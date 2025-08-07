@@ -1,0 +1,4308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RGBLightCat - The first cat meme token on RGB protocol">
+    <meta name="theme-color" content="#FFFF00">
+    <title>RGBLightCat - RGB Protocol Token</title>
+    
+    <!-- Secure Random - MUST LOAD FIRST for security -->
+    <script src="js/secure-random-fixed.js"></script>
+    
+    <!-- CRITICAL: Immediate Mint Lock - MUST LOAD EARLY to prevent unauthorized access -->
+    <script src="js/mint-lock-immediate.js"></script>
+    
+    <!-- Memory Leak Fix - Comprehensive memory management -->
+    <script src="js/memory-leak-fix.js"></script>
+    
+    <!-- Memory Cleanup Manager - Additional memory management -->
+    <script src="js/memory-cleanup-manager.js"></script>
+    
+    <!-- Perfect 10/10 Improvements -->
+    <link rel="stylesheet" href="css/perfect-10-improvements.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- Preload QR scanner for faster loading -->
+    <link rel="preload" href="js/html5-qrcode.min.js" as="script">
+    
+    <!-- Master Fix - Comprehensive Solution -->
+    <!-- Removed master-fix.js - causes SafeEvents recursion -->
+    <script src="js/immediate-fix.js"></script>
+    <script src="js/comprehensive-ui-fix.js?v=1.0.1"></script>
+    
+    <!-- LIGHTCAT Professional Systems - MUST LOAD FIRST -->
+    <!-- Removed pro-init.js - loads memory-safe-events -->
+    
+    <!-- Accessibility Improvements - WCAG 2.1 AA Compliance -->
+    <script src="js/accessibility-improvements.js"></script>
+    
+    <!-- Three.js - Only load on game page -->
+    <script>
+        if (window.location.pathname.includes('game')) {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+        }
+    </script>
+    
+    <!-- GSAP for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- QRCode.js for QR generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
+    <!-- Perfect 10/10 Enhancements -->
+    <!-- Removed perfect-10-enhancements.js - syntax errors -->
+    
+    <!-- Mobile Number Formatting -->
+    <script src="js/mobile-number-fix.js" defer></script>
+    
+    <!-- Stats Percentage Fix -->
+    <script src="js/stats-fix.js"></script>
+    
+    <!-- Visibility Only Fix - Minimal fix without UI changes -->
+    <script src="js/visibility-only-fix.js"></script>
+    
+    <!-- QR Scanner Library Button Centering -->
+    <style>
+        /* Center the Request camera permission button */
+        #qrReaderDiv button {
+            margin: 10px auto !important;
+            display: block !important;
+        }
+        
+        #qrReaderDiv #html5-qrcode-button-camera-permission {
+            background: var(--yellow) !important;
+            color: #000 !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            border-radius: 8px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            font-size: 1rem !important;
+            margin: 20px auto !important;
+            display: block !important;
+        }
+        
+        /* Center all content in QR scanner */
+        #qrReaderDiv > div {
+            text-align: center !important;
+        }
+        
+        #qrReaderDiv .html5-qrcode-element {
+            margin: 0 auto !important;
+        }
+        
+        /* Style the camera selection dropdown */
+        #qrReaderDiv select {
+            margin: 15px auto 25px auto !important;
+            display: block !important;
+            padding: 12px 20px !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--yellow) !important;
+            background: rgba(0, 0, 0, 0.9) !important;
+            color: var(--yellow) !important;
+            font-size: 0.9rem !important;
+            width: 90% !important;
+            max-width: 300px !important;
+            cursor: pointer !important;
+        }
+        
+        /* Style all buttons in the scanner */
+        #qrReaderDiv button {
+            margin: 10px 5px !important;
+            padding: 12px 24px !important;
+            border-radius: 8px !important;
+            font-size: 0.9rem !important;
+            min-height: 44px !important;
+            cursor: pointer !important;
+            display: inline-block !important;
+            white-space: nowrap !important;
+        }
+        
+        /* Primary scanner buttons */
+        #qrReaderDiv button[style*="background-color: rgb(33, 150, 243)"],
+        #qrReaderDiv button[style*="background-color: #2196F3"] {
+            background: var(--yellow) !important;
+            color: #000 !important;
+            border: none !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Secondary buttons */
+        #qrReaderDiv button[style*="border"] {
+            background: transparent !important;
+            color: var(--yellow) !important;
+            border: 2px solid var(--yellow) !important;
+        }
+        
+        /* File upload button styling */
+        #qrReaderDiv input[type="file"] {
+            margin: 15px auto !important;
+            display: block !important;
+            padding: 10px !important;
+            width: 90% !important;
+            max-width: 300px !important;
+        }
+        
+        /* Button container spacing */
+        #qrReaderDiv > div > div {
+            margin: 15px 0 !important;
+        }
+        
+        /* Torch/Flash button if available */
+        #qrReaderDiv button[id*="torch"] {
+            position: relative !important;
+            margin-top: 15px !important;
+        }
+        
+        /* Start/Stop Scanning buttons specific styling */
+        #html5-qrcode-button-camera-start,
+        #html5-qrcode-button-camera-stop {
+            margin: 20px 15px !important;
+            padding: 14px 28px !important;
+            min-width: 140px !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        /* Start button - Primary style */
+        #html5-qrcode-button-camera-start {
+            background: var(--yellow) !important;
+            color: #000 !important;
+            border: none !important;
+        }
+        
+        #html5-qrcode-button-camera-start:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4) !important;
+        }
+        
+        /* Stop button - Secondary style */
+        #html5-qrcode-button-camera-stop {
+            background: transparent !important;
+            color: #ff5252 !important;
+            border: 2px solid #ff5252 !important;
+        }
+        
+        #html5-qrcode-button-camera-stop:hover {
+            background: rgba(255, 82, 82, 0.1) !important;
+        }
+        
+        /* Button container organization */
+        #html5qr-code-full-region > div {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 20px !important;
+            margin: 25px 0 !important;
+            padding: 10px 0 !important;
+        }
+        
+        /* Scanner region padding */
+        #html5qr-code-full-region {
+            padding: 20px !important;
+        }
+        
+        /* Modal close button hover effect */
+        #closeQRScanner:hover {
+            opacity: 1 !important;
+            transform: scale(1.2) !important;
+        }
+        
+        /* Mobile modal adjustments */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 20px !important;
+                padding: 20px !important;
+                padding-top: 50px !important;
+            }
+            
+            #qrScannerModal h2 {
+                font-size: 1.3rem !important;
+                padding: 0 40px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            #closeQRScanner {
+                width: 35px !important;
+                height: 35px !important;
+                font-size: 1.2rem !important;
+                top: 10px !important;
+                right: 10px !important;
+            }
+            
+            #cameraPermissionDiv {
+                padding: 20px !important;
+            }
+            
+            /* Adjust scanner container for mobile */
+            #qrReaderDiv {
+                padding: 10px !important;
+            }
+            
+            /* Mobile button layout improvements */
+            #qrReaderDiv button {
+                margin: 8px 3px !important;
+                padding: 10px 16px !important;
+                font-size: 0.85rem !important;
+                min-width: 120px !important;
+            }
+            
+            /* Stack buttons vertically on very small screens */
+            @media (max-width: 380px) {
+                #qrReaderDiv button {
+                    display: block !important;
+                    width: 90% !important;
+                    margin: 8px auto !important;
+                }
+            }
+            
+            /* Mobile camera dropdown */
+            #qrReaderDiv select {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+                -webkit-appearance: none !important;
+                appearance: none !important;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFD700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+                background-repeat: no-repeat !important;
+                background-position: right 10px center !important;
+                background-size: 20px !important;
+                padding-right: 40px !important;
+            }
+            
+            /* Mobile Start/Stop button adjustments */
+            #html5-qrcode-button-camera-start,
+            #html5-qrcode-button-camera-stop {
+                margin: 10px 5px !important;
+                padding: 12px 20px !important;
+                font-size: 0.9rem !important;
+                min-width: 130px !important;
+            }
+            
+            /* Stack buttons on very narrow screens */
+            @media (max-width: 320px) {
+                #html5-qrcode-button-camera-start,
+                #html5-qrcode-button-camera-stop {
+                    display: block !important;
+                    width: 100% !important;
+                    margin: 10px 0 !important;
+                    max-width: 250px !important;
+                }
+                
+                #html5qr-code-full-region > div {
+                    flex-direction: column !important;
+                    align-items: center !important;
+                }
+            }
+        }
+        
+        /* Ensure proper spacing in scanner states */
+        #scannerStateContainer > div {
+            padding: 20px;
+        }
+        
+        /* Scanner loading state */
+        #qrReaderDiv .html5-qrcode-loader {
+            margin: 20px auto !important;
+        }
+        
+        /* MINIMAL CLEAN SCANNER - Hide all unnecessary elements including camera selector */
+        #qrReaderDiv select,
+        #qrReaderDiv button:not(#html5-qrcode-button-camera-stop),
+        #qrReaderDiv input[type="file"],
+        #qrReaderDiv > div:not(:has(video)):not(:has(#html5-qrcode-button-camera-stop)),
+        #cameraSelectDiv,
+        #qrReaderDiv__camera_selection {
+            display: none !important;
+        }
+        
+        /* Only show stop button, style it minimally */
+        #html5-qrcode-button-camera-stop {
+            position: absolute !important;
+            bottom: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            background: rgba(255, 82, 82, 0.9) !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 24px !important;
+            border-radius: 25px !important;
+            font-weight: 600 !important;
+            z-index: 100 !important;
+        }
+        
+        /* Comprehensive scanner UI fixes */
+        #qrReaderDiv {
+            text-align: center !important;
+        }
+        
+        /* File upload section styling */
+        #qrReaderDiv > div:last-child {
+            margin-top: 30px !important;
+            padding-top: 20px !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Upload button styling */
+        #qrReaderDiv input[type="file"] + button {
+            background: transparent !important;
+            color: var(--yellow) !important;
+            border: 2px solid var(--yellow) !important;
+            padding: 10px 20px !important;
+            margin: 10px auto !important;
+            display: block !important;
+            border-radius: 8px !important;
+        }
+        
+        /* Scanner video container - Clean minimal look */
+        #qrReaderDiv video {
+            border-radius: 15px !important;
+            border: none !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            height: auto !important;
+            background: #000 !important;
+        }
+        
+        /* Scanner container clean look */
+        #qrReaderDiv {
+            background: transparent !important;
+            position: relative !important;
+            contain: layout !important;
+        }
+        
+        /* Prevent video overflow */
+        #qrReaderDiv > div {
+            max-width: 100% !important;
+        }
+        
+        #qrReaderDiv video {
+            max-width: 100% !important;
+            object-fit: contain !important;
+        }
+        
+        /* Hide all status text */
+        #qrReaderDiv > div[style*="text-align"] {
+            display: none !important;
+        }
+        
+        /* Scanner status messages */
+        #qrReaderDiv > div[style*="text-align"] {
+            color: var(--yellow) !important;
+            margin: 15px 0 !important;
+        }
+        
+        /* All text in scanner */
+        #qrReaderDiv {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        
+        /* Zoom slider if present */
+        #qrReaderDiv input[type="range"] {
+            width: 80% !important;
+            margin: 15px auto !important;
+            display: block !important;
+        }
+    </style>
+    <!-- Removed perfect-10-integration.js - syntax errors -->
+    
+    <style>
+        :root {
+            --black: #000000;
+            --yellow: #FFFF00;
+            --dark-gray: #0a0a0a;
+            --medium-gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+            --white: #FFFFFF;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Custom Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+            border: 1px solid rgba(255, 255, 0, 0.2);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--yellow);
+            border-radius: 6px;
+            border: 2px solid var(--black);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+        
+        /* Firefox Scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--yellow) var(--black);
+        }
+
+        body {
+            background: var(--black);
+            color: var(--white);
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Three.js Background Canvas */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Lightning rain container */
+        .lightning-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            opacity: 0.2;
+        }
+
+        /* Content above background */
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            min-height: 80px;
+        }
+
+        header.scrolled {
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 10px 30px rgba(255, 255, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .site-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--yellow);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, 
+                #2a2a2a 0%,
+                #2a2a2a 40%,
+                #666666 48%,
+                #FFFF00 50%,
+                #FFFF00 52%,
+                #666666 54%,
+                #2a2a2a 62%,
+                #2a2a2a 100%
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: lightning-strike 4s ease-in-out infinite;
+        }
+
+        @keyframes lightning-strike {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .tagline {
+                background: var(--yellow) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                animation: none !important;
+            }
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .stat-label,
+            .tier-requirement,
+            .tier-reward {
+                color: #FFFFFF !important;
+            }
+        }
+        
+        /* Focus indicators */
+        *:focus-visible {
+            outline: 2px solid var(--yellow);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--yellow);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--yellow);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .section-title:hover {
+            color: var(--yellow);
+            transform: translateY(-5px);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--yellow);
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover::after {
+            width: 200px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding-top: 120px;
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 0, 0.02) 100%);
+        }
+
+        .mint-status-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #FFFF00;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 0, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+            margin: 0 auto 60px;
+            max-width: 800px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: linear-gradient(90deg, var(--yellow) 0%, #FFD700 100%);
+            border-radius: 50px;
+            transition: width 1s ease;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            /* Reduce section padding for mobile */
+            section {
+                padding: 40px 0 !important;
+            }
+            
+            .stats-section {
+                padding-top: 140px !important;
+                padding-bottom: 30px !important;
+            }
+            
+            .game-section {
+                padding: 30px 0 !important;
+            }
+            
+            .purchase-section {
+                padding: 30px 0 !important;
+            }
+            
+            /* Reduce title spacing */
+            .section-title {
+                font-size: 1.8rem !important;
+                margin-bottom: 25px !important;
+                letter-spacing: 2px !important;
+            }
+            
+            .section-title::after {
+                display: none !important;
+            }
+            
+            /* Tighter mint status */
+            .mint-status-text {
+                font-size: 1.3rem !important;
+                margin-bottom: 15px !important;
+            }
+            
+            .progress-container {
+                margin-bottom: 25px !important;
+            }
+            
+            /* Compact stats grid */
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 12px;
+                margin-top: 25px !important;
+            }
+            
+            .stat-card {
+                padding: 20px 10px;
+                min-height: 100px;
+            }
+            
+            .stat-number {
+                font-size: 1.6rem;
+                margin-bottom: 5px !important;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem !important;
+            }
+            
+            /* Make header elements MUCH bigger on mobile */
+            .logo {
+                width: 60px !important;
+                height: 60px !important;
+                margin-bottom: 10px !important;
+            }
+            
+            .site-title {
+                font-size: 2.2rem !important;
+                letter-spacing: 2px !important;
+                font-weight: 700 !important;
+                margin: 5px 0 !important;
+                text-align: center !important;
+                line-height: 1 !important;
+            }
+            
+            /* Show and animate tagline on mobile - BIGGER */
+            .tagline {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                font-size: 1rem !important;
+                margin-top: 8px !important;
+                margin-bottom: 5px !important;
+                font-weight: 500 !important;
+                letter-spacing: 0.8px !important;
+                line-height: 1.3 !important;
+                
+                /* Maintain the lightning animation */
+                background: linear-gradient(90deg, 
+                    #2a2a2a 0%,
+                    #2a2a2a 40%,
+                    #666666 48%,
+                    #FFFF00 50%,
+                    #FFFF00 52%,
+                    #666666 54%,
+                    #2a2a2a 62%,
+                    #2a2a2a 100%
+                ) !important;
+                background-size: 300% 100% !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+                animation: lightning-strike 4s ease-in-out infinite !important;
+            }
+            
+            /* Adjust header for bigger elements */
+            header {
+                min-height: 140px !important;
+                padding: 15px 0 !important;
+            }
+            
+            body {
+                padding-top: 150px !important;
+            }
+            
+            .stats-section {
+                padding-top: 160px !important;
+            }
+            
+            /* Center logo section on mobile */
+            .logo-section {
+                text-align: center !important;
+                align-items: center !important;
+                flex-direction: column !important;
+                gap: 5px !important;
+            }
+            
+            .logo-section div {
+                width: 100% !important;
+                text-align: center !important;
+            }
+            
+            /* Mobile tier grid - horizontal scrolling */
+            .tier-grid {
+                display: flex !important;
+                overflow-x: auto !important;
+                gap: 10px !important;
+                padding: 10px 0 !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                grid-template-columns: unset !important;
+                margin-bottom: 30px !important;
+            }
+            
+            .tier-card {
+                flex: 0 0 auto !important;
+                width: 110px !important;
+                padding: 12px 8px !important;
+                scroll-snap-align: center !important;
+            }
+            
+            .tier-number {
+                font-size: 1.3rem !important;
+                margin-bottom: 3px !important;
+            }
+            
+            .tier-name {
+                font-size: 0.85rem !important;
+                margin-bottom: 3px !important;
+            }
+            
+            .tier-requirement,
+            .tier-reward {
+                font-size: 0.65rem !important;
+                line-height: 1.1 !important;
+                margin: 1px 0 !important;
+            }
+            
+            /* Feature boxes mobile optimization */
+            .feature-boxes {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 15px !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin-top: 20px !important;
+            }
+            
+            .feature-box {
+                flex: 1 !important;
+                width: 100% !important;
+                min-height: 90px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                padding: 20px 15px !important;
+                text-align: center !important;
+                background: rgba(255, 255, 0, 0.08) !important;
+                border: 1px solid rgba(255, 255, 0, 0.3) !important;
+                border-radius: 12px !important;
+            }
+            
+            .feature-box strong {
+                font-size: 1rem !important;
+                margin-bottom: 5px !important;
+                display: block !important;
+            }
+            
+            .feature-box p {
+                font-size: 0.8rem !important;
+                line-height: 1.3 !important;
+                margin: 5px 0 0 0 !important;
+            }
+            
+            #gameWrapper {
+                height: 300px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            /* Compact game start screen */
+            #gameStartScreen {
+                padding: 20px !important;
+            }
+            
+            #gameStartScreen img {
+                width: 80px !important;
+                height: 80px !important;
+                margin-bottom: 10px !important;
+            }
+            
+            #gameStartScreen h3 {
+                font-size: 1.4rem !important;
+                margin-bottom: 10px !important;
+                letter-spacing: 2px !important;
+            }
+            
+            #gameStartScreen p {
+                font-size: 0.85rem !important;
+                margin: 0 0 20px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            #startGameBtn {
+                padding: 12px 30px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            /* Compact purchase form on mobile */
+            .purchase-form {
+                padding: 25px 15px !important;
+                margin-top: 20px !important;
+            }
+            
+            .form-group {
+                margin-bottom: 20px !important;
+            }
+            
+            .form-label {
+                margin-bottom: 8px !important;
+                font-size: 0.85rem !important;
+            }
+            
+            .form-input {
+                padding: 12px !important;
+                font-size: 0.9rem !important;
+            }
+            
+            /* Reduce footer padding */
+            footer {
+                padding: 30px 0 !important;
+                margin-top: 30px !important;
+            }
+            
+            /* Override inline styles for mobile */
+            div[style*="margin: 30px 0"] {
+                margin: 15px 0 !important;
+            }
+            
+            div[style*="margin: 40px 0"] {
+                margin: 20px 0 !important;
+            }
+            
+            div[style*="margin-bottom: 20px"] {
+                margin-bottom: 10px !important;
+            }
+            
+            div[style*="margin-bottom: 30px"] {
+                margin-bottom: 15px !important;
+            }
+            
+            div[style*="padding: 20px"] {
+                padding: 15px !important;
+            }
+            
+            div[style*="padding: 30px"] {
+                padding: 20px !important;
+            }
+            
+            div[style*="padding: 40px"] {
+                padding: 20px !important;
+            }
+            
+            /* Specific purchase flow box */
+            .purchase-section > div > div[style*="margin: 30px 0"] {
+                margin: 15px 0 !important;
+                padding: 15px !important;
+            }
+            
+            /* Batch selector spacing */
+            .batch-selector {
+                margin: 20px 0 !important;
+                gap: 20px !important;
+            }
+            
+            /* Container padding */
+            .container {
+                padding: 0 15px !important;
+            }
+            
+            /* Game container */
+            .game-container {
+                padding: 15px !important;
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 0, 0.1);
+            padding: 40px 15px;
+            border-radius: 20px;
+            transition: var(--transition);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            overflow: visible;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--yellow);
+            background: rgba(255, 255, 0, 0.05);
+            box-shadow: 0 20px 40px rgba(255, 255, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFFF00;  /* Same yellow as 7% SOLD text */
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            line-height: 1.2;
+            padding: 0 5px;
+            transition: none !important;  /* Remove any transitions/animations */
+            transform: none !important;
+        }
+        
+        /* Remove bounce/transform on tap */
+        .stat-number:active,
+        .stat-number:focus {
+            transform: none !important;
+            transition: none !important;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Game Section */
+        .game-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tier-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px solid rgba(255, 255, 0, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+        }
+
+        .tier-card:hover {
+            transform: translateY(-10px) scale(1);
+            border-color: var(--yellow);
+            background: rgba(255, 255, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(255, 255, 0, 0.2);
+        }
+
+        .tier-card.unlocked {
+            border-color: var(--yellow);
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        .tier-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .tier-card.unlocked .tier-number {
+            color: var(--yellow);
+        }
+
+        .tier-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            color: var(--yellow);
+            border: 2px solid var(--yellow);
+            padding: 15px 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--yellow);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 0, 0.3);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Game Canvas */
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 0, 0.3);
+            border-radius: 10px;
+            background: var(--black);
+        }
+
+        /* Purchase Section */
+        .purchase-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 0, 0.02) 100%);
+        }
+
+        .purchase-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 0, 0.2);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 0, 0.2);
+            border-radius: 15px;
+            color: var(--white);
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--yellow);
+            background: rgba(255, 255, 0, 0.05);
+        }
+
+        /* === Lightcat purchase-batch selector UI fix ===
+           Scope: #purchase .batch-selector (safe for rest of site)
+           Goal: Align – 0 + MAX in one row, center text, mobile-friendly hit boxes.
+        ==================================================================== */
+        #purchase .batch-selector {
+            /* one horizontal row */
+            display: flex;
+            align-items: center;           /* vertical centering of every control */
+            gap: 12px;                     /* consistent spacing between items   */
+            flex-wrap: nowrap;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        /* numeric value */
+        #purchase .batch-selector .batch-count {
+            min-width: 60px;               /* keeps value column stable          */
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--yellow);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* shared style for all buttons (–, +, MAX) */
+        #purchase .batch-selector button {
+            display: inline-flex;          /* enables flex centering inside btn  */
+            align-items: center;           /* vertical text centering             */
+            justify-content: center;       /* horizontal text centering           */
+            height: 56px;                  /* 56 px ≥ 44 px mobile tap target     */
+            min-width: 56px;               /* same width for square buttons       */
+            padding: 0 16px;               /* gives MAX a pill shape              */
+            border-radius: 12px;           /* matches site's rounded corners      */
+            line-height: 1;                /* avoid baselines shift on iOS        */
+            -webkit-appearance: none;
+            appearance: none;
+            border: 2px solid rgba(255, 255, 0, 0.3);
+            background: transparent;
+            color: var(--yellow);
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* hover state */
+        #purchase .batch-selector button:hover:not(:disabled) {
+            border-color: var(--yellow);
+            background: rgba(255, 255, 0, 0.1);
+            transform: scale(1.05);
+        }
+
+        /* make – and + perfectly square */
+        #purchase .batch-selector #decreaseBatch,
+        #purchase .batch-selector #increaseBatch {
+            width: 56px;                   /* force square shape                 */
+            padding: 0;                    /* remove padding for square buttons  */
+        }
+
+        /* MAX button - just the text, no padding or fixed size */
+        #purchase .batch-selector #maxBatch {
+            width: auto;                   /* only as wide as the text */
+            min-width: unset;              /* remove minimum width */
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0;
+            padding: 0 !important;         /* no padding at all */
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;       /* remove the frame/border */
+            background: transparent !important; /* make background transparent */
+        }
+
+        /* disabled state for MAX (visual only, no logic change) */
+        #purchase .batch-selector #maxBatch[disabled],
+        #purchase .batch-selector #maxBatch[aria-disabled="true"] {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* === End Lightcat batch selector fix ================================= */
+        
+        /* Mobile font size adjustments for MAX button */
+        @media (max-width: 768px) {
+            .batch-btn.max-btn {
+                font-size: 0.65rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .batch-btn.max-btn {
+                font-size: 0.6rem !important;
+            }
+        }
+        
+        @media (max-width: 375px) {
+            .batch-btn.max-btn {
+                font-size: 0.55rem !important;
+            }
+        }
+        
+        @media (max-width: 320px) {
+            .batch-btn.max-btn {
+                font-size: 0.5rem !important;
+            }
+        }
+
+        .batch-count {
+            font-size: 3rem;
+            font-weight: 700;
+            min-width: 100px;
+            text-align: center;
+            color: var(--yellow);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--medium-gray);
+            border: 2px solid rgba(255, 255, 0, 0.3);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            animation: modalAppear 0.3s ease forwards;
+        }
+
+        @keyframes modalAppear {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 0, 0.1);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Game specific styles */
+        #gameWrapper {
+            box-shadow: 0 0 30px rgba(255, 255, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #gameWrapper:hover {
+            box-shadow: 0 0 40px rgba(255, 255, 0, 0.3);
+        }
+        
+        #startGameBtn {
+            box-shadow: 0 5px 20px rgba(255, 255, 0, 0.3);
+        }
+        
+        #startGameBtn:hover {
+            box-shadow: 0 10px 30px rgba(255, 255, 0, 0.5);
+        }
+
+        /* Payment Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: var(--dark-gray);
+            border: 2px solid var(--yellow);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 95vh;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(255, 255, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .payment-info {
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex: 1;
+            padding-right: 5px;
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .payment-info::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+        
+        .payment-info {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .payment-qr {
+            text-align: center;
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        #qrcode {
+            display: block;
+            padding: 0;
+            background: transparent;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        
+        #qrcode img,
+        #qrcode canvas {
+            display: block !important;
+            margin: 0 auto !important;
+            border: none !important;
+            padding: 0 !important;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Ensure only first QR code element is visible */
+        #qrcode > *:not(:first-child) {
+            display: none !important;
+        }
+        
+        /* Responsive - Extra small screens */
+        @media (max-width: 320px) {
+            .stat-number {
+                font-size: 1.4rem !important;
+            }
+            
+            .stat-card {
+                padding: 20px 10px !important;
+            }
+            
+            .stats-grid {
+                gap: 10px !important;
+            }
+        }
+        
+        /* Responsive - Small phones like iPhone SE */
+        @media (max-width: 375px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .stats-section {
+                padding-top: 140px !important;
+            }
+            
+            /* Keep bigger sizes even on small screens */
+            .site-title {
+                font-size: 2rem !important; /* Still big on 375px screens */
+            }
+            
+            .logo {
+                width: 55px !important;
+                height: 55px !important;
+            }
+            
+            .tagline {
+                font-size: 0.9rem !important; /* Slightly smaller but still readable */
+            }
+            
+            .section-title {
+                font-size: 1.5rem !important;
+                letter-spacing: 1px !important;
+            }
+            
+            /* Purchase form optimization */
+            .purchase-form {
+                padding: 20px !important;
+            }
+            
+            .form-input {
+                padding: 12px !important;
+                font-size: 0.875rem !important;
+            }
+            
+            .batch-selector {
+                gap: 15px !important;
+            }
+            
+            .batch-btn {
+                width: 44px !important;
+                height: 44px !important;
+                font-size: 1.3rem !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                padding: 0 !important;
+                line-height: 1 !important;
+            }
+            
+            .batch-btn.max-btn {
+                /* Keep same circular style on mobile */
+                width: 44px !important;
+                height: 44px !important;
+            }
+            
+            .batch-count {
+                font-size: 2rem !important;
+            }
+            
+            /* Modal optimization */
+            .modal-content {
+                padding: 15px 10px !important;
+                margin: 5px !important;
+                width: calc(100% - 10px) !important;
+                max-height: calc(100vh - 10px) !important;
+            }
+            
+            .modal-content h3 {
+                font-size: 1rem !important;
+                margin-bottom: 10px !important;
+                letter-spacing: 1px !important;
+            }
+            
+            .payment-info > div {
+                margin: 10px 0 !important;
+                padding: 12px 8px !important;
+                border-radius: 12px !important;
+            }
+            
+            #paymentAmount {
+                font-size: 0.9rem !important;
+                padding: 8px !important;
+            }
+            
+            #paymentAddress {
+                font-size: 0.6rem !important;
+                padding: 8px 6px !important;
+                line-height: 1.4 !important;
+            }
+            
+            .payment-info button {
+                padding: 5px 10px !important;
+                font-size: 0.65rem !important;
+            }
+            
+            .payment-info > div:last-of-type {
+                font-size: 0.7rem !important;
+                padding: 10px !important;
+                letter-spacing: 0 !important;
+            }
+            
+            .payment-info > div:last-of-type span {
+                font-size: 0.65rem !important;
+            }
+            
+            #closeModal {
+                top: 5px !important;
+                right: 5px !important;
+                font-size: 1rem !important;
+                width: 25px !important;
+                height: 25px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .modal-content h3 {
+                font-size: 1.2rem !important;
+            }
+            
+            #paymentAmount {
+                font-size: 0.9rem !important;
+                padding: 10px !important;
+            }
+            
+            #paymentAddress {
+                font-size: 0.75rem !important;
+                padding: 10px !important;
+            }
+            
+            /* Stats optimization */
+            .stat-number {
+                font-size: 1.6rem !important;
+                white-space: nowrap !important;
+            }
+            
+            .stat-card {
+                padding: 25px 15px !important;
+                min-height: 150px;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem !important;
+            }
+            
+            .mint-status-text {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Tier cards */
+            .tier-card {
+                padding: 20px !important;
+            }
+            
+            .tier-card h3 {
+                font-size: 1.2rem !important;
+            }
+            
+            /* Game specific */
+            #gameWrapper {
+                height: 350px !important;
+            }
+            
+            #gameStartScreen img {
+                width: 50px !important;
+                height: 50px !important;
+            }
+            
+            #gameStartScreen h3 {
+                font-size: 1rem !important;
+            }
+            
+            #gameStartScreen p {
+                font-size: 0.75rem !important;
+            }
+            
+            #startGameBtn {
+                font-size: 0.8rem !important;
+                padding: 10px 25px !important;
+            }
+            
+            /* Bitcoin amount display */
+            #totalBTC {
+                font-size: 1.8rem !important;
+            }
+            
+            /* Footer */
+            footer {
+                padding: 30px 0 !important;
+                font-size: 0.8rem !important;
+            }
+        }
+        
+        /* Responsive - Tablets and medium phones */
+        @media (max-width: 768px) {
+            /* Tier grid handled by mobile styles above */
+            
+            nav {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            #gameWrapper {
+                height: 400px !important;
+            }
+            
+            /* Game start screen mobile optimization */
+            #gameStartScreen {
+                padding: 20px !important;
+            }
+            
+            #gameStartScreen img {
+                width: 60px !important;
+                height: 60px !important;
+                margin-bottom: 10px !important;
+            }
+            
+            #gameStartScreen h3 {
+                font-size: 1.2rem !important;
+                letter-spacing: 2px !important;
+            }
+            
+            #gameStartScreen p {
+                font-size: 0.8rem !important;
+                padding: 0 10px;
+                margin: 0 0 20px 0 !important;
+                line-height: 1.3 !important;
+            }
+            
+            #startGameBtn {
+                font-size: 0.9rem !important;
+                padding: 12px 30px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            /* Hide keyboard controls on mobile */
+            #gameStartScreen > div:last-child {
+                display: none !important;
+            }
+            
+            /* Additional mobile optimizations */
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 15px !important;
+            }
+            
+            .logo-section {
+                margin-bottom: 20px;
+                flex-direction: column;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            /* Fix % sold visibility on mobile */
+            .mint-status-text {
+                font-size: 1.4rem !important;
+                margin-bottom: 20px !important;
+            }
+            
+            .stats-section {
+                padding-top: 160px !important;
+            }
+            
+            .stat-card {
+                padding: 30px 20px !important;
+                min-height: 160px;
+            }
+            
+            .stat-number {
+                font-size: 2rem !important;
+                white-space: nowrap !important;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem !important;
+            }
+            
+            .purchase-form {
+                padding: 30px 20px !important;
+                border-radius: 20px;
+            }
+            
+            .form-label {
+                font-size: 0.875rem !important;
+            }
+            
+            .btn {
+                padding: 12px 30px !important;
+                font-size: 0.9rem !important;
+            }
+            
+            /* Payment modal */
+            .modal-content {
+                width: 95% !important;
+                max-width: none !important;
+                margin: 10px !important;
+                padding: 30px 15px !important;
+                max-height: 95vh !important;
+            }
+            
+            .modal-content h3 {
+                font-size: 1.4rem !important;
+                margin-bottom: 20px !important;
+            }
+            
+            .payment-info > div {
+                margin: 20px 0 !important;
+                padding: 20px 15px !important;
+            }
+            
+            #paymentAmount {
+                font-size: 1.2rem !important;
+                padding: 12px !important;
+            }
+            
+            #paymentAddress {
+                font-size: 0.75rem !important;
+                padding: 12px !important;
+                line-height: 1.6 !important;
+            }
+            
+            .payment-info button {
+                padding: 8px 15px !important;
+                font-size: 0.8rem !important;
+            }
+            
+            #closeModal {
+                top: 10px !important;
+                right: 10px !important;
+                font-size: 1.5rem !important;
+            }
+            
+            /* Navigation */
+            nav {
+                display: none;
+            }
+        }
+    </style>
+    
+    <!-- CRITICAL FIX: Batch button centering override -->
+    <style>
+        /* Force center alignment for batch buttons on ALL devices */
+        #decreaseBatch,
+        #increaseBatch,
+        .batch-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Ensure the symbols are centered */
+        #decreaseBatch::before,
+        #increaseBatch::before {
+            content: none !important;
+        }
+        
+        /* Mobile specific override */
+        @media (max-width: 768px) {
+            #decreaseBatch,
+            #increaseBatch {
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                font-size: 1.3rem !important;
+                font-weight: 700 !important;
+            }
+        }
+    </style>
+    
+    <!-- Professional QR Scanner Styles -->
+    <style>
+        /* QR Scanner Professional Styling */
+        #qrReaderDiv {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        #qrReaderDiv video {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Ensure scanner modal content doesn't overlap */
+        #qrScannerModal {
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        #qrScannerModal .modal-content {
+            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Scanner container should be contained */
+        #scannerStateContainer {
+            flex: 1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Html5Qrcode UI Overrides */
+        #qrReaderDiv__scan_region {
+            border: 2px solid var(--yellow) !important;
+        }
+        
+        #qrReaderDiv__dashboard_section_swaplink {
+            color: var(--yellow) !important;
+        }
+        
+        #qrReaderDiv__dashboard_section_csr button {
+            background-color: var(--yellow) !important;
+            color: #000 !important;
+            border: none !important;
+            padding: 8px 16px !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+        }
+        
+        /* Scanner message overlays */
+        .scan-message {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            #qrReaderDiv {
+                max-width: 300px;
+                margin: 10px auto;
+            }
+            
+            #qrScannerModal {
+                padding: 10px;
+            }
+            
+            #qrScannerModal .modal-content {
+                width: 95% !important;
+                max-width: 400px !important;
+                padding: 20px !important;
+                max-height: 85vh !important;
+                margin: 10px auto !important;
+            }
+            
+            /* Prevent scanner from being too tall on mobile */
+            #qrReaderDiv video {
+                max-height: 50vh !important;
+            }
+            
+            /* Ensure proper spacing */
+            #scannerStateContainer {
+                min-height: 250px;
+                max-height: 60vh;
+            }
+        }
+    </style>
+    
+    <!-- Mobile Optimized CSS - Loaded AFTER inline styles to ensure proper cascade -->
+    <link rel="stylesheet" href="css/mobile-optimized.css?v=1754349561">
+    <link rel="stylesheet" href="css/desktop-batch-selector-fix.css?v=1.0">
+    <link rel="stylesheet" href="css/desktop-scroll-overlap-fix.css?v=1.0">
+    
+    <!-- Professional Payment Modal CSS -->
+    <link rel="stylesheet" href="css/payment-modal-clean.css?v=2.0">
+    
+    <!-- Invoice UI Improvements CSS -->
+    <link rel="stylesheet" href="css/invoice-ui-improvements.css?v=1.0">
+    
+    <!-- Number Formatter - Load early to ensure it's available for stats -->
+    <script src="js/number-formatter-fixed.js"></script>
+    
+    <!-- QR Code Library for Payment Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Three.js Canvas -->
+    <canvas id="three-canvas"></canvas>
+    
+    <!-- Lightning Rain Background -->
+    <div class="lightning-rain" id="lightningRain"></div>
+    
+    <div class="content-wrapper">
+        <header id="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <img src="logo.jpg" alt="RGBLightCat Logo" class="logo">
+                        <div>
+                            <h1 class="site-title">LIGHTCAT</h1>
+                            <p class="tagline">First Cat Meme Token on RGB Protocol</p>
+                        </div>
+                    </div>
+                    <nav>
+                        <a href="#stats">Stats</a>
+                        <a href="#game">Game</a>
+                        <a href="#purchase">Purchase</a>
+                        <a href="tokenomics.html">Tokenomics</a>
+                        <a href="https://twitter.com/RGBLightCat" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 5px;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--yellow)" style="vertical-align: middle;">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                    </nav>
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Mobile Navigation Drawer -->
+        <nav class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-header">
+                <img src="logo.jpg" alt="RGBLightCat" class="mobile-nav-logo">
+                <button class="mobile-nav-close" id="mobileNavClose">×</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="#stats" onclick="closeMobileNav()">Live Stats</a>
+                <a href="#game" onclick="closeMobileNav()">Play Game</a>
+                <a href="#purchase" onclick="closeMobileNav()">Buy LIGHTCAT</a>
+                <a href="tokenomics.html">Tokenomics</a>
+                <a href="https://twitter.com/RGBLightCat" target="_blank" rel="noopener noreferrer">
+                    Follow @RGBLightCat
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--yellow)" style="margin-left: 5px;">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+            <!-- Quick Batch Selection for Mobile -->
+            <div class="mobile-quick-select">
+                <h3>Quick Selection</h3>
+                <div class="quick-select-buttons">
+                    <button class="quick-select-btn" data-batches="1">1 Batch</button>
+                    <button class="quick-select-btn" data-batches="5">5 Batches</button>
+                    <button class="quick-select-btn" data-batches="8">8 Batches</button>
+                    <button class="quick-select-btn" data-batches="10">10 Batches</button>
+                </div>
+            </div>
+        </nav>
+        <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+        <section id="stats" class="stats-section">
+            <div class="container">
+                <h2 class="section-title">LIVE MINT STATUS</h2>
+                <div class="mint-status-text" id="progressText">7.00% SOLD</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" style="width: 7%; background: var(--yellow);"></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="soldBatches">2,100</div>
+                        <div class="stat-label">Batches Sold</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="remainingBatches">27,900</div>
+                        <div class="stat-label">Remaining Batches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalTokens">1,470,000</div>
+                        <div class="stat-label">Tokens Allocated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="uniqueBuyers">0</div>
+                        <div class="stat-label">Unique Wallets</div>
+                    </div>
+                </div>
+                
+                <!-- Immediate Mobile Number Formatting -->
+                <script>
+                    // Format numbers immediately on mobile
+                    if (window.innerWidth <= 768) {
+                        function formatMobileNumber(num) {
+                            const n = parseInt(num.toString().replace(/,/g, ''));
+                            if (n >= 1000000) {
+                                return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                            } else if (n >= 1000) {
+                                return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+                            }
+                            return n.toString();
+                        }
+                        
+                        // Apply immediately to avoid flash of unformatted content
+                        setTimeout(() => {
+                            const sold = document.getElementById('soldBatches');
+                            const remaining = document.getElementById('remainingBatches');
+                            const tokens = document.getElementById('totalTokens');
+                            
+                            if (sold) sold.textContent = formatMobileNumber(sold.textContent);
+                            if (remaining) remaining.textContent = formatMobileNumber(remaining.textContent);
+                            if (tokens) tokens.textContent = formatMobileNumber(tokens.textContent);
+                        }, 100);
+                    }
+                </script>
+            </div>
+        </section>
+
+        <section id="game" class="game-section">
+            <div class="container">
+                <h2 class="section-title">UNLOCK PURCHASE TIERS</h2>
+                
+                <div class="tier-grid">
+                    <div class="tier-card" id="tier3">
+                        <div class="tier-number">1</div>
+                        <div class="tier-name">Gold</div>
+                        <div class="tier-requirement">Score: 25+ ⚡</div>
+                        <div class="tier-reward">Max: 30 Batches</div>
+                    </div>
+                    <div class="tier-card" id="tier2">
+                        <div class="tier-number">2</div>
+                        <div class="tier-name">Silver</div>
+                        <div class="tier-requirement">Score: 15-24 ⚡</div>
+                        <div class="tier-reward">Max: 20 Batches</div>
+                    </div>
+                    <div class="tier-card" id="tier1">
+                        <div class="tier-number">3</div>
+                        <div class="tier-name">Bronze</div>
+                        <div class="tier-requirement">Score: 11-14 ⚡</div>
+                        <div class="tier-reward">Max: 10 Batches</div>
+                    </div>
+                </div>
+
+                <div class="game-container" style="position: relative;">
+                    <div id="gameWrapper" style="position: relative; width: 100%; height: 500px; background: #000; border-radius: 20px; overflow: visible; border: 2px solid rgba(255, 255, 0, 0.3);">
+                        <iframe id="gameFrame" src="" style="width: 100%; height: 100%; border: none; display: none; border-radius: 20px;" tabindex="0"></iframe>
+                        <div id="clickToFocus" style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.95); border: 1px solid var(--yellow); padding: 10px 20px; border-radius: 20px; display: none; pointer-events: none; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                            <p style="color: var(--yellow); font-weight: 600; text-transform: uppercase; margin: 0; font-size: 0.8rem; letter-spacing: 1px;">Click to activate game controls</p>
+                        </div>
+                        <div id="gameStartScreen" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; z-index: 10; padding: 40px; border-radius: 20px;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <img src="images/RGB_LITE_CAT_LOGO.jpg" alt="" style="width: 120px; height: 120px; margin-bottom: 15px;">
+                                <h3 style="color: var(--yellow); font-size: 1.8rem; margin: 0; text-transform: uppercase; letter-spacing: 4px; font-weight: 700;">LIGHT CAT</h3>
+                            </div>
+                            <p style="color: rgba(255,255,255,0.7); margin: 0 0 30px 0; text-align: center; max-width: 400px; font-size: 0.95rem; line-height: 1.4;">Control the cat and collect lightning bolts in 30 seconds to unlock exclusive purchase tiers!</p>
+                            <button class="btn" id="startGameBtn" style="font-size: 1rem; padding: 18px 50px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; line-height: 1;">
+                                START GAME
+                            </button>
+                            <div style="width: 100%; max-width: 500px; margin-top: auto;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+                                    <div><span style="color: var(--yellow); font-weight: 600;">W/↑</span> Move Forward</div>
+                                    <div><span style="color: var(--yellow); font-weight: 600;">S/↓</span> Move Backward</div>
+                                    <div><span style="color: var(--yellow); font-weight: 600;">A/←</span> Move Left</div>
+                                    <div><span style="color: var(--yellow); font-weight: 600;">D/→</span> Move Right</div>
+                                    <div><span style="color: var(--yellow); font-weight: 600;">SPACE</span> Jump</div>
+                                    <div><span style="color: var(--yellow); font-weight: 600;">SHIFT</span> Sprint</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fullscreen button removed - game now goes directly to fullscreen -->
+                </div>
+            </div>
+        </section>
+
+        <section id="purchase" class="purchase-section">
+            <div class="container">
+                <h2 class="section-title">PURCHASE TOKENS</h2>
+                
+                <!-- RGB Protocol Info -->
+                <div style="max-width: 800px; margin: 0 auto 40px; text-align: center;">
+                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; line-height: 1.6; margin-bottom: 20px;">
+                        LIGHTCAT uses the RGB Protocol - a revolutionary Bitcoin Layer 2 technology that enables smart contracts 
+                        and token issuance with client-side validation. Your tokens are secured by Bitcoin's network.
+                        We recommend using <strong style="color: var(--yellow);">Bitcoin Tribe wallet</strong> for the best RGB experience.
+                    </p>
+                    
+                    <!-- Purchase Flow -->
+                    <div style="margin: 30px 0; padding: 20px; background: rgba(255, 255, 0, 0.05); border: 1px solid rgba(255, 255, 0, 0.2); border-radius: 10px;">
+                        <p style="color: var(--yellow); font-weight: 600; margin-bottom: 15px;">Purchase Flow:</p>
+                        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                            <div style="text-align: center;">
+                                <div style="width: 50px; height: 50px; background: var(--yellow); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 5px;">1</div>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Enter RGB Invoice</p>
+                            </div>
+                            <span style="color: var(--yellow); font-size: 1.5rem;">→</span>
+                            <div style="text-align: center;">
+                                <div style="width: 50px; height: 50px; background: var(--yellow); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 5px;">2</div>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Get Lightning Invoice</p>
+                            </div>
+                            <span style="color: var(--yellow); font-size: 1.5rem;">→</span>
+                            <div style="text-align: center;">
+                                <div style="width: 50px; height: 50px; background: var(--yellow); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 5px;">3</div>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Pay with Lightning</p>
+                            </div>
+                            <span style="color: var(--yellow); font-size: 1.5rem;">→</span>
+                            <div style="text-align: center;">
+                                <div style="width: 50px; height: 50px; background: var(--yellow); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 5px;">4</div>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.8);">Receive Tokens</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-boxes" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 30px;">
+                        <div class="feature-box" style="padding: 15px 25px; background: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.3); border-radius: 10px;">
+                            <strong style="color: var(--yellow);">Self-Custody</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.7);">You control your tokens</p>
+                        </div>
+                        <div class="feature-box" style="padding: 15px 25px; background: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.3); border-radius: 10px;">
+                            <strong style="color: var(--yellow);">Lightning Fast</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.7);">Instant payments via LN</p>
+                        </div>
+                        <div class="feature-box" style="padding: 15px 25px; background: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.3); border-radius: 10px;">
+                            <strong style="color: var(--yellow);">Bitcoin Secured</strong>
+                            <p style="margin: 5px 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.7);">Protected by Bitcoin</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MINT LOCK SECTION - Visible by default, hidden when game completed -->
+                <div class="mint-locked-container" id="mintLockedContainer" style="
+                    max-width: 600px;
+                    margin: 40px auto;
+                    background: rgba(255, 0, 0, 0.1);
+                    border: 2px solid #ff4444;
+                    border-radius: 15px;
+                    padding: 40px;
+                    text-align: center;
+                    box-shadow: 0 4px 20px rgba(255, 68, 68, 0.2);
+                ">
+                    <div style="color: #ff4444; font-size: 2rem; font-weight: bold; margin-bottom: 20px;">
+                        🔒 MINT IS LOCKED
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; margin-bottom: 15px; line-height: 1.4;">
+                        You must play the game to unlock purchasing!
+                    </p>
+                    <p style="color: rgba(255, 255, 255, 0.8); font-size: 1rem; margin-bottom: 30px;">
+                        Score 11+ to unlock Bronze tier (10 batches)<br>
+                        Score 15+ to unlock Silver tier (20 batches)<br>
+                        Score 25+ to unlock Gold tier (30 batches)
+                    </p>
+                    <a href="game.html" class="btn" style="
+                        display: inline-block; 
+                        background: var(--yellow); 
+                        color: #000; 
+                        font-weight: bold;
+                        text-decoration: none;
+                        padding: 15px 30px;
+                        border-radius: 8px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(255, 215, 0, 0.5)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(255, 215, 0, 0.3)';">
+                        PLAY GAME TO UNLOCK
+                    </a>
+                </div>
+                
+                <form class="purchase-form" id="purchaseForm" novalidate style="display: none;">
+                    <div class="form-group">
+                        <!-- Scan QR Button - Repositioned Above Input -->
+                        <div style="margin-top: 30px; margin-bottom: 35px; text-align: center; padding: 20px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <button type="button" id="scanQRBtn" style="
+                                background: var(--yellow);
+                                color: #000;
+                                border: none;
+                                padding: 12px 24px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-size: 0.9rem;
+                                font-weight: 600;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                transition: all 0.3s ease;
+                                box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 8px;
+                                min-height: 44px;
+                            " 
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(255, 215, 0, 0.5)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(255, 215, 0, 0.3)';"
+                            aria-label="Scan QR code for RGB invoice">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                    <circle cx="12" cy="13" r="4"/>
+                                </svg>
+                                Scan QR Code
+                            </button>
+                            <p style="margin-top: 8px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">
+                                Have a QR code? Scan it to auto-fill the invoice
+                            </p>
+                        </div>
+                        
+                        <label class="form-label" for="rgbInvoice" style="display: block; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">RGB Invoice</label>
+                        <div style="position: relative; width: 100%;">
+                            <input 
+                                type="text" 
+                                class="form-input" 
+                                id="rgbInvoice" 
+                                placeholder="rgb:utxob:WiUyMWVkN..."
+                                style="width: 100%; box-sizing: border-box;"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div style="margin-top: 15px; padding: 15px; background: rgba(255, 255, 0, 0.05); border: 1px solid rgba(255, 255, 0, 0.2); border-radius: 10px;">
+                            <p style="color: var(--yellow); font-weight: 600; margin-bottom: 10px; font-size: 0.9rem;">
+                                How to get your RGB Invoice:
+                            </p>
+                            <ol style="color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; margin: 0; padding-left: 20px; line-height: 1.8;">
+                                <li>Download Bitcoin Tribe wallet (recommended RGB wallet)</li>
+                                <li>Open the app and navigate to "Receive" or "RGB Assets"</li>
+                                <li>Select "Create RGB Invoice" or "Receive RGB20 Tokens"</li>
+                                <li>Copy the generated invoice (starts with "rgb:") or scan QR code</li>
+                                <li>Paste it here and click "CREATE LIGHTNING INVOICE"</li>
+                                <li>Pay the Lightning invoice to receive your LIGHTCAT tokens</li>
+                            </ol>
+                            <div style="margin-top: 12px; padding: 10px; background: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.3); border-radius: 8px;">
+                                <p style="margin: 0; color: var(--yellow); font-weight: 600; font-size: 0.85rem;">
+                                    Recommended RGB Wallet:
+                                </p>
+                                <p style="margin: 5px 0; font-size: 0.8rem;">
+                                    <strong style="color: #fff;">Bitcoin Tribe RGB</strong> - Full RGB protocol support with Lightning integration
+                                </p>
+                                <div style="margin-top: 8px;">
+                                    <a href="https://bitcointribe.app/" target="_blank" style="color: var(--yellow); text-decoration: underline; font-size: 0.8rem; margin-right: 15px;">Download Bitcoin Tribe</a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.bithyve.tribe" target="_blank" style="color: var(--yellow); text-decoration: underline; font-size: 0.8rem;">Google Play</a>
+                                </div>
+                            </div>
+                            <p style="margin-top: 10px; color: rgba(255, 255, 255, 0.6); font-size: 0.75rem;">
+                                Other RGB wallets: Iris, MyCitadel, BitMask • More info: <a href="https://rgb.tech/wallets" target="_blank" style="color: var(--yellow); text-decoration: underline;">rgb.tech/wallets</a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label class="form-label" for="emailAddress" style="display: block; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Email (Optional)</label>
+                        <input 
+                            type="email" 
+                            class="form-input" 
+                            id="emailAddress" 
+                            placeholder="your@email.com"
+                            style="width: 100%; box-sizing: border-box;"
+                            autocomplete="email"
+                        >
+                        <p style="margin-top: 10px; color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">
+                            Receive download link for your consignment
+                        </p>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 40px;">
+                        <label class="form-label" style="display: block; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Number of Batches</label>
+                        <div class="batch-selector">
+                            <button type="button" class="batch-btn" id="decreaseBatch" style="display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; line-height: 1 !important;">−</button>
+                            <div class="batch-count" id="batchCount">0</div>
+                            <button type="button" class="batch-btn" id="increaseBatch" style="display: flex !important; align-items: center !important; justify-content: center !important; padding: 0 !important; line-height: 1 !important;">+</button>
+                            <button type="button" id="maxBatch" style="background: none !important; border: none !important; padding: 0 !important; margin: 0 !important; margin-left: 10px !important; color: var(--yellow) !important; cursor: pointer !important; font-size: 0.875rem !important; font-weight: 600 !important; outline: none !important; box-shadow: none !important; min-width: auto !important; width: auto !important; height: auto !important; line-height: normal !important;">MAX</button>
+                        </div>
+                        <p style="text-align: center; color: rgba(255, 255, 255, 0.6); margin-top: 20px;">
+                            Maximum allowed: <span id="maxBatches" style="color: var(--yellow);">0</span> batches
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 0, 0.05); border: 1px solid rgba(255, 255, 0, 0.2); border-radius: 15px; padding: 30px; margin: 40px 0; text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--yellow); font-family: 'JetBrains Mono', monospace;" id="totalBTC">0.00000000 BTC</div>
+                        <div style="margin-top: 10px; color: rgba(255, 255, 255, 0.7);">
+                            <span id="totalSats">0</span> satoshis • 
+                            <span id="tokenAmount">0</span> LIGHTCAT tokens
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem;">
+                        CREATE LIGHTNING INVOICE
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p>© 2025 RGBLightCat Token. Built on RGB Protocol.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div class="modal" id="qrScannerModal" style="display: none;">
+        <div class="modal-content" style="max-width: 500px; text-align: center; position: relative; padding-top: 60px;">
+            <button class="modal-close" id="closeQRScanner" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--yellow); font-size: 2rem; cursor: pointer; z-index: 10; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; opacity: 0.8;">&times;</button>
+            <h2 style="color: var(--yellow); margin-bottom: 30px; padding: 0 50px;">Scan RGB Invoice QR Code</h2>
+            
+            <!-- Scanner State Container -->
+            <div id="scannerStateContainer" style="min-height: 300px;">
+                <!-- Initial state - asking for camera permission -->
+                <div id="cameraPermissionDiv" style="padding: 40px;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="#000">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: var(--yellow); margin-bottom: 15px;">Ready to Scan</h3>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 25px;">
+                        Click below to start scanning your RGB invoice QR code
+                    </p>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <button id="startScannerBtn" style="background: var(--yellow); color: #000; border: none; padding: 12px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; display: inline-block; min-height: 44px;">
+                            Enable Camera & Scan
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- QR Scanner Container (hidden initially) -->
+                <div id="qrReaderDiv" style="width: 100%; max-width: 400px; margin: 0 auto; display: none; position: relative; min-height: 300px;">
+                    <!-- Scanner will be initialized here -->
+                </div>
+                
+                <!-- Camera selector removed - auto defaults to back camera on mobile -->
+                
+                <!-- Success State (hidden initially) -->
+                <div id="scanSuccessDiv" style="display: none; padding: 40px;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="#fff">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                    </div>
+                    <h3 style="color: #4CAF50; margin-bottom: 15px;">QR Code Scanned!</h3>
+                    <p style="color: rgba(255,255,255,0.8); word-break: break-all; font-family: monospace; font-size: 0.9rem; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 5px;" id="scannedInvoice"></p>
+                </div>
+            </div>
+            
+            <p style="color: rgba(255,255,255,0.6); margin-top: 20px; font-size: 0.85rem;">
+                Position your wallet's QR code within the camera frame
+            </p>
+            
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,0,0.05); border: 1px solid rgba(255,255,0,0.2); border-radius: 8px;">
+                <p style="color: var(--yellow); font-weight: 600; margin-bottom: 5px;">Having trouble?</p>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 10px;">
+                    Make sure your wallet is showing an RGB invoice QR code (not a Bitcoin address)
+                </p>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button id="uploadQRBtn" style="background: transparent; color: var(--yellow); border: 1px solid var(--yellow); padding: 8px 20px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
+                        Upload QR Image
+                    </button>
+                    <button id="manualInputBtn" style="background: transparent; color: var(--yellow); border: 1px solid var(--yellow); padding: 8px 20px; border-radius: 5px; cursor: pointer; font-size: 0.85rem;">
+                        Enter Manually
+                    </button>
+                </div>
+                <input type="file" id="qrFileInput" accept="image/*" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Old Payment Modal - DISABLED, using payment-modal-pro.js instead -->
+    <!-- <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <button style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--yellow); font-size: 2rem; cursor: pointer;" id="closeModal">&times;</button>
+            <h3 style="text-align: center; margin-bottom: 20px; color: var(--yellow); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">Lightning Payment</h3>
+            
+            <div class="payment-info" style="text-align: center; width: 100%;">
+                <div class="payment-qr" id="qrCodeContainer" style="width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                    <div style="background: #000; padding: 15px; border-radius: 10px; border: 2px solid var(--yellow);">
+                        <div id="qrcode" style="margin: 0 auto;"></div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 0, 0.05); border: 2px solid rgba(255, 255, 0, 0.3); border-radius: 15px; padding: 20px; margin: 20px 0;">
+                    <p style="margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow); font-weight: 600; font-size: 0.9rem;">Amount to pay:</p>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--yellow); margin: 10px 0; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--yellow); border-radius: 12px;">
+                        <span id="paymentAmount">0.00002000 BTC</span><br>
+                        <span style="font-size: 0.9rem; opacity: 0.8;">(<span id="paymentSats">2,000</span> sats)</span>
+                    </div>
+                    
+                    <p style="margin-bottom: 10px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow); font-weight: 600; font-size: 0.9rem;">Lightning Invoice:</p>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; word-break: break-all; margin: 10px 0; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--yellow); border-radius: 12px; cursor: pointer; transition: all 0.3s; line-height: 1.4; max-height: 100px; overflow-y: auto;" id="lightningInvoice" onclick="copyInvoice()">
+                        Loading...
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; justify-content: center; margin-top: 15px; flex-wrap: wrap;">
+                        <button onclick="copyInvoice()" style="background: transparent; border: 1px solid var(--yellow); color: var(--yellow); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s;" onmouseover="this.style.background='var(--yellow)'; this.style.color='var(--black)'" onmouseout="this.style.background='transparent'; this.style.color='var(--yellow)'">Copy Invoice</button>
+                    </div>
+                </div>
+                
+                <div style="border: 2px solid var(--yellow); background: rgba(255, 255, 0, 0.02); padding: 15px; text-align: center; text-transform: uppercase; letter-spacing: 1px; border-radius: 12px; font-weight: 600; font-size: 0.85rem;">
+                    ⚡ Pay with Lightning Network ⚡<br>
+                    <span style="font-size: 0.75rem; opacity: 0.8; text-transform: none; letter-spacing: normal;">Invoice expires in 30 minutes</span>
+                </div>
+                
+                <p style="text-align: center; margin-top: 20px; margin-bottom: 10px; color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;">
+                    <span style="display: inline-block; animation: pulse 2s infinite;">⚡</span> <span id="paymentStatus">Waiting for payment...</span>
+                </p>
+                
+                <div id="consignmentReady" style="display: none; margin-top: 20px; padding: 20px; background: rgba(0, 255, 0, 0.1); border: 2px solid #00FF00; border-radius: 10px;">
+                    <h4 style="color: #00FF00; margin-bottom: 10px;">Payment Confirmed!</h4>
+                    <p style="margin-bottom: 15px;">Your RGB consignment is ready.</p>
+                    <button onclick="downloadConsignment()" class="btn" style="background: #00FF00; color: #000;">Download Consignment</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+    <script src="litecat-game.js"></script>
+    <script>
+        // Visual effects random function (not security-critical)
+        function visualRandom() {
+            // For visual effects, we can use a less expensive method
+            const array = new Uint32Array(1);
+            crypto.getRandomValues(array);
+            return array[0] / (0xFFFFFFFF + 1);
+        }
+
+        // Initialize GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Three.js Background
+        let scene, camera, renderer, particles;
+
+        function initThree() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('three-canvas'),
+                alpha: true 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.position.z = 5;
+
+            // Create particles
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const sparkle = 500;
+
+            for (let i = 0; i < sparkle; i++) {
+                const x = visualRandom() * 2000 - 1000;
+                const y = visualRandom() * 2000 - 1000;
+                const z = visualRandom() * 2000 - 1000;
+                vertices.push(x, y, z);
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            const material = new THREE.PointsMaterial({ 
+                color: 0xFFFF00, 
+                size: 2,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.x += 0.0005;
+            particles.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initThree();
+            initAnimations();
+            createLightningRain();
+        });
+
+        // Window resize
+        window.addEventListener('resize', () => {
+            if (camera && renderer) {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        });
+
+        // Header scroll effect and dynamic spacing
+        function adjustStatsSpacing() {
+            const header = document.getElementById('header');
+            const statsSection = document.getElementById('stats');
+            if (header && statsSection) {
+                const headerHeight = header.offsetHeight;
+                const buffer = 20; // Extra buffer to ensure visibility
+                statsSection.style.paddingTop = (headerHeight + buffer) + 'px';
+            }
+        }
+
+        // Adjust on load and resize
+        window.addEventListener('load', adjustStatsSpacing);
+        window.addEventListener('resize', adjustStatsSpacing);
+        
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            // Adjust spacing after scroll class changes
+            setTimeout(adjustStatsSpacing, 300);
+        });
+
+        // GSAP Animations
+        function initAnimations() {
+            // Fade in elements
+            gsap.to('.mint-status-text', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.5
+            });
+
+            // Stat cards
+            gsap.to('.stat-card', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                delay: 0.8
+            });
+
+            // Tier cards
+            ScrollTrigger.create({
+                trigger: '.tier-grid',
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to('.tier-card', {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        duration: 0.8,
+                        stagger: 0.15
+                    });
+                }
+            });
+
+            // Purchase form
+            ScrollTrigger.create({
+                trigger: '.purchase-form',
+                start: 'top 80%',
+                onEnter: () => {
+                    gsap.to('.purchase-form', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1
+                    });
+                }
+            });
+        }
+
+        // Create dynamic lightning rain
+        function createLightningRain() {
+            const container = document.getElementById('lightningRain');
+            
+            for (let i = 0; i < 15; i++) {
+                const bolt = document.createElement('div');
+                bolt.style.position = 'absolute';
+                bolt.style.left = visualRandom() * 100 + '%';
+                bolt.style.top = '-100px';
+                bolt.style.width = '40px';
+                bolt.style.height = '60px';
+                bolt.style.backgroundImage = 'url(LIGHTING_BOT.png)';
+                bolt.style.backgroundSize = 'contain';
+                bolt.style.backgroundRepeat = 'no-repeat';
+                bolt.style.opacity = visualRandom() * 0.3 + 0.1;
+                bolt.style.animation = `fall ${visualRandom() * 3 + 4}s linear infinite`;
+                bolt.style.animationDelay = visualRandom() * 5 + 's';
+                container.appendChild(bolt);
+            }
+        }
+
+        // Add CSS animation for lightning
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(calc(100vh + 100px));
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // QR Code generation for Lightning
+        function generateLightningQR(lightningInvoice) {
+            const qrContainer = document.getElementById('qrcode');
+            // Clear any existing QR codes
+            while (qrContainer.firstChild) {
+                qrContainer.removeChild(qrContainer.firstChild);
+            }
+            
+            // Check if Lightning invoice is valid
+            if (!lightningInvoice || lightningInvoice === 'null' || lightningInvoice === 'undefined') {
+                console.error('Invalid Lightning invoice:', lightningInvoice);
+                qrContainer.innerHTML = `<p style="color: var(--yellow); padding: 20px;">Lightning invoice not available. Please refresh and try again.</p>`;
+                return;
+            }
+            
+            // Calculate optimal QR code size based on viewport
+            const viewportWidth = window.innerWidth;
+            const qrSize = viewportWidth <= 375 ? 160 : 
+                           viewportWidth <= 768 ? 180 : 
+                           200;
+            
+            // Format the Lightning invoice for QR code
+            // Add "lightning:" prefix if not already present
+            let qrText = lightningInvoice;
+            if (!qrText.toLowerCase().startsWith('lightning:')) {
+                qrText = 'lightning:' + lightningInvoice;
+            }
+            
+            console.log('Generating QR code with text:', qrText);
+            
+            // Create QR code
+            try {
+                new QRCode(qrContainer, {
+                    text: qrText,
+                    width: qrSize,
+                    height: qrSize,
+                    colorDark: "#000000",
+                    colorLight: "#FFFFFF",
+                    correctLevel: QRCode.CorrectLevel.L
+                });
+            } catch (error) {
+                console.error('QR Code generation error:', error);
+                qrContainer.innerHTML = `<p style="color: var(--yellow); padding: 20px;">QR Code generation failed. Please copy the invoice manually.</p>`;
+            }
+        }
+
+        // Payment modal functions
+        window.showPaymentModal = function(invoice) {
+            const modal = document.getElementById('paymentModalPro');
+            
+            // Update modal content
+            document.getElementById('paymentAmount').textContent = invoice.amountBTC.toFixed(8) + ' BTC';
+            document.getElementById('paymentSats').textContent = invoice.amountSats.toLocaleString();
+            document.getElementById('lightningInvoice').textContent = invoice.lightningInvoice;
+            
+            // Reset consignment section
+            document.getElementById('consignmentReady').style.display = 'none';
+            document.getElementById('paymentStatus').textContent = 'Waiting for payment...';
+            
+            // Generate QR code for Lightning invoice
+            generateLightningQR(invoice.lightningInvoice);
+            
+            // Show modal
+            modal.style.display = 'flex';
+        };
+
+
+        // Notification system - make it global (simplified)
+        window.showNotification = function(message) {
+            // For copy action, we'll use a subtle approach or skip notification
+            if (message === 'Lightning invoice copied!') {
+                // Change button text temporarily as feedback
+                const copyButtons = document.querySelectorAll('button');
+                copyButtons.forEach(btn => {
+                    if (btn.textContent === 'Copy Invoice') {
+                        const originalText = btn.textContent;
+                        btn.textContent = '✓ Copied!';
+                        btn.style.background = 'var(--yellow)';
+                        btn.style.color = 'var(--black)';
+                        
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.style.background = 'transparent';
+                            btn.style.color = 'var(--yellow)';
+                        }, 2000);
+                    }
+                });
+                return; // Skip the popup notification
+            }
+            
+            // For other notifications, show a small toast at the bottom
+            const existingNotif = document.getElementById('globalNotification');
+            if (existingNotif) {
+                existingNotif.remove();
+            }
+            
+            const notif = document.createElement('div');
+            notif.id = 'globalNotification';
+            notif.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--yellow);
+                color: var(--black);
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                z-index: 2147483647;
+                animation: slideUp 0.3s ease;
+                box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+                text-align: center;
+                min-width: 150px;
+                max-width: 90%;
+            `;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.style.animation = 'slideDown 0.3s ease';
+                setTimeout(() => notif.remove(), 300);
+            }, 2500);
+        }
+
+        // Add notification animations
+        const notifStyle = document.createElement('style');
+        notifStyle.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes slideUp {
+                from { transform: translateX(-50%) translateY(100%); opacity: 0; }
+                to { transform: translateX(-50%) translateY(0); opacity: 1; }
+            }
+            @keyframes slideDown {
+                from { transform: translateX(-50%) translateY(0); opacity: 1; }
+                to { transform: translateX(-50%) translateY(100%); opacity: 0; }
+            }
+            @keyframes pulse {
+                0% { opacity: 1; transform: scale(1); }
+                50% { opacity: 0.5; transform: scale(1.1); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+                to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                to { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            }
+        `;
+        document.head.appendChild(notifStyle);
+
+        // Function to show tier unlock notification
+        function showTierUnlockNotification(tier) {
+            // Get max batches for this tier
+            const maxBatches = {
+                bronze: 10,
+                silver: 20,
+                gold: 30
+            }[tier.toLowerCase()] || 0;
+            
+            // CRITICAL: Hide the "MINT IS LOCKED" message when tier is unlocked
+            const mintLockedContainer = document.querySelector('.mint-locked-container');
+            if (mintLockedContainer && tier && tier !== 'none') {
+                mintLockedContainer.style.display = 'none';
+                // Show purchase form
+                const purchaseForm = document.getElementById('purchaseForm');
+                if (purchaseForm) {
+                    purchaseForm.style.display = 'block';
+                }
+            }
+            
+            // Note: Removed old logic that hid all "MINT IS LOCKED" elements
+            // Now we properly manage the mint-locked-container visibility
+            
+            // Create and show notification
+            const notification = document.createElement('div');
+            notification.id = 'tierNotification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #000;
+                border: 3px solid var(--yellow);
+                padding: 40px;
+                border-radius: 20px;
+                z-index: 9999;
+                text-align: center;
+                max-width: 500px;
+                animation: fadeIn 0.5s ease;
+            `;
+            notification.innerHTML = `
+                <h2 style="color: var(--yellow); font-size: 1.5rem; margin-bottom: 15px;">
+                    ${tier.toUpperCase()} Tier Unlocked
+                </h2>
+                <p style="font-size: 1rem; color: #fff; margin-bottom: 20px;">
+                    You can now purchase up to <span style="color: var(--yellow);">${maxBatches} batches</span>.
+                </p>
+                <button onclick="document.getElementById('tierNotification').remove();" style="background: var(--yellow); color: #000; border: none; padding: 10px 30px; font-size: 0.9rem; border-radius: 4px; cursor: pointer;">
+                    Continue
+                </button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Show the premium tier unlock card below the game
+            const tierLabel = document.getElementById('tier-label');
+            if (tierLabel) {
+                // Tier-specific styling
+                const tierColors = {
+                    gold: { text: '#FFD700', glow: '#FFD700' },
+                    silver: { text: '#C0C0C0', glow: '#C0C0C0' },
+                    bronze: { text: '#CD7F32', glow: '#CD7F32' }
+                };
+                
+                const tierColor = tierColors[tier.toLowerCase()] || tierColors.gold;
+                
+                tierLabel.style.display = 'block';
+                tierLabel.style.marginTop = '30px';
+                tierLabel.innerHTML = `
+                    <div class="tier-unlock-card" style="
+                        position: relative;
+                        background: #000;
+                        border: 3px solid #fff600;
+                        border-radius: 20px;
+                        padding: 30px;
+                        max-width: 400px;
+                        margin: 0 auto;
+                        box-shadow: 
+                            0 0 30px rgba(255, 246, 0, 0.5),
+                            0 0 60px rgba(255, 246, 0, 0.3),
+                            0 0 90px rgba(255, 246, 0, 0.1),
+                            inset 0 0 30px rgba(255, 246, 0, 0.05);
+                        animation: pulseGlow 2s ease-in-out infinite;
+                        overflow: hidden;
+                    ">
+                        <!-- Background pattern -->
+                        <div style="
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background: linear-gradient(45deg, transparent 30%, rgba(255, 246, 0, 0.02) 50%, transparent 70%);
+                            animation: shimmer 3s ease-in-out infinite;
+                            pointer-events: none;
+                        "></div>
+                        
+                        <!-- Content Container -->
+                        <div style="position: relative; z-index: 1; text-align: center;">
+                            <!-- Logo placeholder -->
+                            <div style="
+                                width: 100px;
+                                height: 100px;
+                                margin: 0 auto 20px;
+                                background: radial-gradient(circle, rgba(255, 246, 0, 0.2), transparent);
+                                border: 2px solid ${tierColor.glow};
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                position: relative;
+                                overflow: hidden;
+                            ">
+                                <!-- Add your logo here -->
+                                <img src="https://pic4net.com/pm-2LB0PW.html" alt="LIGHTCAT" style="
+                                    width: 80%;
+                                    height: 80%;
+                                    object-fit: contain;
+                                    filter: drop-shadow(0 0 10px ${tierColor.glow});
+                                " onerror="this.style.display='none'">
+                                
+                                <!-- Fallback icon if no logo -->
+                                <div style="
+                                    position: absolute;
+                                    font-size: 3rem;
+                                    color: ${tierColor.text};
+                                    text-shadow: 0 0 20px ${tierColor.glow};
+                                ">🏆</div>
+                            </div>
+                            
+                            <!-- Tier Badge -->
+                            <div style="
+                                display: inline-block;
+                                background: linear-gradient(135deg, ${tierColor.glow}22, ${tierColor.glow}11);
+                                border: 2px solid ${tierColor.glow};
+                                border-radius: 30px;
+                                padding: 8px 24px;
+                                margin-bottom: 15px;
+                                box-shadow: 0 0 20px ${tierColor.glow}66;
+                            ">
+                                <span style="
+                                    color: ${tierColor.text};
+                                    font-size: 0.9rem;
+                                    font-weight: 600;
+                                    text-transform: uppercase;
+                                    letter-spacing: 2px;
+                                    text-shadow: 0 0 10px ${tierColor.glow};
+                                ">${tier.toUpperCase()} TIER</span>
+                            </div>
+                            
+                            <!-- Status Text -->
+                            <h3 style="
+                                color: #fff600;
+                                font-size: 2rem;
+                                margin: 15px 0;
+                                font-weight: 900;
+                                text-transform: uppercase;
+                                letter-spacing: 3px;
+                                text-shadow: 
+                                    0 0 20px #fff600,
+                                    0 0 40px #fff60099,
+                                    0 0 60px #fff60066;
+                                animation: textGlow 1.5s ease-in-out infinite alternate;
+                            ">UNLOCKED</h3>
+                            
+                            <!-- Divider -->
+                            <div style="
+                                height: 2px;
+                                background: linear-gradient(90deg, transparent, ${tierColor.glow}, transparent);
+                                margin: 20px 0;
+                                animation: dividerPulse 2s ease-in-out infinite;
+                            "></div>
+                            
+                            <!-- Batch Info -->
+                            <div style="
+                                background: rgba(255, 246, 0, 0.05);
+                                border: 1px solid rgba(255, 246, 0, 0.2);
+                                border-radius: 10px;
+                                padding: 15px;
+                                backdrop-filter: blur(10px);
+                            ">
+                                <p style="
+                                    color: #fff;
+                                    font-size: 1rem;
+                                    margin: 0 0 8px 0;
+                                    opacity: 0.9;
+                                ">You can now purchase</p>
+                                <div style="
+                                    color: #fff600;
+                                    font-size: 2.5rem;
+                                    font-weight: bold;
+                                    text-shadow: 0 0 20px #fff600;
+                                    margin: 10px 0;
+                                ">${maxBatches}</div>
+                                <p style="
+                                    color: #fff;
+                                    font-size: 1rem;
+                                    margin: 8px 0 0 0;
+                                    opacity: 0.9;
+                                    text-transform: uppercase;
+                                    letter-spacing: 1px;
+                                ">Batches Maximum</p>
+                            </div>
+                            
+                            <!-- Achievement Stars -->
+                            <div style="
+                                margin-top: 20px;
+                                display: flex;
+                                justify-content: center;
+                                gap: 10px;
+                            ">
+                                ${[...Array(tier === 'bronze' ? 1 : tier === 'silver' ? 2 : 3)].map(() => `
+                                    <span style="
+                                        color: ${tierColor.text};
+                                        font-size: 1.5rem;
+                                        filter: drop-shadow(0 0 10px ${tierColor.glow});
+                                        animation: starPulse 1.5s ease-in-out infinite;
+                                    ">⭐</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <style>
+                        @keyframes pulseGlow {
+                            0%, 100% { box-shadow: 0 0 30px rgba(255, 246, 0, 0.5), 0 0 60px rgba(255, 246, 0, 0.3), 0 0 90px rgba(255, 246, 0, 0.1), inset 0 0 30px rgba(255, 246, 0, 0.05); }
+                            50% { box-shadow: 0 0 40px rgba(255, 246, 0, 0.7), 0 0 80px rgba(255, 246, 0, 0.5), 0 0 120px rgba(255, 246, 0, 0.3), inset 0 0 40px rgba(255, 246, 0, 0.1); }
+                        }
+                        
+                        @keyframes textGlow {
+                            0% { text-shadow: 0 0 20px #fff600, 0 0 40px #fff60099, 0 0 60px #fff60066; }
+                            100% { text-shadow: 0 0 30px #fff600, 0 0 60px #fff600cc, 0 0 90px #fff60099; }
+                        }
+                        
+                        @keyframes shimmer {
+                            0% { transform: translateX(-100%); }
+                            100% { transform: translateX(100%); }
+                        }
+                        
+                        @keyframes dividerPulse {
+                            0%, 100% { opacity: 0.5; }
+                            50% { opacity: 1; }
+                        }
+                        
+                        @keyframes starPulse {
+                            0%, 100% { transform: scale(1); }
+                            50% { transform: scale(1.2); }
+                        }
+                    </style>
+                `;
+            }
+            
+            // Update purchase form to show it's unlocked
+            const mintButton = document.getElementById('submitRgbInvoice');
+            if (mintButton) {
+                mintButton.disabled = false;
+                mintButton.classList.remove('locked');
+                mintButton.innerHTML = 'Generate Lightning Invoice';
+            }
+            
+            // Enable all inputs in the purchase form
+            const rgbInvoiceInput = document.getElementById('rgbInvoice');
+            if (rgbInvoiceInput) {
+                rgbInvoiceInput.disabled = false;
+                rgbInvoiceInput.placeholder = 'Enter your RGB invoice (e.g., rgb:utxob:...)';
+            }
+            
+            const emailInput = document.getElementById('customerEmail');
+            if (emailInput) {
+                emailInput.disabled = false;
+            }
+            
+            const batchCountInput = document.getElementById('batchCount');
+            if (batchCountInput) {
+                batchCountInput.disabled = false;
+                batchCountInput.max = maxBatches;
+            }
+            
+            // Update batch selector buttons
+            const decreaseBtn = document.getElementById('decreaseBatch');
+            const increaseBtn = document.getElementById('increaseBatch');
+            if (decreaseBtn) decreaseBtn.disabled = false;
+            if (increaseBtn) increaseBtn.disabled = false;
+            
+            // Update max batches display
+            const maxBatchesEl = document.getElementById('maxBatches');
+            if (maxBatchesEl) {
+                maxBatchesEl.textContent = maxBatches;
+            }
+            
+            // Show the invoice form if it was hidden
+            const invoiceForm = document.querySelector('.invoice-form');
+            if (invoiceForm) {
+                invoiceForm.style.display = 'block';
+                invoiceForm.style.opacity = '1';
+            }
+            
+            // Auto-remove notification after 5 seconds
+            setTimeout(() => {
+                const notif = document.getElementById('tierNotification');
+                if (notif) {
+                    notif.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => {
+                        const n = document.getElementById('tierNotification');
+                        if (n) n.remove();
+                    }, 500);
+                }
+            }, 5000);
+        }
+
+        // Inline Game Functionality with Fullscreen Option
+        document.addEventListener('DOMContentLoaded', function() {
+            const startGameBtn = document.getElementById('startGameBtn');
+            const gameFrame = document.getElementById('gameFrame');
+            const gameStartScreen = document.getElementById('gameStartScreen');
+            const gameWrapper = document.getElementById('gameWrapper');
+            
+            if (startGameBtn && gameFrame && gameStartScreen) {
+                startGameBtn.addEventListener('click', function() {
+                    console.log('Start game clicked');
+                    
+                    // Check if on mobile
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    
+                    // On mobile, navigate directly to mobile-optimized game page
+                    if (isMobile) {
+                        console.log('Mobile device - navigating to mobile game');
+                        // Check WebGL support
+                        const canvas = document.createElement('canvas');
+                        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                        
+                        if (!gl) {
+                            console.log('WebGL not supported - using 2D fallback');
+                            window.location.href = 'game-mobile.html';
+                        } else {
+                            console.log('WebGL supported - trying 3D game');
+                            window.location.href = 'game.html';
+                        }
+                        return;
+                    }
+                    
+                    // Desktop: use iframe and automatically go fullscreen
+                    // Hide start screen  
+                    gameStartScreen.style.display = 'none';
+                    
+                    // Set a loading timeout
+                    let loadTimeout;
+                    
+                    // Show and load game
+                    gameFrame.style.display = 'block';
+                    gameFrame.src = 'game.html';
+                    
+                    // Automatically request fullscreen on desktop
+                    if (gameWrapper && gameWrapper.requestFullscreen) {
+                        gameWrapper.requestFullscreen().then(() => {
+                            console.log('Entered fullscreen mode automatically');
+                            gameWrapper.style.height = '100vh';
+                        }).catch(err => {
+                            console.log('Could not enter fullscreen automatically:', err);
+                            // Continue without fullscreen
+                        });
+                    }
+                    
+                    // Set loading timeout for desktop
+                    loadTimeout = setTimeout(() => {
+                        console.error('Game loading timeout');
+                        gameStartScreen.style.display = 'flex';
+                        gameStartScreen.innerHTML = '<div style="text-align: center; padding: 20px;"><p style="color: #ff5252; margin-bottom: 20px;">Game loading timeout.</p><button class="btn" onclick="location.reload()">Try Again</button></div>';
+                    }, 10000);
+                    
+                    // Scroll to game
+                    gameWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Add error handler
+                    gameFrame.onerror = function(e) {
+                        clearTimeout(loadTimeout);
+                        console.error('Game iframe error:', e);
+                        gameStartScreen.style.display = 'flex';
+                        gameStartScreen.innerHTML = '<div style="text-align: center; padding: 20px;"><p style="color: #ff5252; margin-bottom: 20px;">Error loading game.</p><button class="btn" onclick="location.reload()">Try Again</button></div>';
+                    };
+                    
+                    // Handle iframe load events
+                    gameFrame.onload = function() {
+                        clearTimeout(loadTimeout);
+                        console.log('Game iframe loaded successfully');
+                        
+                        // Check if iframe content is accessible
+                        try {
+                            const iframeDoc = gameFrame.contentDocument || gameFrame.contentWindow.document;
+                            console.log('Iframe document accessible:', !!iframeDoc);
+                        } catch (e) {
+                            console.log('Cannot access iframe content (cross-origin):', e.message);
+                        }
+                        
+                        // Don't try to focus on mobile
+                        if (!isMobile) {
+                            gameFrame.focus();
+                        }
+                        
+                        // Add message about clicking to focus
+                        const clickToFocus = document.getElementById('clickToFocus');
+                        
+                        // Show focus message when iframe loses focus
+                        const checkFocus = function() {
+                            const isFocused = document.activeElement === gameFrame;
+                            if (!isFocused && gameFrame.style.display === 'block') {
+                                clickToFocus.style.display = 'block';
+                                // Add fade-in effect
+                                clickToFocus.style.opacity = '0';
+                                setTimeout(() => {
+                                    clickToFocus.style.transition = 'opacity 0.3s ease';
+                                    clickToFocus.style.opacity = '1';
+                                }, 10);
+                            } else {
+                                clickToFocus.style.display = 'none';
+                            }
+                        };
+                        
+                        // Check focus periodically
+                        setInterval(checkFocus, 500);
+                        
+                        // Add click handler to game wrapper to focus iframe
+                        gameWrapper.addEventListener('click', function() {
+                            gameFrame.focus();
+                            clickToFocus.style.display = 'none';
+                        });
+                    };
+                    
+                    // Prevent page scroll when game is active
+                    const preventScroll = function(e) {
+                        if (document.activeElement === gameFrame || 
+                            (gameFrame.contentWindow && document.activeElement === gameFrame.contentWindow.document.body)) {
+                            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'Space'].includes(e.key)) {
+                                e.preventDefault();
+                            }
+                        }
+                    };
+                    
+                    window.addEventListener('keydown', preventScroll);
+                    
+                    // Store the handler for cleanup
+                    gameFrame.dataset.scrollHandler = 'true';
+                    window.preventGameScroll = preventScroll;
+                    
+                    // Listen for navigation messages from game iframe
+                    const ALLOWED_ORIGIN = window.location.origin; // adjust if game is hosted elsewhere
+                    window.addEventListener('message', (event) => {
+                        // Only accept messages from the trusted origin
+                        if (event.origin !== ALLOWED_ORIGIN) return;
+
+                        // Ensure data is an object with the expected shape
+                        if (typeof event.data !== 'object') return;
+
+                        if (event.data.type === 'navigate' && typeof event.data.url === 'string') {
+                            // Optional: restrict to same-origin URLs to prevent open-redirects
+                            if (new URL(event.data.url, location.href).origin === location.origin) {
+                                window.location.href = event.data.url;
+                            }
+                        }
+                        
+                        // Handle tier unlock claim from game
+                        if (event.data.type === 'claimTierUnlock' && event.data.tier) {
+                            console.log('Received tier unlock claim:', event.data.tier);
+                            
+                            // Store the tier first
+                            localStorage.setItem('unlockedTier', event.data.tier);
+                            localStorage.setItem('tierJustUnlocked', 'true');
+                            
+                            // Exit fullscreen if we're in fullscreen mode
+                            if (document.fullscreenElement) {
+                                document.exitFullscreen().then(() => {
+                                    console.log('Exited fullscreen for tier claim');
+                                    
+                                    // Reset game iframe to blank/start screen
+                                    const gameFrame = document.getElementById('gameFrame');
+                                    const gameStartScreen = document.getElementById('gameStartScreen');
+                                    const gameWrapper = document.getElementById('gameWrapper');
+                                    
+                                    if (gameFrame) {
+                                        // Clear iframe completely to prevent nested site
+                                        gameFrame.src = 'about:blank';
+                                        gameFrame.style.display = 'none';
+                                        // Remove iframe from DOM and recreate it to ensure clean state
+                                        const newFrame = document.createElement('iframe');
+                                        newFrame.id = 'gameFrame';
+                                        newFrame.style.display = 'none';
+                                        newFrame.style.width = '100%';
+                                        newFrame.style.height = '100%';
+                                        newFrame.style.border = 'none';
+                                        gameFrame.parentNode.replaceChild(newFrame, gameFrame);
+                                    }
+                                    
+                                    if (gameStartScreen) {
+                                        gameStartScreen.style.display = 'flex'; // Show start screen again
+                                    }
+                                    
+                                    if (gameWrapper) {
+                                        gameWrapper.style.height = '500px'; // Reset height
+                                    }
+                                    
+                                    // Show tier notification and scroll to purchase
+                                    setTimeout(() => {
+                                        // Show the tier unlock notification
+                                        showTierUnlockNotification(event.data.tier);
+                                        
+                                        // Scroll to purchase section
+                                        const purchaseSection = document.getElementById('purchase');
+                                        if (purchaseSection) {
+                                            purchaseSection.scrollIntoView({ behavior: 'smooth' });
+                                        }
+                                    }, 100);
+                                    
+                                }).catch(err => {
+                                    console.log('Error exiting fullscreen:', err);
+                                });
+                            } else {
+                                // Not in fullscreen, still reset the game
+                                const gameFrame = document.getElementById('gameFrame');
+                                const gameStartScreen = document.getElementById('gameStartScreen');
+                                const gameWrapper = document.getElementById('gameWrapper');
+                                
+                                if (gameFrame) {
+                                    // Clear iframe completely to prevent nested site
+                                    gameFrame.src = 'about:blank';
+                                    gameFrame.style.display = 'none';
+                                    // Remove iframe from DOM and recreate it to ensure clean state
+                                    const newFrame = document.createElement('iframe');
+                                    newFrame.id = 'gameFrame';
+                                    newFrame.style.display = 'none';
+                                    newFrame.style.width = '100%';
+                                    newFrame.style.height = '100%';
+                                    newFrame.style.border = 'none';
+                                    gameFrame.parentNode.replaceChild(newFrame, gameFrame);
+                                }
+                                
+                                if (gameStartScreen) {
+                                    gameStartScreen.style.display = 'flex';
+                                }
+                                
+                                if (gameWrapper) {
+                                    gameWrapper.style.height = '500px'; // Reset height
+                                }
+                                
+                                // Show tier notification and scroll to purchase
+                                setTimeout(() => {
+                                    // Show the tier unlock notification
+                                    showTierUnlockNotification(event.data.tier);
+                                    
+                                    // Scroll to purchase section
+                                    const purchaseSection = document.getElementById('purchase');
+                                    if (purchaseSection) {
+                                        purchaseSection.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                }, 100);
+                            }
+                        }
+                    });                });
+            }
+            
+            // Listen for fullscreen changes
+            document.addEventListener('fullscreenchange', function() {
+                if (!document.fullscreenElement && gameWrapper) {
+                    console.log('Exited fullscreen mode');
+                    gameWrapper.style.height = '500px';
+                }
+            });
+            
+            // Purchase Form Handling
+            const purchaseForm = document.getElementById('purchaseForm');
+            const decreaseBtn = document.getElementById('decreaseBatch');
+            const increaseBtn = document.getElementById('increaseBatch');
+            const batchCountEl = document.getElementById('batchCount');
+            const totalBTCEl = document.getElementById('totalBTC');
+            const totalSatsEl = document.getElementById('totalSats');
+            const tokenAmountEl = document.getElementById('tokenAmount');
+            const maxBatchesEl = document.getElementById('maxBatches');
+            const closeModalBtn = document.getElementById('closeModal');
+            const scanQRBtn = document.getElementById('scanQRBtn');
+            
+            // QR Scanner functionality is now handled by qr-scanner.js
+            
+            // Constants
+            const PRICE_PER_BATCH_BTC = 0.00002;
+            const TOKENS_PER_BATCH = 700;
+            const PRICE_PER_BATCH_SATS = 2000;
+            
+            // State
+            let currentBatches = 1; // Start at 1 - minimum purchase amount
+            let maxBatches = 0; // CRITICAL: Mint is LOCKED without tier
+            let isMintClosed = false; // Track if mint is closed
+            let mintLocked = true; // Mint requires game play to unlock
+            let updatingBatches = false; // Track when we're updating batch counts
+            
+            // Check for unlocked tier from game
+            // Handle both regular URL params and hash params (e.g., #purchase?tier=gold)
+            let urlParams = new URLSearchParams(window.location.search);
+            let unlockedTier = urlParams.get('tier');
+            
+            // If not in regular params, check hash params
+            if (!unlockedTier && window.location.hash.includes('?')) {
+                const hashParams = window.location.hash.split('?')[1];
+                urlParams = new URLSearchParams(hashParams);
+                unlockedTier = urlParams.get('tier');
+            }
+            
+            // Fall back to localStorage
+            unlockedTier = unlockedTier || localStorage.getItem('unlockedTier');
+            
+            // TEMPORARY: Allow admin bypass for testing
+            if (!unlockedTier && (window.location.search.includes('admin=true') || window.location.hash.includes('admin=true'))) {
+                unlockedTier = 'gold';
+                localStorage.setItem('unlockedTier', 'gold');
+            }
+            
+            if (unlockedTier) {
+                mintLocked = false; // Unlock mint when tier is present
+                switch(unlockedTier.toLowerCase()) {
+                    case 'bronze':
+                        maxBatches = 10;  // Bronze tier: 10 batches max
+                        break;
+                    case 'silver':
+                        maxBatches = 20;  // Silver tier: 20 batches max
+                        break;
+                    case 'gold':
+                        maxBatches = 30;  // Gold tier: 30 batches max
+                        break;
+                    default:
+                        maxBatches = 0;   // No purchase without valid tier
+                        mintLocked = true;
+                }
+                
+                // For admin bypass, set initial batch count to 1
+                if ((window.location.search.includes('admin=true') || window.location.hash.includes('admin=true')) && currentBatches === 0) {
+                    currentBatches = 1;
+                }
+                maxBatchesEl.textContent = maxBatches;
+                
+                // Keep initial batch count at 1 when coming from game (don't auto-max)
+                if (urlParams.get('tier')) {
+                    // currentBatches stays at 1 (already set)
+                    updateBatchDisplay();
+                }
+                
+                // Highlight the unlocked tier
+                const tierMap = { bronze: 'tier1', silver: 'tier2', gold: 'tier3' };
+                const tierCard = document.getElementById(tierMap[unlockedTier.toLowerCase()]);
+                if (tierCard) {
+                    tierCard.classList.add('unlocked');
+                }
+                
+                // Show tier unlock notification if coming from game
+                if (urlParams.get('tier')) {
+                    // Store the tier in localStorage before any redirects
+                    localStorage.setItem('unlockedTier', urlParams.get('tier'));
+                    
+                    // Check if we're inside an iframe (nested view issue)
+                    if (window.self !== window.top) {
+                        // We're in an iframe - redirect parent window instead
+                        window.top.location.href = window.location.href;
+                        return; // Stop execution here
+                    }
+                    
+                    // Reset game iframe to show Play Game button again
+                    const gameFrame = document.getElementById('gameFrame');
+                    const gameStartScreen = document.getElementById('gameStartScreen');
+                    if (gameFrame) {
+                        gameFrame.src = ''; // Clear the iframe source
+                        gameFrame.style.display = 'none'; // Hide the iframe
+                    }
+                    if (gameStartScreen) {
+                        gameStartScreen.style.display = 'flex'; // Show the play game screen
+                    }
+                    
+                    // Scroll to purchase section
+                    setTimeout(() => {
+                        document.getElementById('purchase').scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Show special notification
+                        const notification = document.createElement('div');
+                        notification.id = 'tierNotification'; // Add ID for proper removal
+                        notification.style.cssText = `
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            background: #000;
+                            border: 3px solid var(--yellow);
+                            padding: 40px;
+                            border-radius: 20px;
+                            z-index: 9999;
+                            text-align: center;
+                            max-width: 500px;
+                            animation: fadeIn 0.5s ease;
+                        `;
+                        notification.innerHTML = `
+                            <h2 style="color: var(--yellow); font-size: 2rem; margin-bottom: 20px; text-transform: uppercase;">
+                                ${unlockedTier.toUpperCase()} TIER UNLOCKED!
+                            </h2>
+                            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 30px;">
+                                Congratulations! You can now purchase up to <span style="color: var(--yellow); font-weight: bold;">${maxBatches} batches</span> of LIGHTCAT tokens.
+                            </p>
+                            <button onclick="document.getElementById('tierNotification').remove(); window.location.href = window.location.pathname;" style="background: var(--yellow); color: #000; border: none; padding: 15px 40px; font-size: 1rem; font-weight: bold; border-radius: 50px; cursor: pointer; text-transform: uppercase;">
+                                Start Purchasing
+                            </button>
+                        `;
+                        document.body.appendChild(notification);
+                        
+                        // Auto-remove after 5 seconds and refresh
+                        setTimeout(() => {
+                            const notif = document.getElementById('tierNotification');
+                            if (notif) {
+                                notif.style.animation = 'fadeOut 0.5s ease';
+                                setTimeout(() => {
+                                    const n = document.getElementById('tierNotification');
+                                    if (n) n.remove();
+                                    // Force full page reload to properly update everything
+                                    window.location.href = window.location.pathname;
+                                }, 500);
+                            }
+                        }, 5000);
+                    }, 500);
+                    
+                    // Clear URL parameter
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
+            
+            // Update display
+            function updateBatchDisplay() {
+                batchCountEl.textContent = currentBatches;
+                const totalBTC = (currentBatches * PRICE_PER_BATCH_BTC).toFixed(8);
+                const totalSats = currentBatches * PRICE_PER_BATCH_SATS;
+                const totalTokens = currentBatches * TOKENS_PER_BATCH;
+                
+                totalBTCEl.textContent = totalBTC + ' BTC';
+                totalSatsEl.textContent = totalSats.toLocaleString();
+                tokenAmountEl.textContent = totalTokens.toLocaleString();
+                
+                // Update button states
+                decreaseBtn.disabled = currentBatches <= 1;
+                increaseBtn.disabled = currentBatches >= maxBatches;
+            }
+            
+            // Batch controls - prevent focus changes during batch updates
+            decreaseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                updatingBatches = true;
+                if (currentBatches > 1) {
+                    currentBatches--;
+                    updateBatchDisplay();
+                }
+                setTimeout(() => { updatingBatches = false; }, 100);
+            });
+            
+            increaseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                updatingBatches = true;
+                if (currentBatches < maxBatches) {
+                    currentBatches++;
+                    updateBatchDisplay();
+                }
+                setTimeout(() => { updatingBatches = false; }, 100);
+            });
+            
+            // Max button functionality - prevent focus changes
+            const maxBtn = document.getElementById('maxBatch');
+            if (maxBtn) {
+                maxBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    updatingBatches = true;
+                    if (maxBatches > 0) {
+                        currentBatches = maxBatches;
+                        updateBatchDisplay();
+                    }
+                    setTimeout(() => { updatingBatches = false; }, 100);
+                });
+            }
+            
+            // Form submission - prevent default validation
+            purchaseForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Check if mint is closed
+                if (isMintClosed) {
+                    showNotification('MINT IS CLOSED - No new purchases allowed', 'error');
+                    return;
+                }
+                
+                // Check if mint is locked (no tier unlocked)
+                if (mintLocked) {
+                    showNotification('MINT IS LOCKED! You must play the game to unlock purchasing. Score 11+ for Bronze tier.', 'error');
+                    return;
+                }
+                
+                const rgbInvoice = document.getElementById('rgbInvoice').value.trim();
+                const email = document.getElementById('emailAddress').value.trim();
+                
+                // Basic validation
+                if (!rgbInvoice) {
+                    showNotification('Please enter your RGB invoice');
+                    return;
+                }
+                
+                // Validate RGB invoice format (basic check)
+                if (!rgbInvoice.startsWith('rgb:') || !rgbInvoice.includes('utxob:')) {
+                    showNotification('Please enter a valid RGB invoice (must start with "rgb:" and contain "utxob:")');
+                    return;
+                }
+                
+                // Disable submit button
+                const submitBtn = purchaseForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'CREATING LIGHTNING INVOICE...';
+                
+                try {
+                    // Ensure we have valid values for mobile
+                    const finalBatchCount = currentBatches || 1; // Default to 1 if 0
+                    const finalTier = unlockedTier || 'bronze'; // Default to bronze if no tier
+                    
+                    // Log for debugging mobile issues
+                    console.log('Invoice request:', {
+                        batchCount: finalBatchCount,
+                        tier: finalTier,
+                        hasRgbInvoice: !!rgbInvoice
+                    });
+                    
+                    // Create invoice via API
+                    const response = await fetch('/api/rgb/invoice', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            rgbInvoice: rgbInvoice,
+                            email: email,
+                            batchCount: finalBatchCount,
+                            tier: finalTier,
+                            gameSessionId: window.gameSessionId || localStorage.getItem('gameSessionId') || null
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.error || 'Failed to create invoice');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // Debug log to see what we're getting from server
+                    console.log('Server response:', result);
+                    console.log('Lightning invoice:', result.lightningInvoice);
+                    
+                    // Prepare invoice object with correct structure
+                    const invoice = {
+                        id: result.invoiceId,
+                        lightningInvoice: result.lightningInvoice,
+                        amountSats: result.amount || (finalBatchCount * 2000),
+                        amountBTC: (result.amount || (finalBatchCount * 2000)) / 100000000,
+                        expiresAt: result.expiresAt,
+                        qrCode: result.qrCode
+                    };
+                    
+                    // Show payment modal
+                    showPaymentModal(invoice);
+                    
+                    // Store invoice for reference
+                    localStorage.setItem('currentInvoice', JSON.stringify(invoice));
+                    
+                    // Start payment verification polling
+                    startPaymentVerification(invoice.id);
+                    
+                } catch (error) {
+                    console.error('Error creating invoice:', error);
+                    // More detailed error message for debugging
+                    let errorMsg = 'Error creating invoice. ';
+                    if (error.message.includes('batch')) {
+                        errorMsg = 'Please select at least 1 batch to purchase.';
+                    } else if (error.message.includes('tier')) {
+                        errorMsg = 'No tier unlocked. Please play the game first or use ?admin=true for testing.';
+                    } else if (error.message.includes('invoice')) {
+                        errorMsg = 'Invalid RGB invoice format. Must start with "rgb:" and contain "utxob:".';
+                    } else {
+                        errorMsg += error.message || 'Please try again.';
+                    }
+                    showNotification(errorMsg);
+                } finally {
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'CREATE LIGHTNING INVOICE';
+                }
+            });
+            
+            // Payment verification
+            function startPaymentVerification(invoiceId) {
+                let checkCount = 0;
+                const maxChecks = 360; // 30 minutes at 5 second intervals
+                
+                const verificationInterval = setInterval(async () => {
+                    checkCount++;
+                    
+                    try {
+                        const response = await fetch(`/api/rgb/invoice/${invoiceId}/status`);
+                        
+                        if (!response.ok) {
+                            throw new Error('Verification failed');
+                        }
+                        
+                        const result = await response.json();
+                        const statusEl = document.getElementById('paymentStatus');
+                        const consignmentDiv = document.getElementById('consignmentReady');
+                        
+                        if (result.status === 'paid' || result.status === 'processing' || result.status === 'delivered') {
+                            clearInterval(verificationInterval);
+                            
+                            if (statusEl) {
+                                statusEl.innerHTML = '<span style="color: #4CAF50;">✓ Payment confirmed! Redirecting...</span>';
+                            }
+                            
+                            // Store invoice ID for success page
+                            localStorage.setItem('lastInvoiceId', invoiceId);
+                            
+                            // Show success notification
+                            showNotification('Payment confirmed! Redirecting to your receipt...');
+                            
+                            // Update stats
+                            updateMintStats();
+                            
+                            // Redirect to success page after short delay
+                            setTimeout(() => {
+                                window.location.href = `/success.html?invoice=${invoiceId}`;
+                            }, 1500);
+                            
+                        } else if (result.status === 'expired') {
+                            clearInterval(verificationInterval);
+                            if (statusEl) {
+                                statusEl.innerHTML = '<span style="color: #ff5252;">Invoice expired. Please create a new one.</span>';
+                            }
+                        } else {
+                            // Still pending
+                            if (statusEl) {
+                                statusEl.textContent = `Waiting for payment... (${Math.floor(checkCount * 5 / 60)}m ${(checkCount * 5) % 60}s)`;
+                            }
+                        }
+                        
+                    } catch (error) {
+                        console.error('Verification error:', error);
+                    }
+                    
+                    if (checkCount >= maxChecks) {
+                        clearInterval(verificationInterval);
+                        const statusEl = document.getElementById('paymentStatus');
+                        if (statusEl) {
+                            statusEl.innerHTML = '<span style="color: #ff5252;">Payment verification timeout.</span>';
+                        }
+                    }
+                }, 5000);
+                
+                // Store interval ID for cleanup
+                window.currentVerificationInterval = verificationInterval;
+            }
+            
+            // Download consignment
+            function downloadConsignment() {
+                if (window.currentInvoiceId) {
+                    window.location.href = `/api/rgb/download/${window.currentInvoiceId}`;
+                }
+            }
+            
+            // Copy Lightning invoice - make it global
+            window.copyInvoice = function() {
+                const invoiceEl = document.getElementById('lightningInvoice');
+                if (invoiceEl && invoiceEl.textContent !== 'Loading...') {
+                    navigator.clipboard.writeText(invoiceEl.textContent)
+                        .then(() => {
+                            showNotification('Lightning invoice copied!');
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy:', err);
+                            // Fallback for older browsers
+                            const textArea = document.createElement('textarea');
+                            textArea.value = invoiceEl.textContent;
+                            textArea.style.position = 'fixed';
+                            textArea.style.left = '-999999px';
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            try {
+                                document.execCommand('copy');
+                                showNotification('Lightning invoice copied!');
+                            } catch (err) {
+                                showNotification('Failed to copy. Please select and copy manually.');
+                            }
+                            document.body.removeChild(textArea);
+                        });
+                }
+            }
+            
+            // Modal close
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', () => {
+                    document.getElementById('paymentModalPro').style.display = 'none';
+                    // Clear verification interval if exists
+                    if (window.currentVerificationInterval) {
+                        clearInterval(window.currentVerificationInterval);
+                    }
+                });
+            }
+            
+            // Close modal on outside click
+            document.getElementById('paymentModalPro').addEventListener('click', (e) => {
+                if (e.target.id === 'paymentModalPro') {
+                    document.getElementById('paymentModalPro').style.display = 'none';
+                    if (window.currentVerificationInterval) {
+                        clearInterval(window.currentVerificationInterval);
+                    }
+                }
+            });
+            
+            // Initialize display
+            updateBatchDisplay();
+            
+            // Debug focus issues
+            const emailInput = document.getElementById('emailAddress');
+            const rgbInput = document.getElementById('rgbInvoice');
+            
+            // Add debugging to track focus changes
+            if (emailInput) {
+                emailInput.addEventListener('focus', function(e) {
+                    console.log('Email input FOCUSED');
+                    console.trace('Focus trace');
+                }, true);
+                
+                emailInput.addEventListener('blur', function(e) {
+                    console.log('Email input BLURRED');
+                    console.trace('Blur trace');
+                }, true);
+            }
+            
+            if (rgbInput) {
+                rgbInput.addEventListener('focus', function(e) {
+                    console.log('RGB input FOCUSED');
+                    console.trace('Focus trace');
+                }, true);
+                
+                rgbInput.addEventListener('blur', function(e) {
+                    console.log('RGB input BLURRED'); 
+                    console.trace('Blur trace');
+                }, true);
+            }
+            
+            // Track ALL focus changes on the page
+            document.addEventListener('focus', function(e) {
+                console.log('Focus changed to:', e.target.id || e.target.tagName, e.target);
+            }, true);
+            
+            // CRITICAL: Handle mint lock UI - Use existing HTML elements
+            const mintLockedContainer = document.getElementById('mintLockedContainer');
+            const purchaseForm = document.getElementById('purchaseForm');
+            
+            if (mintLocked) {
+                // Show mint lock container, hide purchase form
+                if (mintLockedContainer) {
+                    mintLockedContainer.style.display = 'block';
+                }
+                if (purchaseForm) {
+                    purchaseForm.style.display = 'none';
+                }
+                
+                // Also update the max batches display to show 0
+                maxBatchesEl.textContent = '0';
+                batchCountEl.textContent = '0';
+                currentBatches = 0;
+                
+                // Disable batch controls
+                decreaseBtn.disabled = true;
+                increaseBtn.disabled = true;
+            } else if (unlockedTier) {
+                // CRITICAL: Hide mint lock container and show purchase form
+                if (mintLockedContainer) {
+                    mintLockedContainer.style.display = 'none';
+                }
+                if (purchaseForm) {
+                    purchaseForm.style.display = 'block';
+                }
+                
+                // Display tier unlock label below game section
+                const gameSection = document.getElementById('game');
+                const existingLabel = document.getElementById('tierUnlockLabel');
+                
+                if (!existingLabel && gameSection) {
+                    const tierLabel = document.createElement('div');
+                    tierLabel.id = 'tierUnlockLabel';
+                    tierLabel.style.cssText = `
+                        text-align: center;
+                        padding: 20px 30px;
+                        background: var(--yellow);
+                        margin: 40px auto;
+                        max-width: 600px;
+                        border-radius: 10px;
+                    `;
+                    tierLabel.innerHTML = `
+                        <h3 style="color: #000; font-size: 1.5rem; margin: 0 0 10px 0; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">
+                            ${unlockedTier.toUpperCase()} TIER UNLOCKED
+                        </h3>
+                        <p style="color: #000; font-size: 1.1rem; margin: 0; font-weight: 600;">
+                            You can now purchase up to ${maxBatches} batches
+                        </p>
+                    `;
+                    
+                    // Insert after game section
+                    gameSection.parentNode.insertBefore(tierLabel, gameSection.nextSibling);
+                }
+            }
+            
+            // Update mint stats from API
+            async function updateMintStats() {
+                try {
+                    const response = await fetch('/api/rgb/stats');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch stats');
+                    }
+                    
+                    const result = await response.json();
+                    const stats = result.stats || result; // Handle both response formats
+                    
+                    // Constants - showing full 30k with team/partner allocation
+                    const TOTAL_SUPPLY_BATCHES = 30000; // Full 21M tokens / 700
+                    const TEAM_BATCHES = 1500; // 5% of 30k
+                    const PARTNER_BATCHES = 600; // 2% of 30k
+                    const PRE_ALLOCATED = TEAM_BATCHES + PARTNER_BATCHES; // 2100 batches (7%)
+                    const PUBLIC_BATCHES = 27900;
+                    
+                    // Get actual public sales
+                    const publicSoldBatches = stats.batchesSold || 0;
+                    const totalAllocated = PRE_ALLOCATED + publicSoldBatches;
+                    const publicRemaining = stats.batchesAvailable || (PUBLIC_BATCHES - publicSoldBatches);
+                    const totalTokensAllocated = totalAllocated * 700;
+                    const uniqueBuyers = stats.uniqueBuyers || 0;
+                    
+                    // Calculate percentage of PUBLIC supply sold (accurate representation)
+                    const percentSold = ((publicSoldBatches / PUBLIC_BATCHES) * 100).toFixed(2);
+                    
+                    // Show warning if almost sold out
+                    if (publicRemaining > 0 && publicRemaining <= 1000) {
+                        // Create warning banner if doesn't exist
+                        let warningBanner = document.getElementById('soldOutWarning');
+                        if (!warningBanner) {
+                            warningBanner = document.createElement('div');
+                            warningBanner.id = 'soldOutWarning';
+                            warningBanner.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; background: #FF5252; color: white; padding: 15px; text-align: center; z-index: 9999; font-weight: bold; font-size: 1.1rem;';
+                            warningBanner.textContent = `⚠️ ONLY ${publicRemaining} BATCHES REMAINING - MINT CLOSING SOON ⚠️`;
+                            document.body.prepend(warningBanner);
+                        } else {
+                            warningBanner.textContent = `⚠️ ONLY ${publicRemaining} BATCHES REMAINING - MINT CLOSING SOON ⚠️`;
+                        }
+                    }
+                    
+                    // Check if sold out
+                    if (publicRemaining <= 0) {
+                        isMintClosed = true;
+                        document.getElementById('progressText').textContent = '100% SOLD OUT';
+                        document.getElementById('progressBar').style.width = '100%';
+                        document.getElementById('progressBar').style.background = '#FF5252'; // Red for sold out
+                        
+                        // Disable purchase form
+                        const purchaseForm = document.getElementById('purchaseForm');
+                        if (purchaseForm) {
+                            purchaseForm.style.opacity = '0.5';
+                            purchaseForm.style.pointerEvents = 'none';
+                            const submitBtn = purchaseForm.querySelector('button[type="submit"]');
+                            if (submitBtn) {
+                                submitBtn.textContent = 'SOLD OUT';
+                                submitBtn.disabled = true;
+                            }
+                        }
+                    } else {
+                        // Update DOM with clean numbers (including pre-allocated)
+                        document.getElementById('progressText').textContent = percentSold + '% SOLD';
+                        document.getElementById('progressBar').style.width = percentSold + '%';
+                        document.getElementById('progressBar').style.background = 'var(--yellow)';
+                    }
+                    
+                    // Use the NumberFormatter utility for smart mobile formatting
+                    NumberFormatter.applyToElement('soldBatches', totalAllocated, 'batches sold');
+                    NumberFormatter.applyToElement('remainingBatches', publicRemaining, 'batches remaining');
+                    NumberFormatter.applyToElement('totalTokens', totalTokensAllocated, 'tokens allocated');
+                    NumberFormatter.applyToElement('uniqueBuyers', uniqueBuyers, 'unique wallets');
+                    
+                } catch (error) {
+                    console.error('Error fetching stats:', error);
+                    // Keep current values on error
+                }
+            }
+            
+            // Call on page load
+            updateMintStats();
+            
+            // Update stats periodically to keep data live
+            setInterval(updateMintStats, 5000); // Update every 5 seconds for real-time data
+            
+            // Update number formatting when window is resized
+            let resizeTimeout;
+            // NumberFormatter handles its own resize events
+        });
+    </script>
+    
+    <!-- Stats API Adapter - Handles both old and new API formats -->
+    <script src="js/stats-adapter.js"></script>
+    
+    <!-- Mobile Stats UI Fix - Abbreviation for mobile viewports -->
+    <script src="js/mobile-stats-ui-fix.js?v=1.0.1"></script>
+    
+    <!-- Live Updates WebSocket Integration -->
+    <script src="js/websocket-integration.js"></script>
+    
+    <!-- WebLN Integration for Instant Lightning Payments -->
+    <script src="js/webln-integration-fixed.js"></script>
+    
+    <!-- QR Scanner Implementation -->
+    <script src="js/qr-scanner.js?v=1.1.3"></script>
+    
+    <!-- QR Scanner UX Improvements -->
+    <script src="js/qr-scanner-ux-fix.js"></script>
+    
+    <!-- Mobile Menu Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // NumberFormatter is already initialized (no init method needed)
+        
+        // Mobile Menu Functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const quickSelectBtns = document.querySelectorAll('.quick-select-btn');
+        
+        console.log('Mobile menu elements:', {
+            toggle: mobileMenuToggle,
+            nav: mobileNav,
+            close: mobileNavClose,
+            overlay: mobileNavOverlay
+        });
+        
+        function openMobileNav() {
+            mobileNav.classList.add('open');
+            mobileNavOverlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMobileNav() {
+            mobileNav.classList.remove('open');
+            mobileNavOverlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        
+        // Make functions globally available
+        window.openMobileNav = openMobileNav;
+        window.closeMobileNav = closeMobileNav;
+        
+        // Event Listeners
+        if (mobileMenuToggle) {
+            console.log('Mobile menu toggle found:', mobileMenuToggle);
+            mobileMenuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Mobile menu clicked!');
+                openMobileNav();
+            });
+        } else {
+            console.log('Mobile menu toggle NOT found!');
+        }
+        
+        if (mobileNavClose) {
+            mobileNavClose.addEventListener('click', closeMobileNav);
+        }
+        
+        if (mobileNavOverlay) {
+            mobileNavOverlay.addEventListener('click', closeMobileNav);
+        }
+        
+        // Quick select buttons
+        quickSelectBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const batches = parseInt(this.getAttribute('data-batches'));
+                const batchInput = document.getElementById('batchAmount');
+                if (batchInput) {
+                    batchInput.value = batches;
+                    // Update the display
+                    const changeEvent = new Event('input', { bubbles: true });
+                    batchInput.dispatchEvent(changeEvent);
+                }
+                closeMobileNav();
+                // Scroll to purchase section
+                document.getElementById('purchase').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+                closeMobileNav();
+            }
+        });
+    }); // End of DOMContentLoaded
+    </script>
+    
+    <!-- Purchase Tier Fix - Handles tier parameter from game -->
+    <!-- Disabled - causing duplicate tier messages
+    <script src="js/purchase-tier-fix.js"></script>
+    <script src="js/invoice-visibility-fix.js"></script>
+    <script src="js/invoice-force-show.js"></script>
+    -->
+    <script src="js/visual-bugs-fix.js"></script>
+    
+    <!-- Clean Fixed Mobile Scanner -->
+    <script src="js/scanner-professional.js"></script>
+    
+    <!-- UI Improvements - Batch controls and LIVE MINT STATUS styling -->
+    <script src="js/ui-improvements.js"></script>
+    
+    <!-- Full Site Optimization Fixed - Responsive scaling WITHOUT changing UI -->
+    <script src="js/full-site-optimization-fixed.js"></script>
+    
+    <!-- Batch Controls Mobile Centering Fix -->
+    <script src="js/batch-mobile-center-fix.js"></script>
+    
+    <!-- Main Page Tier Detector - Detects unlocked tiers from game -->
+    <!-- Disabled - causing duplicate tier messages
+    <script src="js/main-page-tier-detector.js"></script>
+    -->
+    
+    <!-- Mint Lock Fix - Hides MINT IS LOCKED when tier unlocked -->
+    <!-- Disabled - also shows duplicate tier message
+    <script src="js/mint-lock-fix.js"></script>
+    -->
+    
+    <!-- Purchase Unlock Fix - Comprehensive solution -->
+    <!-- Removed purchase-unlock-fix.js - was causing focus jumping issues -->
+    
+    <!-- Comprehensive UI Polish - Fixes all visual imperfections -->
+    <script src="js/ui-polish-comprehensive.js"></script>
+    
+    <!-- Core Application Logic - CRITICAL FOR MAIN FEATURES -->
+    <script src="scripts/app.js"></script>
+    
+    <!-- Invoice Creation Fix -->
+    <script src="js/invoice-fix.js"></script>
+    
+    <!-- CRITICAL FIXES - Must load early to prevent conflicts -->
+    <script src="js/critical-fixes.js"></script>
+    
+    <!-- Professional Payment Modal System -->
+    <script src="js/payment-modal-clean.js"></script>
+    <script src="js/payment-integration-clean.js"></script>
+    
+    <!-- Payment Integration - Connects everything -->
+    <script src="js/payment-integration.js"></script>
+    
+    <!-- Payment Modal Initialization Fix -->
+    <script src="js/payment-modal-init-fix.js"></script>
+    
+    <!-- Invoice UI Improvements -->
+    <script src="js/invoice-ui-improvements.js"></script>
+    
+    <!-- Bug Fixes and Performance Improvements -->
+    <script src="js/memory-leak-fixes.js"></script>
+    <script src="js/double-submit-prevention.js"></script>
+    <script src="js/qr-scanner-lazy-load.js"></script>
+    <script src="js/threejs-console-fixes.js"></script>
+</body>
+</html>

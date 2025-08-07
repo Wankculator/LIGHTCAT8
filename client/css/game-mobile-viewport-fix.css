@@ -1,0 +1,247 @@
+/* Mobile Game Viewport and Display Fix */
+/* Ensures game displays correctly on all mobile devices and tablets */
+
+/* Fix viewport height issues on mobile browsers */
+:root {
+    --vh: 1vh;
+}
+
+/* Mobile and tablet specific fixes */
+@media screen and (max-width: 1024px) {
+    /* Fix game container to use actual viewport height */
+    #game-container {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        height: calc(var(--vh, 1vh) * 100) !important;
+        background: #000 !important;
+        overflow: hidden !important;
+        touch-action: none !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    /* Fix canvas sizing for mobile */
+    canvas {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        touch-action: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+        object-fit: contain !important;
+    }
+    
+    /* Ensure game UI doesn't overflow */
+    #game-ui {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 10px !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+        pointer-events: none !important;
+        z-index: 100 !important;
+    }
+    
+    /* Fix game stats positioning */
+    .game-stats {
+        background: rgba(0, 0, 0, 0.9) !important;
+        padding: 8px 12px !important;
+        pointer-events: auto !important;
+        max-width: 45% !important;
+    }
+    
+    /* Loading screen fix */
+    #loading-progress {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 300px !important;
+    }
+    
+    /* Game over screen mobile fix */
+    #game-over {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 400px !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Back button positioning */
+    #backButton {
+        position: fixed !important;
+        top: 10px !important;
+        right: 10px !important;
+        z-index: 1000 !important;
+        min-width: 60px !important;
+        min-height: 35px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* Specific mobile phone fixes */
+@media screen and (max-width: 428px) {
+    /* iPhone Pro Max and similar */
+    #game-ui {
+        padding: 8px !important;
+    }
+    
+    .game-stats {
+        padding: 6px 10px !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.65rem !important;
+    }
+    
+    .timer {
+        font-size: 1.1rem !important;
+    }
+    
+    .score {
+        font-size: 0.95rem !important;
+    }
+}
+
+/* Small phones (iPhone SE, etc) */
+@media screen and (max-width: 375px) {
+    #game-ui {
+        padding: 5px !important;
+        gap: 5px !important;
+    }
+    
+    .game-stats {
+        padding: 5px 8px !important;
+    }
+    
+    .mobile-controls {
+        height: 100px !important;
+    }
+    
+    .mobile-joystick {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .mobile-jump {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Tablet specific adjustments */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .mobile-controls {
+        display: block !important; /* Show controls on tablets too */
+    }
+    
+    .mobile-joystick {
+        width: 120px !important;
+        height: 120px !important;
+        left: 20px !important;
+        bottom: 20px !important;
+    }
+    
+    .mobile-jump {
+        width: 100px !important;
+        height: 100px !important;
+        right: 20px !important;
+        bottom: 20px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    #game-ui {
+        padding: 15px !important;
+    }
+    
+    .game-stats {
+        padding: 10px 15px !important;
+    }
+}
+
+/* Landscape orientation fixes */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    #game-ui {
+        padding: 5px 10px !important;
+    }
+    
+    .game-stats {
+        padding: 5px 10px !important;
+    }
+    
+    .mobile-controls {
+        height: 80px !important;
+    }
+    
+    .mobile-joystick {
+        width: 70px !important;
+        height: 70px !important;
+        bottom: 5px !important;
+    }
+    
+    .mobile-jump {
+        width: 60px !important;
+        height: 60px !important;
+        bottom: 5px !important;
+        font-size: 0.75rem !important;
+    }
+    
+    /* Adjust canvas for landscape with controls */
+    canvas {
+        height: calc(100% - 80px) !important;
+    }
+}
+
+/* Fix for notch devices (iPhone X and later) */
+@supports (padding: max(0px)) {
+    #game-container {
+        padding-top: env(safe-area-inset-top) !important;
+        padding-bottom: env(safe-area-inset-bottom) !important;
+        padding-left: env(safe-area-inset-left) !important;
+        padding-right: env(safe-area-inset-right) !important;
+    }
+    
+    .mobile-controls {
+        padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    }
+}
+
+/* Prevent iOS bounce effect */
+body {
+    position: fixed !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Debug helper - remove in production */
+.viewport-debug::after {
+    content: attr(data-viewport);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    z-index: 99999;
+    pointer-events: none;
+}

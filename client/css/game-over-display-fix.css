@@ -1,0 +1,84 @@
+/* Emergency Game Over Display Fix */
+/* Ensures game over screen is ALWAYS visible when triggered */
+
+/* Force game over to be on top of everything */
+#game-over {
+    z-index: 9999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+}
+
+/* When game over should be visible */
+#game-over[style*="display: block"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Ensure allocation message is visible */
+#allocation-message {
+    z-index: 10001 !important;
+    position: relative !important;
+}
+
+#allocation-message[style*="display: block"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Game over content must be visible */
+.game-over-gallery {
+    display: flex !important;
+    z-index: 10000 !important;
+}
+
+.game-over-content {
+    z-index: 10000 !important;
+}
+
+/* Ensure buttons are clickable */
+#play-again,
+#unlock-tier,
+#twitter-follow,
+#verify-follow {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 10002 !important;
+    position: relative !important;
+}
+
+/* Fix for mobile */
+@media (max-width: 768px) {
+    #game-over {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .game-over-gallery {
+        min-height: 100vh !important;
+    }
+}
+
+/* Debug helper - shows red border when game over is supposed to be visible */
+.debug-mode #game-over[style*="display: block"] {
+    border: 5px solid red !important;
+}
+
+/* Ensure game UI doesn't block game over */
+#game-ui {
+    z-index: 100 !important; /* Lower than game over */
+}
+
+/* Mobile controls should be hidden when game over shows */
+#game-over[style*="display: block"] ~ .mobile-controls {
+    display: none !important;
+}
+
+/* Animations should still work */
+#game-over {
+    transition: opacity 0.5s ease-out !important;
+}

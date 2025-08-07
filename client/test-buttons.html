@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Fix Test</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            background: #000; 
+            color: #0f0; 
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 10px;
+            background: #ff6b00;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:disabled {
+            background: #444;
+            color: #999;
+            cursor: not-allowed;
+        }
+        #batchCount {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #111;
+            border: 2px solid #0f0;
+            min-width: 40px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .test-result {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0f0;
+        }
+        .error { border-color: #f00; color: #f00; }
+        .success { border-color: #0f0; color: #0f0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Testing Batch Button Fix</h1>
+    
+    <div style="text-align: center; margin: 30px 0;">
+        <button id="decreaseBatch">−</button>
+        <div id="batchCount">1</div>
+        <button id="increaseBatch">+</button>
+        <button id="maxBatch">MAX</button>
+    </div>
+    
+    <div id="testResults"></div>
+    
+    <script>
+        let currentBatches = 1;
+        let maxBatches = 10; // Simulate gold tier
+        
+        const decreaseBtn = document.getElementById('decreaseBatch');
+        const increaseBtn = document.getElementById('increaseBatch');
+        const batchCountEl = document.getElementById('batchCount');
+        const maxBtn = document.getElementById('maxBatch');
+        const resultsDiv = document.getElementById('testResults');
+        
+        function log(message, isError = false) {
+            const div = document.createElement('div');
+            div.className = 'test-result ' + (isError ? 'error' : 'success');
+            div.textContent = message;
+            resultsDiv.appendChild(div);
+        }
+        
+        function updateBatchDisplay() {
+            if (batchCountEl) {
+                batchCountEl.textContent = currentBatches;
+            }
+            if (decreaseBtn) {
+                decreaseBtn.disabled = currentBatches <= 1;
+            }
+            if (increaseBtn) {
+                increaseBtn.disabled = currentBatches >= maxBatches;
+            }
+            console.log('Batch updated:', currentBatches);
+        }
+        
+        // Test null checks
+        if (decreaseBtn) {
+            decreaseBtn.addEventListener('click', () => {
+                if (currentBatches > 1) {
+                    currentBatches--;
+                    updateBatchDisplay();
+                    log(`✅ Decreased to ${currentBatches}`);
+                }
+            });
+            log('✅ Decrease button initialized');
+        } else {
+            log('❌ Decrease button not found', true);
+        }
+        
+        if (increaseBtn) {
+            increaseBtn.addEventListener('click', () => {
+                if (currentBatches < maxBatches) {
+                    currentBatches++;
+                    updateBatchDisplay();
+                    log(`✅ Increased to ${currentBatches}`);
+                }
+            });
+            log('✅ Increase button initialized');
+        } else {
+            log('❌ Increase button not found', true);
+        }
+        
+        if (maxBtn) {
+            maxBtn.addEventListener('click', () => {
+                currentBatches = maxBatches;
+                updateBatchDisplay();
+                log(`✅ Set to max: ${currentBatches}`);
+            });
+            log('✅ Max button initialized');
+        }
+        
+        // Initialize display
+        updateBatchDisplay();
+        log('✅ Initial display updated');
+        
+        // Test programmatic changes
+        setTimeout(() => {
+            currentBatches = 5;
+            updateBatchDisplay();
+            log('✅ Programmatically set to 5');
+        }, 1000);
+        
+        log('🎉 All tests completed - try clicking the buttons!');
+    </script>
+</body>
+</html>

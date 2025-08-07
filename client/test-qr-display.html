@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test QR Display</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            font-family: Arial;
+            padding: 20px;
+        }
+        #qrcode {
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+        }
+        .invoice-text {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+            margin: 20px 0;
+        }
+        button {
+            background: #FFD700;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Test</h1>
+    <button onclick="createInvoice()">Create Test Invoice</button>
+    
+    <div id="result" style="display:none;">
+        <h2>Lightning Invoice:</h2>
+        <div class="invoice-text" id="invoiceText"></div>
+        
+        <h2>QR Code:</h2>
+        <div id="qrcode"></div>
+    </div>
+
+    <script>
+    async function createInvoice() {
+        try {
+            const response = await fetch('http://localhost:3000/api/rgb/invoice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rgbInvoice: 'rgb:utxob:test123',
+                    batchCount: 3
+                })
+            });
+            
+            const data = await response.json();
+            console.log('API Response:', data);
+            
+            if (data.success && data.lightningInvoice) {
+                // Display invoice text
+                document.getElementById('invoiceText').textContent = data.lightningInvoice;
+                
+                // Clear previous QR code
+                document.getElementById('qrcode').innerHTML = '';
+                
+                // Generate QR code
+                new QRCode(document.getElementById('qrcode'), {
+                    text: 'lightning:' + data.lightningInvoice,
+                    width: 200,
+                    height: 200,
+                    colorDark: "#000000",
+                    colorLight: "#FFFFFF",
+                    correctLevel: QRCode.CorrectLevel.L
+                });
+                
+                document.getElementById('result').style.display = 'block';
+                
+                alert('QR Code generated successfully! Invoice: ' + data.invoiceId);
+            } else {
+                alert('No lightningInvoice in response!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGHTCAT UI Component Library</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="css/mobile-optimized.css">
+    <style>
+        /* Component Library Styles */
+        body {
+            background: #000;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .component-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 0, 0.2);
+            border-radius: 10px;
+        }
+        
+        .component-title {
+            color: #FFFF00;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .component-example {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        
+        .code-snippet {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        
+        /* Device Preview */
+        .device-preview {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .device-frame {
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 10px;
+            background: #111;
+        }
+        
+        .device-screen {
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .iphone-se { width: 375px; height: 667px; }
+        .iphone-12 { width: 390px; height: 844px; }
+        .pixel-5 { width: 393px; height: 851px; }
+        
+        @media (max-width: 768px) {
+            .device-preview {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .device-frame {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #FFFF00; font-size: 2.5rem;">
+        🎨 LIGHTCAT UI Component Library
+    </h1>
+    
+    <!-- Header Component -->
+    <div class="component-section">
+        <h2 class="component-title">Header (Mobile Optimized)</h2>
+        
+        <div class="component-example">
+            <header style="position: relative; margin-bottom: 20px;">
+                <div class="container">
+                    <div class="header-content">
+                        <div class="logo-section">
+                            <img src="images/RGB_LITE_CAT_LOGO.jpg" alt="LIGHTCAT" class="logo">
+                            <div>
+                                <h1 class="site-title">LIGHTCAT</h1>
+                                <p class="tagline">First Cat Meme Token on RGB Protocol</p>
+                            </div>
+                        </div>
+                        <button class="mobile-menu-toggle" style="display: block;">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        <div class="code-snippet">
+&lt;header&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="header-content"&gt;
+            &lt;div class="logo-section"&gt;
+                &lt;img src="logo.jpg" alt="LIGHTCAT" class="logo"&gt;
+                &lt;div&gt;
+                    &lt;h1 class="site-title"&gt;LIGHTCAT&lt;/h1&gt;
+                    &lt;p class="tagline"&gt;First Cat Meme Token on RGB Protocol&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/header&gt;
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="component-section">
+        <h2 class="component-title">Stats Cards</h2>
+        
+        <div class="component-example">
+            <div class="stats-grid" style="max-width: 600px;">
+                <div class="stat-card">
+                    <div class="stat-number">4,397</div>
+                    <div class="stat-label">Batches Sold</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">25,603</div>
+                    <div class="stat-label">Remaining</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3,077,900</div>
+                    <div class="stat-label">Tokens Sold</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Unique Wallets</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="code-snippet">
+&lt;div class="stats-grid"&gt;
+    &lt;div class="stat-card"&gt;
+        &lt;div class="stat-number"&gt;4,397&lt;/div&gt;
+        &lt;div class="stat-label"&gt;Batches Sold&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- More stat cards --&gt;
+&lt;/div&gt;
+        </div>
+    </div>
+    
+    <!-- Buttons -->
+    <div class="component-section">
+        <h2 class="component-title">Buttons</h2>
+        
+        <div class="component-example">
+            <button class="btn btn-primary" style="margin: 10px;">Play Game</button>
+            <button class="btn btn-secondary" style="margin: 10px;">Learn More</button>
+            <button class="btn btn-success" style="margin: 10px;">Purchase Tokens</button>
+            <button class="btn" disabled style="margin: 10px;">Sold Out</button>
+        </div>
+        
+        <div class="code-snippet">
+&lt;button class="btn btn-primary"&gt;Play Game&lt;/button&gt;
+&lt;button class="btn btn-secondary"&gt;Learn More&lt;/button&gt;
+&lt;button class="btn btn-success"&gt;Purchase Tokens&lt;/button&gt;
+&lt;button class="btn" disabled&gt;Sold Out&lt;/button&gt;
+        </div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="component-section">
+        <h2 class="component-title">Progress Bar</h2>
+        
+        <div class="component-example">
+            <div class="progress-container" style="max-width: 600px;">
+                <div class="progress-bar" style="width: 14.66%; background: var(--yellow);"></div>
+            </div>
+        </div>
+        
+        <div class="code-snippet">
+&lt;div class="progress-container"&gt;
+    &lt;div class="progress-bar" style="width: 14.66%; background: var(--yellow);"&gt;&lt;/div&gt;
+&lt;/div&gt;
+        </div>
+    </div>
+    
+    <!-- Tier Cards -->
+    <div class="component-section">
+        <h2 class="component-title">Tier Cards</h2>
+        
+        <div class="component-example">
+            <div class="tier-grid" style="max-width: 800px;">
+                <div class="tier-card bronze">
+                    <div class="tier-icon">🥉</div>
+                    <div class="tier-content">
+                        <h3 class="tier-name">BRONZE TIER</h3>
+                        <p class="tier-requirement">Score 11+ points</p>
+                        <p class="tier-reward">Purchase up to 10 batches</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Live Testing Area -->
+    <div class="component-section">
+        <h2 class="component-title">🧪 Live Testing Area</h2>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div>
+                <h3>Edit CSS Live:</h3>
+                <textarea id="liveCSS" style="width: 400px; height: 200px; background: #1a1a1a; color: #fff; padding: 10px; font-family: monospace;">
+/* Try editing styles here */
+.section-title {
+    color: #FFFF00;
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.5rem;
+    }
+}</textarea>
+                <button onclick="applyLiveCSS()" class="btn btn-primary" style="margin-top: 10px;">Apply Styles</button>
+            </div>
+            
+            <div>
+                <h3>Preview:</h3>
+                <div id="preview" style="border: 1px solid #333; padding: 20px; min-height: 200px;">
+                    <h2 class="section-title">LIVE MINT STATUS</h2>
+                    <div class="mint-status-text">14.66% SOLD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function applyLiveCSS() {
+            const css = document.getElementById('liveCSS').value;
+            let styleTag = document.getElementById('liveStyles');
+            
+            if (!styleTag) {
+                styleTag = document.createElement('style');
+                styleTag.id = 'liveStyles';
+                document.head.appendChild(styleTag);
+            }
+            
+            styleTag.textContent = css;
+        }
+        
+        // Device preview simulator
+        function simulateDevice(device) {
+            const preview = document.getElementById('preview');
+            switch(device) {
+                case 'iphone-se':
+                    preview.style.width = '375px';
+                    break;
+                case 'iphone-12':
+                    preview.style.width = '390px';
+                    break;
+                case 'desktop':
+                    preview.style.width = '100%';
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

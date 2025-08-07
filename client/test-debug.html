@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test for rgblightcat.com</h1>
+    <p>Maximum allowed: <span id="maxBatches" style="color: red;">0</span> batches</p>
+    <p>Batch count: <span id="batchCount">1</span></p>
+    <button id="decreaseBatch">-</button>
+    <button id="increaseBatch">+</button>
+    
+    <script>
+        console.log('TEST: Script starting');
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('TEST: DOMContentLoaded fired');
+            
+            // Get URL params
+            const urlParams = new URLSearchParams(window.location.search);
+            const tier = urlParams.get('tier');
+            console.log('TEST: Tier from URL:', tier);
+            
+            // Get elements
+            const maxBatchesEl = document.getElementById('maxBatches');
+            const batchCountEl = document.getElementById('batchCount');
+            const decreaseBtn = document.getElementById('decreaseBatch');
+            const increaseBtn = document.getElementById('increaseBatch');
+            
+            console.log('TEST: Elements found:', {
+                maxBatchesEl: !!maxBatchesEl,
+                batchCountEl: !!batchCountEl,
+                decreaseBtn: !!decreaseBtn,
+                increaseBtn: !!increaseBtn
+            });
+            
+            // Process tier
+            let maxBatches = 0;
+            if (tier) {
+                switch(tier.toLowerCase()) {
+                    case 'bronze':
+                        maxBatches = 10;
+                        break;
+                    case 'silver':
+                        maxBatches = 20;
+                        break;
+                    case 'gold':
+                        maxBatches = 30;
+                        break;
+                }
+                console.log('TEST: maxBatches set to:', maxBatches);
+                
+                if (maxBatchesEl) {
+                    maxBatchesEl.textContent = maxBatches;
+                    maxBatchesEl.style.color = 'green';
+                    console.log('TEST: Updated display to:', maxBatchesEl.textContent);
+                }
+            }
+            
+            // Button handlers
+            let currentBatches = 1;
+            
+            if (decreaseBtn) {
+                decreaseBtn.addEventListener('click', () => {
+                    if (currentBatches > 1) {
+                        currentBatches--;
+                        batchCountEl.textContent = currentBatches;
+                        console.log('TEST: Decreased to:', currentBatches);
+                    }
+                });
+            }
+            
+            if (increaseBtn) {
+                increaseBtn.addEventListener('click', () => {
+                    if (currentBatches < maxBatches) {
+                        currentBatches++;
+                        batchCountEl.textContent = currentBatches;
+                        console.log('TEST: Increased to:', currentBatches);
+                    }
+                });
+            }
+            
+            console.log('TEST: Setup complete');
+        });
+    </script>
+</body>
+</html>

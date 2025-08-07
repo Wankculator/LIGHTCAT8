@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - LIGHTCAT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: #000;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .thank-you {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .purchase-details {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .token-amount {
+            font-size: 1.5rem;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .status-section {
+            margin-bottom: 30px;
+        }
+
+        .status-bar {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        .status-progress {
+            height: 10px;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .status-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 10px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px solid #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-color: #FFD700;
+            color: #000;
+            animation: pulse 2s infinite;
+        }
+
+        .step.completed .step-icon {
+            background: #FFD700;
+            border-color: #FFD700;
+            color: #000;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .step.active .step-label,
+        .step.completed .step-label {
+            color: #FFD700;
+        }
+
+        .consignment-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .consignment-section.ready {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .download-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .download-button:disabled {
+            background: #444;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .info-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .info-box p {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFD700;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #FFD700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .success-container {
+                padding: 30px 20px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        </div>
+
+        <h1>Payment Successful!</h1>
+        <p class="thank-you">Thank you for your purchase</p>
+
+        <div class="purchase-details">
+            <div class="detail-row">
+                <span class="detail-label">Transaction ID</span>
+                <span class="detail-value" id="transactionId">Loading...</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Batches Purchased</span>
+                <span class="detail-value" id="batchCount">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">LIGHTCAT Tokens</span>
+                <span class="detail-value token-amount" id="tokenAmount">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Amount Paid</span>
+                <span class="detail-value" id="amountPaid">-</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Payment Time</span>
+                <span class="detail-value" id="paymentTime">-</span>
+            </div>
+        </div>
+
+        <div class="status-section">
+            <h3 style="margin-bottom: 15px; color: #FFD700;">Distribution Status</h3>
+            <div class="status-bar">
+                <div class="status-progress" id="statusProgress" style="width: 33%;"></div>
+            </div>
+            
+            <div class="status-steps">
+                <div class="step completed" id="step1">
+                    <div class="step-icon">✓</div>
+                    <div class="step-label">Payment Received</div>
+                </div>
+                <div class="step active" id="step2">
+                    <div class="step-icon">
+                        <div class="loading-spinner" style="margin: 0;"></div>
+                    </div>
+                    <div class="step-label">Generating Tokens</div>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-icon">📦</div>
+                    <div class="step-label">Ready to Download</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consignment-section" id="consignmentSection">
+            <button class="download-button" id="downloadButton" onclick="downloadConsignment()">
+                📥 Download RGB Consignment File
+            </button>
+            
+            <div class="info-box">
+                <h3>Next Steps:</h3>
+                <p>
+                    1. Download your RGB consignment file<br>
+                    2. Import it into your RGB-compatible wallet (Iris, BitMask, etc.)<br>
+                    3. Your LIGHTCAT tokens will appear in your wallet<br>
+                    4. Keep the consignment file safe as backup
+                </p>
+            </div>
+        </div>
+
+        <div class="info-box" id="waitingInfo">
+            <h3>⏳ Processing Your Tokens...</h3>
+            <p>
+                Your RGB tokens are being generated. This usually takes 30-60 seconds.
+                The download button will appear automatically when ready.
+            </p>
+        </div>
+
+        <a href="/" class="back-link">← Back to Homepage</a>
+    </div>
+
+    <script>
+        // Get invoice ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const invoiceId = urlParams.get('invoice') || localStorage.getItem('lastInvoiceId');
+        
+        // Initialize page with data
+        async function initializePage() {
+            if (!invoiceId) {
+                document.querySelector('.thank-you').textContent = 'Invoice not found';
+                return;
+            }
+
+            document.getElementById('transactionId').textContent = invoiceId.substring(0, 8) + '...';
+            
+            // Start checking payment status
+            checkPaymentStatus();
+            
+            // Check every 3 seconds for consignment
+            const statusInterval = setInterval(async () => {
+                const complete = await checkPaymentStatus();
+                if (complete) {
+                    clearInterval(statusInterval);
+                }
+            }, 3000);
+        }
+
+        async function checkPaymentStatus() {
+            try {
+                const response = await fetch(`/api/rgb/invoice/${invoiceId}/status`);
+                const data = await response.json();
+                
+                if (data.invoice) {
+                    // Update purchase details
+                    const batchCount = data.invoice.batchCount || '-';
+                    const tokenAmount = data.invoice.tokenAmount || (batchCount * 700);
+                    const amountSats = data.invoice.amount || (batchCount * 2000);
+                    
+                    document.getElementById('batchCount').textContent = batchCount;
+                    document.getElementById('tokenAmount').textContent = tokenAmount.toLocaleString() + ' LIGHTCAT';
+                    document.getElementById('amountPaid').textContent = amountSats.toLocaleString() + ' sats';
+                    document.getElementById('paymentTime').textContent = new Date().toLocaleTimeString();
+                }
+                
+                // Update status based on response
+                if (data.status === 'delivered' && data.consignment) {
+                    // Tokens ready!
+                    showConsignmentReady(data.consignment);
+                    return true; // Stop checking
+                } else if (data.status === 'processing' || data.status === 'paid') {
+                    // Still processing
+                    updateProgress(66);
+                } else if (data.status === 'distribution_failed') {
+                    // Failed
+                    showError(data.error);
+                    return true; // Stop checking
+                }
+                
+                return false; // Continue checking
+                
+            } catch (error) {
+                console.error('Error checking status:', error);
+                return false;
+            }
+        }
+
+        function updateProgress(percent) {
+            document.getElementById('statusProgress').style.width = percent + '%';
+            
+            if (percent >= 66) {
+                document.getElementById('step2').classList.add('active');
+            }
+        }
+
+        function showConsignmentReady(consignment) {
+            // Update UI to show completion
+            document.getElementById('statusProgress').style.width = '100%';
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step2').classList.add('completed');
+            document.getElementById('step2').querySelector('.step-icon').innerHTML = '✓';
+            document.getElementById('step3').classList.add('completed');
+            document.getElementById('step3').querySelector('.step-icon').innerHTML = '✓';
+            
+            // Store consignment for download
+            window.rgbConsignment = consignment;
+            
+            // Show download section, hide waiting info
+            document.getElementById('consignmentSection').classList.add('ready');
+            document.getElementById('waitingInfo').style.display = 'none';
+        }
+
+        function showError(errorMessage) {
+            document.getElementById('waitingInfo').innerHTML = `
+                <h3>❌ Distribution Failed</h3>
+                <p style="color: #ff6b6b;">
+                    ${errorMessage || 'Token distribution failed. Please contact support with your transaction ID.'}
+                </p>
+            `;
+        }
+
+        async function downloadConsignment() {
+            if (!window.rgbConsignment) {
+                alert('Consignment not ready yet. Please wait...');
+                return;
+            }
+            
+            try {
+                // Convert base64 to blob
+                const binaryString = atob(window.rgbConsignment);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                const blob = new Blob([bytes], { type: 'application/octet-stream' });
+                
+                // Create download link
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `lightcat_${invoiceId}.rgb`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // Update button
+                document.getElementById('downloadButton').innerHTML = '✓ Downloaded! (Click to download again)';
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Error downloading consignment. Please try again.');
+            }
+        }
+
+        // Initialize on load
+        initializePage();
+    </script>
+</body>
+</html>

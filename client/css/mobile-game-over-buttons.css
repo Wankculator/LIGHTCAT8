@@ -1,0 +1,166 @@
+/**
+ * Mobile Game Over Buttons CSS
+ * Ensures 44px touch targets and proper mobile styling
+ * Following CLAUDE.md mobile-first requirements
+ */
+
+/* Mobile styles - max 768px */
+@media (max-width: 768px) {
+    /* Ensure game-over takes full screen */
+    #game-over {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 99999 !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Gallery container for mobile */
+    .game-over-gallery {
+        width: 95% !important;
+        max-width: none !important;
+        margin: 10px auto !important;
+        padding: 20px !important;
+        border-width: 2px !important;
+    }
+    
+    /* All buttons must have 44px minimum touch target */
+    #game-over button,
+    #game-over a,
+    #game-over .go-btn,
+    #game-over .btn {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        padding: 12px 20px !important;
+        font-size: 16px !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: transparent !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        -webkit-touch-callout: none !important;
+        display: inline-block !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 10 !important;
+    }
+    
+    /* Twitter section mobile */
+    #twitter-verify {
+        padding: 15px !important;
+        margin: 20px 0 !important;
+    }
+    
+    #twitter-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+    }
+    
+    /* Twitter follow button */
+    #twitter-follow {
+        width: 100% !important;
+        min-height: 48px !important;
+        background: #1DA1F2 !important;
+        color: #FFFFFF !important;
+        border: none !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Verify button */
+    #verify-follow {
+        width: 100% !important;
+        min-height: 48px !important;
+        background: #fff600 !important;
+        color: #000000 !important;
+        border: 2px solid #000000 !important;
+        font-weight: bold !important;
+    }
+    
+    /* Action buttons group */
+    .action-group {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+        margin-top: 20px !important;
+    }
+    
+    /* Individual action buttons */
+    #play-again {
+        width: 100% !important;
+        min-height: 48px !important;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border: 2px solid #000000 !important;
+        font-weight: bold !important;
+        order: 1;
+    }
+    
+    /* CLAIM button - most important */
+    #unlock-tier {
+        width: 100% !important;
+        min-height: 56px !important;
+        background: #fff600 !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        font-size: 20px !important;
+        font-weight: 900 !important;
+        order: 0; /* Show first */
+        animation: none !important; /* Disable animation on mobile */
+    }
+    
+    /* Exit button */
+    button[onclick*="location.href"],
+    .go-btn:last-child {
+        width: 100% !important;
+        min-height: 48px !important;
+        background: #dc3545 !important;
+        color: #FFFFFF !important;
+        border: 2px solid #000000 !important;
+        font-weight: bold !important;
+        order: 2;
+    }
+    
+    /* Active states for mobile */
+    #game-over button:active,
+    #game-over a:active {
+        transform: scale(0.95) !important;
+        opacity: 0.8 !important;
+    }
+    
+    /* Ensure text is readable */
+    #game-over h2 {
+        font-size: 32px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    #final-score {
+        font-size: 48px !important;
+    }
+    
+    #tier-unlocked {
+        font-size: 24px !important;
+        padding: 15px 30px !important;
+    }
+    
+    /* Fix any overflow issues */
+    .game-over-gallery * {
+        max-width: 100% !important;
+    }
+    
+    /* Ensure success message is visible */
+    #verify-success {
+        width: 100% !important;
+        padding: 15px !important;
+        font-size: 16px !important;
+        text-align: center !important;
+    }
+}

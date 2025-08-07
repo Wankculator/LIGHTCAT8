@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Button Test</title>
+    <style>
+        body { background: #000; color: #0f0; padding: 20px; font-family: monospace; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .box { background: #111; border: 1px solid #0f0; padding: 20px; margin: 20px 0; }
+        button { padding: 10px 20px; margin: 5px; background: #ff6b00; color: #000; border: none; cursor: pointer; font-weight: bold; }
+        button:disabled { background: #444; color: #999; }
+        #output { background: #000; padding: 10px; max-height: 400px; overflow-y: auto; }
+        .log { margin: 2px 0; padding: 2px; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+        .info { color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Final Button Test</h1>
+        
+        <div class="box">
+            <h2>Test the live site with different scenarios:</h2>
+            <p>Click each link to test different tier states:</p>
+            
+            <button onclick="testNoTier()">Test 1: No Tier (should block increase)</button>
+            <button onclick="testBronze()">Test 2: Bronze Tier (max 5)</button>
+            <button onclick="testSilver()">Test 3: Silver Tier (max 8)</button>
+            <button onclick="testGold()">Test 4: Gold Tier (max 10)</button>
+        </div>
+        
+        <div class="box">
+            <h2>Expected Behavior:</h2>
+            <ul>
+                <li>No Tier: Start at 1, cannot increase (maxBatches = 0)</li>
+                <li>Bronze: Can go from 1 to 5</li>
+                <li>Silver: Can go from 1 to 8</li>
+                <li>Gold: Can go from 1 to 10</li>
+            </ul>
+        </div>
+        
+        <div class="box">
+            <h2>Test Output:</h2>
+            <div id="output"></div>
+        </div>
+        
+        <div class="box">
+            <h2>Direct API Test:</h2>
+            <button onclick="testAPI(1)">Create Invoice with 1 batch</button>
+            <button onclick="testAPI(5)">Create Invoice with 5 batches</button>
+            <button onclick="testAPI(10)">Create Invoice with 10 batches</button>
+        </div>
+    </div>
+    
+    <script>
+        const RGB_INVOICE = 'rgb:2xvS9Gx1k6tMjmKwJeRuQc9j5QRFeN1LLXDzEXuzQnUVQ1rvNqjgGH8RTEPaKMQp8ACXSsXpigFgCv2r8V8wr4PsqSUvRd9bc:utxob:giagOvLc-SD2LLWl-M9ckx88-2uV76p5-L_E_fcc-6YZNNV2-bq6uG?expiry=1754627227&endpoints=rpcs://proxy.iriswallet.com/0.2/json-rpc';
+        
+        function log(msg, type = 'info') {
+            const output = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = 'log ' + type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function testNoTier() {
+            log('Testing without tier...', 'info');
+            window.open('https://rgblightcat.com#purchase', '_blank');
+            log('Opened site without tier parameter', 'info');
+            log('Expected: Batch count starts at 1, increase button disabled', 'info');
+        }
+        
+        function testBronze() {
+            log('Testing Bronze tier...', 'info');
+            window.open('https://rgblightcat.com?tier=bronze#purchase', '_blank');
+            log('Opened site with Bronze tier', 'success');
+            log('Expected: Can increase from 1 to 5', 'info');
+        }
+        
+        function testSilver() {
+            log('Testing Silver tier...', 'info');
+            window.open('https://rgblightcat.com?tier=silver#purchase', '_blank');
+            log('Opened site with Silver tier', 'success');
+            log('Expected: Can increase from 1 to 8', 'info');
+        }
+        
+        function testGold() {
+            log('Testing Gold tier...', 'info');
+            window.open('https://rgblightcat.com?tier=gold#purchase', '_blank');
+            log('Opened site with Gold tier', 'success');
+            log('Expected: Can increase from 1 to 10', 'info');
+        }
+        
+        async function testAPI(batches) {
+            log(`Testing API with ${batches} batches...`, 'info');
+            
+            try {
+                const response = await fetch('https://rgblightcat.com/api/rgb/invoice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rgbInvoice: RGB_INVOICE,
+                        batchCount: batches,
+                        tier: 'gold',
+                        gameSessionId: 'test-' + Date.now(),
+                        email: 'test@test.com'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    log(`✅ Success: ${batches} batches = ${result.amount} sats`, 'success');
+                } else {
+                    log(`❌ Error: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Exception: ${error.message}`, 'error');
+            }
+        }
+        
+        // Initial message
+        window.addEventListener('load', () => {
+            log('Test page loaded', 'success');
+            log('Open browser console (F12) to see debug logs from the site', 'info');
+            log('Click the test buttons above to test different scenarios', 'info');
+        });
+    </script>
+</body>
+</html>

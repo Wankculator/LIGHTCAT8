@@ -1,0 +1,205 @@
+/* LIGHTCAT Game Mobile Optimizations */
+
+/* Mobile-specific game fixes */
+@media screen and (max-width: 768px) {
+    /* Prevent any overlapping UI elements */
+    #game-container {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Game UI positioning fixes */
+    #game-ui {
+        padding: 8px !important;
+        gap: 8px;
+    }
+    
+    /* Compact game stats */
+    .game-stats {
+        padding: 5px 8px !important;
+        min-width: auto !important;
+        transform: none !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.65rem !important;
+        margin-bottom: 2px !important;
+    }
+    
+    /* Smaller timer and score */
+    .timer {
+        font-size: 1.2rem !important;
+    }
+    
+    .score {
+        font-size: 1rem !important;
+    }
+    
+    .lightning-icon {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    
+    /* Mobile controls positioning */
+    .mobile-controls {
+        padding: 8px !important;
+        z-index: 1000 !important;
+    }
+    
+    .mobile-joystick {
+        width: 120px !important;
+        height: 120px !important;
+        left: 20px !important;
+        bottom: 60px !important;
+    }
+    
+    .mobile-jump {
+        width: 90px !important;
+        height: 90px !important;
+        right: 20px !important;
+        bottom: 60px !important;
+        font-size: 1rem !important;
+    }
+    
+    /* Game over screen mobile optimization */
+    #game-over {
+        padding: 10px !important;
+    }
+    
+    .gallery-wrapper {
+        max-height: 85vh !important;
+        padding: 12px !important;
+    }
+    
+    .go-title {
+        font-size: 0.95rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .go-score {
+        font-size: 2rem !important;
+    }
+    
+    .go-tier {
+        font-size: 0.7rem !important;
+        padding: 4px 10px !important;
+    }
+    
+    /* Compact buttons */
+    .action-group {
+        margin-top: 8px !important;
+    }
+    
+    .go-btn {
+        min-height: 40px !important;
+        padding: 8px 12px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    /* Benefits box */
+    .benefits-box {
+        font-size: 0.7rem !important;
+        padding: 6px !important;
+        margin-top: 6px !important;
+    }
+    
+    .benefits-box p {
+        margin: 2px 0 !important;
+    }
+    
+    /* Tier notification positioning */
+    .tier-notification {
+        top: 65px !important;
+        font-size: 0.65rem !important;
+        padding: 4px 10px !important;
+        max-width: 180px !important;
+    }
+    
+    /* Back button */
+    #backButton {
+        padding: 6px 12px !important;
+        font-size: 0.75rem !important;
+        top: 8px !important;
+        right: 8px !important;
+    }
+    
+    /* Loading screen */
+    #loading-progress {
+        padding: 20px !important;
+        min-width: 250px !important;
+    }
+    
+    #loading-progress h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    #loading-progress img {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .progress-bar {
+        width: 200px !important;
+        height: 8px !important;
+    }
+    
+    /* Twitter block adjustments */
+    .twitter-block {
+        margin: 8px 0 !important;
+    }
+    
+    .twitter-block h3 {
+        font-size: 0.75rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    /* Success message */
+    .success-msg {
+        font-size: 0.7rem !important;
+        padding: 6px !important;
+        margin-top: 6px !important;
+    }
+}
+
+/* Extra small mobile devices */
+@media screen and (max-width: 375px) {
+    .game-stats {
+        padding: 4px 6px !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.6rem !important;
+    }
+    
+    .timer {
+        font-size: 1rem !important;
+    }
+    
+    .score {
+        font-size: 0.9rem !important;
+    }
+    
+    .mobile-joystick {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .mobile-jump {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 0.7rem !important;
+    }
+}
+
+/* Ensure no elements overflow viewport */
+@media screen and (max-width: 768px) {
+    * {
+        max-width: 100vw !important;
+    }
+    
+    body, html {
+        overflow-x: hidden !important;
+    }
+}

@@ -1,0 +1,375 @@
+/* ============================================
+   DEVICE-SPECIFIC MOBILE FIXES
+   Addresses specific issues on different devices
+   ============================================ */
+
+/* iPhone SE (320px) - Very small screens */
+@media screen and (max-width: 320px) {
+    /* Reduce padding to maximize content area */
+    .container {
+        padding: 0 8px !important;
+    }
+    
+    /* Stack all elements vertically */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    /* Smaller stat cards */
+    .stat-card {
+        min-height: 70px !important;
+        padding: 8px !important;
+    }
+    
+    .stat-number {
+        font-size: 1.1rem !important;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem !important;
+    }
+    
+    /* Compact tier cards */
+    .tier-card {
+        flex: 0 0 110px !important;
+        padding: 12px !important;
+    }
+    
+    /* Smaller buttons */
+    .batch-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* Reduce game height */
+    #gameWrapper {
+        height: 220px !important;
+    }
+}
+
+/* iPhone 6/7/8 (375px) */
+@media screen and (min-width: 321px) and (max-width: 375px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    .stat-card {
+        min-height: 80px !important;
+    }
+    
+    .tier-card {
+        flex: 0 0 130px !important;
+    }
+    
+    #gameWrapper {
+        height: 280px !important;
+    }
+}
+
+/* iPhone 6+/7+/8+ (414px) */
+@media screen and (min-width: 376px) and (max-width: 414px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+    
+    .tier-card {
+        flex: 0 0 140px !important;
+    }
+    
+    #gameWrapper {
+        height: 320px !important;
+    }
+}
+
+/* Android common sizes (360px, 393px, 412px) */
+@media screen and (min-width: 350px) and (max-width: 420px) {
+    /* Optimize for Android's typical viewport */
+    body {
+        font-size: 14px !important;
+    }
+    
+    /* Android-specific touch targets */
+    button, .btn, .batch-btn, a {
+        min-height: 48px !important;
+        min-width: 48px !important;
+    }
+}
+
+/* iPad and tablets (768px) */
+@media screen and (min-width: 600px) and (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+    
+    .tier-grid {
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+    }
+    
+    .tier-card {
+        flex: 0 0 180px !important;
+    }
+    
+    #gameWrapper {
+        height: 400px !important;
+    }
+}
+
+/* ============================================
+   iOS-SPECIFIC FIXES
+   ============================================ */
+@supports (-webkit-touch-callout: none) {
+    /* iOS only styles */
+    
+    /* Fix iOS rubber band scrolling */
+    body {
+        position: fixed;
+        width: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix iOS input zoom */
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+    
+    /* Fix iOS tap delay */
+    * {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    /* Fix iOS safe areas (notch) */
+    @supports (padding: env(safe-area-inset-top)) {
+        header {
+            padding-top: env(safe-area-inset-top) !important;
+        }
+        
+        .container {
+            padding-left: max(env(safe-area-inset-left), 12px) !important;
+            padding-right: max(env(safe-area-inset-right), 12px) !important;
+        }
+        
+        footer {
+            padding-bottom: env(safe-area-inset-bottom) !important;
+        }
+    }
+}
+
+/* ============================================
+   ANDROID-SPECIFIC FIXES
+   ============================================ */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
+    /* High DPI Android devices */
+    
+    /* Fix text rendering */
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Optimize touch targets for Android */
+    .batch-btn,
+    .play-button,
+    .btn {
+        position: relative;
+    }
+    
+    .batch-btn::after,
+    .play-button::after,
+    .btn::after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        bottom: -8px;
+        left: -8px;
+    }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE FIXES
+   ============================================ */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    /* Reduce vertical spacing in landscape */
+    :root {
+        --space-lg: 16px;
+        --space-xl: 24px;
+    }
+    
+    /* Smaller header */
+    header {
+        min-height: 50px !important;
+    }
+    
+    body {
+        padding-top: 50px !important;
+    }
+    
+    /* Compact sections */
+    section {
+        padding: 16px 0 !important;
+    }
+    
+    /* Smaller game area */
+    #gameWrapper {
+        height: min(50vh, 250px) !important;
+    }
+    
+    /* Hide less important elements */
+    .tagline {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   SAMSUNG GALAXY FIXES
+   ============================================ */
+@media screen and (max-width: 360px) and (max-height: 640px) {
+    /* Galaxy S5/S6/S7 */
+    .stats-grid {
+        gap: 8px !important;
+    }
+    
+    .tier-card {
+        flex: 0 0 120px !important;
+    }
+}
+
+@media screen and (max-width: 412px) and (max-height: 915px) {
+    /* Galaxy S20/S21 */
+    body {
+        font-size: 15px !important;
+    }
+}
+
+/* ============================================
+   PIXEL PHONE FIXES
+   ============================================ */
+@media screen and (max-width: 393px) and (max-height: 851px) {
+    /* Pixel 5 */
+    .container {
+        padding: 0 12px !important;
+    }
+}
+
+@media screen and (max-width: 412px) and (max-height: 869px) {
+    /* Pixel 6/7 */
+    .stats-grid {
+        gap: 12px !important;
+    }
+}
+
+/* ============================================
+   NOTCH AND CUTOUT HANDLING
+   ============================================ */
+@supports (padding: env(safe-area-inset-top)) {
+    /* Handle all devices with notches/cutouts */
+    .container {
+        padding-left: max(12px, env(safe-area-inset-left)) !important;
+        padding-right: max(12px, env(safe-area-inset-right)) !important;
+    }
+    
+    /* Landscape orientation with notch */
+    @media (orientation: landscape) {
+        header {
+            padding-left: env(safe-area-inset-left) !important;
+            padding-right: env(safe-area-inset-right) !important;
+        }
+    }
+}
+
+/* ============================================
+   FOLDABLE PHONE SUPPORT
+   ============================================ */
+@media (min-width: 320px) and (max-width: 655px) {
+    /* Galaxy Fold closed */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (min-width: 656px) and (max-width: 820px) {
+    /* Galaxy Fold open */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+    
+    .tier-grid {
+        justify-content: space-evenly !important;
+    }
+}
+
+/* ============================================
+   BROWSER-SPECIFIC FIXES
+   ============================================ */
+
+/* Chrome mobile */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
+    /* Fix Chrome's address bar hiding issue */
+    body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Safari mobile */
+@supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    /* Fix Safari's viewport issues */
+    html {
+        height: -webkit-fill-available;
+    }
+    
+    body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Firefox mobile */
+@-moz-document url-prefix() {
+    @media (max-width: 768px) {
+        /* Fix Firefox mobile rendering */
+        * {
+            scrollbar-width: thin;
+        }
+    }
+}
+
+/* ============================================
+   CRITICAL VISIBILITY INSURANCE
+   ============================================ */
+@media screen and (max-width: 1024px) {
+    /* Force all text to be visible */
+    * {
+        color: inherit !important;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+    }
+    
+    /* Ensure section titles are always visible */
+    .section-title {
+        position: relative !important;
+        z-index: 10 !important;
+        background: rgba(0,0,0,0.8) !important;
+        padding: 8px 16px !important;
+        border-radius: 8px !important;
+        display: inline-block !important;
+        margin: 16px auto !important;
+        width: auto !important;
+        max-width: 90% !important;
+    }
+    
+    /* Ensure critical elements have minimum sizes */
+    .stat-card,
+    .tier-card,
+    .form-group,
+    .batch-selector {
+        min-width: 100px !important;
+        min-height: 50px !important;
+    }
+}

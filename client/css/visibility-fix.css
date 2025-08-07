@@ -1,0 +1,63 @@
+/* Emergency Visibility Fix for LIGHTCAT */
+/* Fixes elements stuck at opacity: 0 due to animation failures */
+
+/* Fix opacity without changing colors */
+.stat-card,
+.tier-card,
+.section-title,
+.fade-in,
+.stats-grid .stat-card,
+.pricing-tiers .tier-card,
+.mint-status-text,
+.progress-container {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
+/* Preserve original white text colors */
+.section-title {
+    opacity: 1 !important;
+    /* Don't force color - let original styles handle it */
+}
+
+/* Fix stat visibility without changing colors */
+.stat-number,
+.stat-label,
+.tier-card h3,
+.tier-card p {
+    opacity: 1 !important;
+    /* Don't force color - preserve original white */
+}
+
+/* Ensure stat labels are white */
+.stat-label {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix mint status text visibility */
+.mint-status-text {
+    color: var(--yellow) !important;
+    opacity: 1 !important;
+}
+
+/* Ensure progress bar is visible */
+.progress-container {
+    opacity: 1 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 0, 0.2) !important;
+}
+
+.progress-bar {
+    opacity: 1 !important;
+    background: var(--yellow) !important;
+}
+
+/* Keep modals hidden until opened */
+.modal {
+    display: none;
+}
+
+.modal[style*="display: block"] {
+    display: block !important;
+}

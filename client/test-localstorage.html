@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test localStorage Tier</title>
+</head>
+<body>
+    <h1>Test with localStorage Tier</h1>
+    <p>This page sets gold tier in localStorage then redirects to the main page.</p>
+    
+    <button onclick="testWithLocalStorage()">Set Gold Tier & Go to Site</button>
+    
+    <script>
+    function testWithLocalStorage() {
+        // Set tier in localStorage
+        localStorage.setItem('unlockedTier', 'gold');
+        console.log('Set unlockedTier = gold in localStorage');
+        
+        // Go to the site without URL params
+        window.location.href = '/';
+    }
+    </script>
+</body>
+</html>

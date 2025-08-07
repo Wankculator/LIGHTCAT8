@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIGHTCAT Invoice Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+        }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #0a0;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #111;
+            border-left: 3px solid #0f0;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+        .error {
+            border-left-color: #f00;
+            color: #f00;
+        }
+        .success {
+            border-left-color: #0f0;
+            color: #0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 LIGHTCAT Invoice Flow Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Simulate User Purchase Flow</h2>
+        <p>This simulates what happens when a user clicks "Purchase Tokens" after unlocking a tier.</p>
+        
+        <button onclick="testBronzePurchase()">Test Bronze Purchase (11+ points)</button>
+        <button onclick="testSilverPurchase()">Test Silver Purchase (15+ points)</button>
+        <button onclick="testGoldPurchase()">Test Gold Purchase (25+ points)</button>
+        <button onclick="testLockedPurchase()">Test Locked Purchase (no tier)</button>
+        
+        <div id="result1" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Check Payment Modal Fields</h2>
+        <p>This verifies the frontend correctly handles the API response fields.</p>
+        
+        <button onclick="testFieldHandling()">Test Field Conversion</button>
+        
+        <div id="result2" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: Full Integration Test</h2>
+        <p>This simulates the complete flow from game to payment.</p>
+        
+        <button onclick="testFullFlow()">Run Full Integration Test</button>
+        
+        <div id="result3" class="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'https://rgblightcat.com/api';
+        
+        function log(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.className = 'result ' + (isError ? 'error' : 'success');
+            element.textContent += message + '\n';
+        }
+        
+        function clearLog(elementId) {
+            document.getElementById(elementId).textContent = '';
+        }
+        
+        async function createInvoice(tier, batchCount = 1) {
+            const response = await fetch(`${API_URL}/rgb/invoice`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rgbInvoice: 'rgb:2xvJKPAPY1tRMGNEkG2MY8Gwp6Gqsb7RCALFRmAeWi9zd3zr3vFBG7EqGd1bKkFm5sjvbGhMdqUNMH17xnyEStwdxjRBaj',
+                    batchCount: batchCount,
+                    tier: tier,
+                    gameSessionId: 'browser-test-' + Date.now(),
+                    email: 'browser@test.com'
+                })
+            });
+            
+            return await response.json();
+        }
+        
+        async function testBronzePurchase() {
+            clearLog('result1');
+            log('result1', '🥉 Testing Bronze Tier Purchase...');
+            
+            try {
+                const result = await createInvoice('bronze', 2);
+                
+                if (result.success) {
+                    log('result1', '✅ Invoice created successfully!');
+                    log('result1', `Invoice ID: ${result.invoiceId}`);
+                    log('result1', `Amount: ${result.amount} sats`);
+                    log('result1', `Lightning Invoice: ${result.lightningInvoice ? '✓ Present' : '✗ Missing'}`);
+                    
+                    // Simulate what the frontend modal would do
+                    const amountSats = result.amountSats || result.amount || 0;
+                    const amountBTC = result.amountBTC || (amountSats / 100000000);
+                    log('result1', `\nFrontend would display: ${amountBTC.toFixed(8)} BTC`);
+                } else {
+                    log('result1', '❌ Failed: ' + (result.error || 'Unknown error'), true);
+                }
+            } catch (error) {
+                log('result1', '❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testSilverPurchase() {
+            clearLog('result1');
+            log('result1', '🥈 Testing Silver Tier Purchase...');
+            
+            try {
+                const result = await createInvoice('silver', 4);
+                
+                if (result.success) {
+                    log('result1', '✅ Invoice created successfully!');
+                    log('result1', `Amount: ${result.amount} sats (${(result.amount/100000000).toFixed(8)} BTC)`);
+                    log('result1', `Max batches for silver: 8`);
+                } else {
+                    log('result1', '❌ Failed: ' + (result.error || 'Unknown error'), true);
+                }
+            } catch (error) {
+                log('result1', '❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testGoldPurchase() {
+            clearLog('result1');
+            log('result1', '🥇 Testing Gold Tier Purchase...');
+            
+            try {
+                const result = await createInvoice('gold', 7);
+                
+                if (result.success) {
+                    log('result1', '✅ Invoice created successfully!');
+                    log('result1', `Amount: ${result.amount} sats (${(result.amount/100000000).toFixed(8)} BTC)`);
+                    log('result1', `Max batches for gold: 10`);
+                    log('result1', `Tier in response: ${result.tier}`);
+                } else {
+                    log('result1', '❌ Failed: ' + (result.error || 'Unknown error'), true);
+                }
+            } catch (error) {
+                log('result1', '❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testLockedPurchase() {
+            clearLog('result1');
+            log('result1', '🔒 Testing Locked Purchase (no tier)...');
+            
+            try {
+                const response = await fetch(`${API_URL}/rgb/invoice`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        rgbInvoice: 'rgb:test',
+                        batchCount: 1,
+                        gameSessionId: 'no-tier-test',
+                        email: 'locked@test.com'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (!result.success && result.error && result.error.includes('Mint is locked')) {
+                    log('result1', '✅ Correctly blocked: ' + result.error);
+                } else {
+                    log('result1', '❌ Should have been blocked!', true);
+                    log('result1', JSON.stringify(result, null, 2), true);
+                }
+            } catch (error) {
+                log('result1', '❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testFieldHandling() {
+            clearLog('result2');
+            log('result2', '🔍 Testing API Field Handling...');
+            
+            try {
+                const result = await createInvoice('bronze', 1);
+                
+                if (result.success) {
+                    log('result2', '📋 API Response Fields:');
+                    log('result2', `- amount: ${result.amount !== undefined ? '✓ ' + result.amount : '✗ Missing'}`);
+                    log('result2', `- amountBTC: ${result.amountBTC !== undefined ? '✓ ' + result.amountBTC : '✗ Missing (OK - frontend calculates)'}`);
+                    log('result2', `- amountSats: ${result.amountSats !== undefined ? '✓ ' + result.amountSats : '✗ Missing (OK - uses amount)'}`);
+                    log('result2', `- lightningInvoice: ${result.lightningInvoice ? '✓ Present' : '✗ Missing'}`);
+                    log('result2', `- invoiceId: ${result.invoiceId ? '✓ ' + result.invoiceId : '✗ Missing'}`);
+                    log('result2', `- tier: ${result.tier ? '✓ ' + result.tier : '✗ Missing'}`);
+                    
+                    log('result2', '\n💡 Frontend Conversion Logic:');
+                    log('result2', 'const amountSats = invoice.amountSats || invoice.amount || 0;');
+                    log('result2', 'const amountBTC = invoice.amountBTC || (amountSats / 100000000);');
+                    
+                    const amountSats = result.amountSats || result.amount || 0;
+                    const amountBTC = result.amountBTC || (amountSats / 100000000);
+                    
+                    log('result2', `\n✅ Calculated: ${amountBTC.toFixed(8)} BTC from ${amountSats} sats`);
+                } else {
+                    log('result2', '❌ Failed to create invoice', true);
+                }
+            } catch (error) {
+                log('result2', '❌ Error: ' + error.message, true);
+            }
+        }
+        
+        async function testFullFlow() {
+            clearLog('result3');
+            log('result3', '🎮 Starting Full Integration Test...\n');
+            
+            // Step 1: Simulate game score submission
+            log('result3', 'Step 1: Submitting game score (28 points for gold tier)');
+            try {
+                const scoreResponse = await fetch(`${API_URL}/game/score`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ score: 28 })
+                });
+                
+                const scoreResult = await scoreResponse.json();
+                log('result3', `✅ Score submitted: Tier ${scoreResult.tier}, Max batches: ${scoreResult.maxBatches}`);
+                
+                // Step 2: Create invoice with the tier
+                log('result3', '\nStep 2: Creating invoice with unlocked tier');
+                const invoiceResult = await createInvoice(scoreResult.tier, 5);
+                
+                if (invoiceResult.success) {
+                    log('result3', `✅ Invoice created: ${invoiceResult.invoiceId}`);
+                    log('result3', `   Amount: ${invoiceResult.amount} sats`);
+                    log('result3', `   Tier: ${invoiceResult.tier}`);
+                    
+                    // Step 3: Check invoice status
+                    log('result3', '\nStep 3: Checking invoice status');
+                    const statusResponse = await fetch(`${API_URL}/rgb/invoice/${invoiceResult.invoiceId}/status`);
+                    const statusResult = await statusResponse.json();
+                    
+                    log('result3', `✅ Status: ${statusResult.status}`);
+                    log('result3', `   Message: ${statusResult.message}`);
+                    
+                    // Step 4: Verify frontend would display correctly
+                    log('result3', '\nStep 4: Frontend Display Verification');
+                    const amountSats = invoiceResult.amountSats || invoiceResult.amount || 0;
+                    const amountBTC = invoiceResult.amountBTC || (amountSats / 100000000);
+                    log('result3', `✅ Would display: ${amountBTC.toFixed(8)} BTC`);
+                    log('result3', `✅ QR Code data: ${invoiceResult.qrCode ? 'Present' : 'Missing'}`);
+                    
+                    log('result3', '\n🎉 Full integration test PASSED!');
+                } else {
+                    log('result3', '❌ Invoice creation failed: ' + invoiceResult.error, true);
+                }
+            } catch (error) {
+                log('result3', '❌ Integration test failed: ' + error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>
