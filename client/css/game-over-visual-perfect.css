@@ -1,0 +1,354 @@
+/**
+ * Game Over Visual Perfection CSS
+ * Ensures perfect visual appearance on desktop and mobile
+ * Following CLAUDE.md standards
+ */
+
+/* Base game-over container */
+#game-over {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.98) !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Gallery wrapper */
+#game-over .game-over-gallery {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 600px !important;
+    max-height: 90vh !important;
+    padding: 40px 20px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* Content wrapper */
+#game-over .content-wrapper {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+}
+
+/* Title styling */
+#game-over .go-title {
+    color: #FFFF00 !important;
+    font-size: clamp(1.5rem, 4vw, 2rem) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    text-align: center !important;
+    margin: 0 0 20px 0 !important;
+    text-shadow: 0 0 20px rgba(255, 255, 0, 0.5) !important;
+}
+
+/* Score section */
+#game-over .score-section {
+    text-align: center !important;
+    margin: 20px 0 !important;
+}
+
+#game-over .go-score {
+    font-size: clamp(3rem, 8vw, 5rem) !important;
+    color: #FFFF00 !important;
+    font-weight: bold !important;
+    text-shadow: 0 0 30px rgba(255, 255, 0, 0.8) !important;
+    margin: 10px 0 !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+/* Tier badge */
+#game-over .go-tier {
+    display: inline-block !important;
+    padding: 10px 30px !important;
+    background: rgba(255, 255, 0, 0.1) !important;
+    border: 2px solid #FFFF00 !important;
+    border-radius: 30px !important;
+    color: #FFFF00 !important;
+    font-size: clamp(0.9rem, 3vw, 1.2rem) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin: 15px 0 !important;
+    box-shadow: 0 0 20px rgba(255, 255, 0, 0.3) !important;
+}
+
+/* Twitter block */
+#game-over .twitter-block {
+    width: 100% !important;
+    max-width: 400px !important;
+    background: rgba(255, 255, 0, 0.05) !important;
+    border: 1px solid rgba(255, 255, 0, 0.3) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin: 20px 0 !important;
+    text-align: center !important;
+}
+
+#game-over .twitter-block h3 {
+    color: #FFFF00 !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 15px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+}
+
+/* Action buttons container */
+#game-over .action-group {
+    width: 100% !important;
+    max-width: 400px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+}
+
+/* All buttons base style */
+#game-over button,
+#game-over .go-btn {
+    display: block !important;
+    width: 100% !important;
+    min-height: 50px !important;
+    padding: 14px 24px !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Primary button (CLAIM) */
+#game-over .go-btn.primary,
+#game-over #unlock-tier {
+    background: #FFFF00 !important;
+    color: #000000 !important;
+    border: 2px solid #FFFF00 !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 0, 0.4) !important;
+}
+
+#game-over .go-btn.primary:hover,
+#game-over #unlock-tier:hover {
+    background: #FFD700 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 255, 0, 0.6) !important;
+}
+
+/* Play Again button */
+#game-over #play-again {
+    background: transparent !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+#game-over #play-again:hover {
+    background: rgba(255, 255, 0, 0.1) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 0, 0.3) !important;
+}
+
+/* Exit button */
+#game-over button[onclick*="location.href"],
+#game-over .exit-btn {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+#game-over button[onclick*="location.href"]:hover,
+#game-over .exit-btn:hover {
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Twitter buttons */
+#game-over .go-btn.twitter {
+    background: transparent !important;
+    color: #1DA1F2 !important;
+    border: 2px solid #1DA1F2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+#game-over .go-btn.twitter:hover {
+    background: rgba(29, 161, 242, 0.1) !important;
+    transform: translateY(-2px) !important;
+}
+
+#game-over .go-btn.verify {
+    background: transparent !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+#game-over .go-btn.verify:hover {
+    background: rgba(255, 255, 0, 0.1) !important;
+}
+
+/* Success message */
+#game-over .success-msg {
+    color: #4CAF50 !important;
+    font-size: 0.9rem !important;
+    margin-top: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    #game-over .game-over-gallery {
+        padding: 20px 15px !important;
+        max-height: 100vh !important;
+    }
+    
+    #game-over .go-title {
+        font-size: 1.3rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    #game-over .go-score {
+        font-size: 3rem !important;
+    }
+    
+    #game-over .go-tier {
+        font-size: 0.9rem !important;
+        padding: 8px 20px !important;
+    }
+    
+    #game-over button,
+    #game-over .go-btn {
+        min-height: 48px !important;
+        font-size: 0.95rem !important;
+        padding: 12px 20px !important;
+    }
+    
+    #game-over .action-group {
+        gap: 10px !important;
+    }
+    
+    #game-over .twitter-block {
+        padding: 15px !important;
+        margin: 15px 0 !important;
+    }
+    
+    /* Ensure full width on mobile */
+    #game-over .content-wrapper,
+    #game-over .action-group,
+    #game-over .twitter-block {
+        width: 100% !important;
+        max-width: none !important;
+    }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+    #game-over .go-title {
+        font-size: 1.1rem !important;
+    }
+    
+    #game-over .go-score {
+        font-size: 2.5rem !important;
+    }
+    
+    #game-over button,
+    #game-over .go-btn {
+        font-size: 0.85rem !important;
+        letter-spacing: 0.5px !important;
+    }
+}
+
+/* Ensure buttons are always clickable */
+#game-over button:not(:disabled),
+#game-over .go-btn:not(:disabled) {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}
+
+/* Disabled state */
+#game-over button:disabled,
+#game-over .go-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Animation for appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#game-over .content-wrapper > * {
+    animation: fadeInUp 0.5s ease forwards;
+    animation-fill-mode: both;
+}
+
+#game-over .go-title { animation-delay: 0.1s; }
+#game-over .score-section { animation-delay: 0.2s; }
+#game-over .twitter-block { animation-delay: 0.3s; }
+#game-over .action-group { animation-delay: 0.4s; }
+
+/* Button ripple effect */
+#game-over button::before,
+#game-over .go-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#game-over button:active::before,
+#game-over .go-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Ensure text is always readable */
+#game-over * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}

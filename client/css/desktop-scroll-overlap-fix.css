@@ -1,0 +1,131 @@
+/* Desktop Scroll Overlap Fix */
+/* This file fixes the issue where content below the game window overlaps with the header when scrolling */
+
+/* Desktop-specific styles (min-width: 1024px) */
+@media screen and (min-width: 1024px) {
+    /* Ensure header stays on top with proper z-index */
+    #header, header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 99999 !important; /* Maximum z-index to stay on top */
+        background: #000000 !important; /* Solid background to hide content behind */
+        background-color: #000000 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important; /* Add shadow for depth */
+    }
+    
+    /* Create a stacking context for the main content */
+    .content-wrapper {
+        position: relative !important;
+        z-index: 1 !important; /* Below header */
+    }
+    
+    /* Ensure main content sections stay below header */
+    main, 
+    #main-content,
+    section,
+    #game,
+    #stats,
+    #purchase,
+    #tokenomics,
+    #how-to-play {
+        position: relative !important;
+        z-index: 10 !important; /* Well below header */
+    }
+    
+    /* Game wrapper specific - ensure it doesn't overlap */
+    #gameWrapper,
+    #game-wrapper,
+    .game-container {
+        position: relative !important;
+        z-index: 10 !important;
+        overflow: hidden !important; /* Prevent content from escaping */
+    }
+    
+    /* Ensure game iframe stays contained */
+    #gameWrapper iframe,
+    #game-wrapper iframe {
+        position: relative !important;
+        z-index: 10 !important;
+    }
+    
+    /* Background elements should stay in background */
+    #three-canvas,
+    .lightning-rain,
+    .bg-animation {
+        z-index: 0 !important; /* Absolute background */
+    }
+    
+    /* Fix for any floating elements */
+    .floating,
+    .modal-backdrop {
+        z-index: 9998 !important; /* Just below header */
+    }
+    
+    /* Modals should be above header */
+    .modal,
+    #qrScannerModal,
+    #invoiceModal {
+        z-index: 100000 !important; /* Above header */
+    }
+    
+    /* Ensure proper body padding to account for fixed header */
+    body {
+        padding-top: 100px !important; /* Adjust based on header height */
+    }
+    
+    /* Additional containment for scrolling content */
+    .container {
+        position: relative !important;
+        z-index: 10 !important;
+    }
+    
+    /* Prevent any section from having higher z-index than header */
+    * {
+        max-z-index: 99998; /* CSS custom property as a reminder */
+    }
+    
+    /* Override any inline styles that might cause issues */
+    [style*="z-index: 9999"] {
+        z-index: 99998 !important; /* Force below header */
+    }
+    
+    /* Special case: if header z-index is being overridden, re-enforce it */
+    #header[style*="z-index"],
+    header[style*="z-index"] {
+        z-index: 99999 !important;
+    }
+}
+
+/* Large desktop screens */
+@media screen and (min-width: 1440px) {
+    body {
+        padding-top: 110px !important; /* Slightly more padding for larger screens */
+    }
+}
+
+/* Ultra-wide desktop screens */
+@media screen and (min-width: 1920px) {
+    body {
+        padding-top: 120px !important; /* More padding for ultra-wide */
+    }
+}
+
+/* Additional fix for smooth scrolling behavior */
+@media screen and (min-width: 1024px) {
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px; /* Account for fixed header */
+    }
+    
+    /* Ensure sections don't jump under header when using anchor links */
+    section[id]:before {
+        content: "";
+        display: block;
+        height: 100px; /* Same as header height */
+        margin-top: -100px;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}

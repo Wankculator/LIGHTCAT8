@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Light Cat - Professional 3D Game Experience</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://unpkg.com/three@0.160.0/build/three.module.js" as="script" crossorigin>
+    
+    <!-- Favicon and app icons -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Play RGB Light Cat - The world's first professional 3D web game with Bitcoin Lightning rewards">
+    <meta name="keywords" content="3D game, Bitcoin, Lightning Network, RGB tokens, web game, cryptocurrency">
+    <meta name="author" content="RGB Light Cat Team">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rgblightcat.com/game.html">
+    <meta property="og:title" content="RGB Light Cat - 3D Gaming Experience">
+    <meta property="og:description" content="Professional 3D web gaming with Bitcoin Lightning rewards">
+    <meta property="og:image" content="https://rgblightcat.com/og-image.png">
+    
+    <!-- Import Maps for ES6 modules -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/": "https://unpkg.com/three@0.160.0/"
+        }
+    }
+    </script>
+    
+    <!-- Critical CSS (inline for performance) -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            height: 100vh;
+            color: white;
+        }
+        
+        #game-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #87CEEB;
+        }
+        
+        /* Loading Screen */
+        #loading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .loading-container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .loading-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .progress-bar {
+            width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fff600, #ffaa00);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        #loading-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+        
+        /* Game UI */
+        #game-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            pointer-events: none;
+            z-index: 100;
+        }
+        
+        .game-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            pointer-events: auto;
+        }
+        
+        .game-stats h3 {
+            margin: 0 0 5px 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff600;
+        }
+        
+        #backButton {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            pointer-events: auto;
+            transition: background 0.3s ease;
+        }
+        
+        #backButton:hover {
+            background: #cc3333;
+        }
+        
+        /* Mobile Controls */
+        .mobile-controls {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: none;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+        
+        .mobile-joystick {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            position: relative;
+            pointer-events: auto;
+        }
+        
+        .joystick-handle {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
+        
+        .mobile-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            pointer-events: auto;
+            user-select: none;
+            transition: transform 0.1s ease;
+        }
+        
+        .mobile-button:active {
+            transform: scale(0.95);
+        }
+        
+        #controls-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: none;
+            pointer-events: auto;
+        }
+        
+        /* Error Display */
+        .error-display {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10000;
+            display: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+            }
+            
+            #controls-toggle {
+                display: block;
+            }
+            
+            .game-stats {
+                font-size: 1rem;
+                padding: 10px 15px;
+            }
+            
+            .stat-value {
+                font-size: 1.3rem;
+            }
+            
+            .loading-title {
+                font-size: 2rem;
+            }
+            
+            .progress-bar {
+                width: 250px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-stats {
+                top: 10px;
+                left: 10px;
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            #backButton {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Performance Optimizations */
+        .mobile-joystick,
+        .mobile-button,
+        #backButton {
+            will-change: transform;
+        }
+        
+        /* Debug Mode Styles */
+        body.debug-mode #performance-display {
+            display: block !important;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .loading-title {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Game Canvas -->
+    <canvas id="game-canvas"></canvas>
+    
+    <!-- Loading Screen -->
+    <div id="loading-progress">
+        <div class="loading-container">
+            <h1 class="loading-title">RGB Light Cat</h1>
+            <div class="progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+            <p id="loading-text">Initializing...</p>
+        </div>
+    </div>
+    
+    <!-- Game UI Overlay -->
+    <div id="game-ui">
+        <!-- Game Stats -->
+        <div class="game-stats">
+            <div>
+                <h3>Lightning Collected</h3>
+                <div id="score" class="stat-value">0</div>
+            </div>
+            <div style="margin-top: 15px;">
+                <h3>Time Remaining</h3>
+                <div id="timer" class="stat-value">30</div>
+            </div>
+        </div>
+        
+        <!-- Back Button -->
+        <button id="backButton">
+            <span>← Back to Menu</span>
+        </button>
+    </div>
+    
+    <!-- Mobile Controls -->
+    <div class="mobile-controls" id="mobile-controls">
+        <!-- Virtual Joystick -->
+        <div class="mobile-joystick" id="mobile-joystick">
+            <div class="joystick-handle" id="joystick-handle"></div>
+        </div>
+        
+        <!-- Jump Button -->
+        <div class="mobile-button" id="mobile-jump">
+            JUMP
+        </div>
+    </div>
+    
+    <!-- Controls Toggle -->
+    <button id="controls-toggle">Hide Controls</button>
+    
+    <!-- Error Display -->
+    <div class="error-display" id="error-display">
+        <h3>Error</h3>
+        <p id="error-message">An error occurred</p>
+        <button onclick="location.reload()">Reload</button>
+    </div>
+    
+    <!-- Main Application Script -->
+    <script type="module">
+        // Feature Detection
+        function checkBrowserSupport() {
+            const issues = [];
+            
+            // Check for ES6 modules
+            if (!('noModule' in HTMLScriptElement.prototype)) {
+                issues.push('ES6 modules not supported');
+            }
+            
+            // Check for WebGL
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                issues.push('WebGL not supported');
+            }
+            
+            // Check for Web Audio API
+            if (!window.AudioContext && !window.webkitAudioContext) {
+                issues.push('Web Audio API not supported (audio will be disabled)');
+            }
+            
+            if (issues.length > 0) {
+                console.warn('Browser compatibility issues:', issues);
+                document.getElementById('loading-text').textContent = 
+                    'Browser compatibility issues detected. Some features may not work.';
+            }
+            
+            return issues.length === 0;
+        }
+        
+        // Initialize Application
+        async function initializeApp() {
+            try {
+                // Check browser support
+                checkBrowserSupport();
+                
+                // Dynamic import of the main application
+                const { default: RGBLightCatApp } = await import('../src/main.js');
+                
+                console.log('Application loaded successfully');
+                
+            } catch (error) {
+                console.error('Failed to load application:', error);
+                
+                // Show error to user
+                document.getElementById('loading-text').textContent = 
+                    'Failed to load game. Please refresh the page.';
+                document.getElementById('loading-text').style.color = '#ff5252';
+                
+                // Show detailed error in console
+                console.error('Error details:', error.stack);
+            }
+        }
+        
+        // Handle page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+        
+        // Global error handling
+        window.addEventListener('error', (event) => {
+            console.error('Global error:', event.error);
+            
+            const errorDisplay = document.getElementById('error-display');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (errorDisplay && errorMessage) {
+                errorMessage.textContent = event.error.message || 'An unexpected error occurred';
+                errorDisplay.style.display = 'block';
+            }
+        });
+        
+        // Handle unhandled promise rejections
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled promise rejection:', event.reason);
+            
+            const errorDisplay = document.getElementById('error-display');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (errorDisplay && errorMessage) {
+                errorMessage.textContent = 'Network error occurred. Please check your connection.';
+                errorDisplay.style.display = 'block';
+            }
+        });
+        
+        // Performance monitoring
+        if ('performance' in window && 'mark' in performance) {
+            performance.mark('app-start');
+            
+            window.addEventListener('load', () => {
+                performance.mark('app-loaded');
+                performance.measure('app-load-time', 'app-start', 'app-loaded');
+                
+                const loadTime = performance.getEntriesByName('app-load-time')[0];
+                console.log(`App load time: ${loadTime.duration.toFixed(2)}ms`);
+            });
+        }
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,685 @@
+/* ================================================
+   LIGHTCAT PERFECT MOBILE UI - PIXEL PERFECT
+   No gaps, no overlaps, no bleeds, just perfection
+   ================================================ */
+
+/* Global Mobile Reset - Perfect Scaling */
+@media screen and (max-width: 768px) {
+    /* Reset all elements for perfect mobile rendering */
+    * {
+        box-sizing: border-box !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+    
+    /* Prevent horizontal scroll */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Perfect viewport scaling */
+    body {
+        min-height: 100vh !important;
+        position: relative !important;
+        padding-top: 0 !important;
+    }
+}
+
+/* ================================================
+   PERFECT MOBILE HEADER - NO BLEEDS
+   ================================================ */
+@media screen and (max-width: 768px) {
+    header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        background: rgba(0, 0, 0, 0.98) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        z-index: 99999 !important;
+        padding: 12px 0 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8) !important;
+        border-bottom: none !important;
+    }
+    
+    .container {
+        padding: 0 16px !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    .header-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 8px !important;
+        position: relative !important;
+    }
+    
+    .logo-section {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+    
+    .logo {
+        width: 45px !important;
+        height: 45px !important;
+        object-fit: contain !important;
+    }
+    
+    .site-title {
+        font-size: 1.6rem !important;
+        color: #FFFF00 !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        letter-spacing: 2px !important;
+    }
+    
+    .tagline {
+        font-size: 0.75rem !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+        text-align: center !important;
+        /* Perfect animation without overflow */
+        background: linear-gradient(90deg, 
+            #2a2a2a 0%,
+            #2a2a2a 40%,
+            #666666 48%,
+            #FFFF00 50%,
+            #FFFF00 52%,
+            #666666 54%,
+            #2a2a2a 62%,
+            #2a2a2a 100%
+        ) !important;
+        background-size: 300% 100% !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        animation: lightning-strike 4s ease-in-out infinite !important;
+    }
+    
+    /* Mobile menu button - perfectly positioned */
+    .mobile-menu-toggle {
+        position: absolute !important;
+        top: 50% !important;
+        right: 16px !important;
+        transform: translateY(-50%) !important;
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 1px solid rgba(255, 255, 0, 0.3) !important;
+        border-radius: 4px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* ================================================
+   PERFECT CONTENT SPACING - NO OVERLAPS
+   ================================================ */
+@media screen and (max-width: 768px) {
+    /* Main content wrapper with proper spacing */
+    .content-wrapper {
+        padding-top: 110px !important; /* Exact header height */
+        position: relative !important;
+        z-index: 1 !important;
+        background: #000 !important;
+    }
+    
+    /* Hero section - perfect spacing */
+    .hero {
+        min-height: calc(100vh - 110px) !important;
+        padding: 40px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 2 !important;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem !important;
+        line-height: 1.1 !important;
+        margin: 0 0 16px 0 !important;
+        color: #FFD700 !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+        line-height: 1.4 !important;
+        margin: 0 0 24px 0 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+}
+
+/* ================================================
+   STATS SECTION - PERFECT ALIGNMENT
+   ================================================ */
+@media screen and (max-width: 768px) {
+    #stats {
+        padding: 48px 16px !important;
+        background: #000 !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    /* Section titles - consistent sizing */
+    .section-title,
+    #stats h2 {
+        font-size: 1.6rem !important;
+        line-height: 1.2 !important;
+        margin: 0 0 24px 0 !important;
+        text-align: center !important;
+        color: #FFFFFF !important;
+        letter-spacing: 1.5px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        transition: color 0.3s ease !important;
+    }
+    
+    .section-title:active,
+    #stats h2:active {
+        color: #FFFF00 !important;
+    }
+    
+    /* Progress container - perfect alignment */
+    .progress-container {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        padding: 3px !important;
+        margin: 0 0 32px 0 !important;
+        overflow: hidden !important;
+    }
+    
+    .progress-bar {
+        height: 24px !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+        border-radius: 10px !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .progress-fill {
+        height: 100% !important;
+        background: linear-gradient(90deg, #FFD700, #FFA500) !important;
+        border-radius: 10px !important;
+        transition: width 0.5s ease !important;
+    }
+    
+    .progress-text {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #fff !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Stats grid - perfect spacing */
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin: 0 !important;
+    }
+    
+    .stat-card {
+        background: rgba(255, 215, 0, 0.05) !important;
+        border: 1px solid rgba(255, 215, 0, 0.2) !important;
+        border-radius: 12px !important;
+        padding: 20px !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stat-card:active {
+        transform: scale(0.98) !important;
+        border-color: rgba(255, 215, 0, 0.5) !important;
+    }
+    
+    .stat-card h3 {
+        font-size: 0.9rem !important;
+        color: #FFD700 !important;
+        margin: 0 0 8px 0 !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem !important;
+        color: #FFF !important;
+        font-weight: 700 !important;
+        margin: 0 0 4px 0 !important;
+        font-family: 'JetBrains Mono', monospace !important;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        margin: 0 !important;
+    }
+}
+
+/* ================================================
+   GAME SECTION - PERFECT SIZING
+   ================================================ */
+@media screen and (max-width: 768px) {
+    #game {
+        padding: 48px 16px !important;
+        background: #0A0A0A !important;
+    }
+    
+    .tier-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin: 0 0 24px 0 !important;
+    }
+    
+    .tier-card {
+        background: rgba(255, 215, 0, 0.05) !important;
+        border: 1px solid rgba(255, 215, 0, 0.2) !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        text-align: center !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .tier-card:active {
+        transform: scale(0.98) !important;
+        border-color: rgba(255, 215, 0, 0.5) !important;
+    }
+    
+    .game-container {
+        background: #000 !important;
+        border: 1px solid rgba(255, 255, 0, 0.2) !important;
+        border-radius: 16px !important;
+        padding: 16px !important;
+        margin: 0 !important;
+    }
+    
+    #gameWrapper {
+        width: 100% !important;
+        height: 450px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+    
+    .play-button {
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 16px auto !important;
+        padding: 16px 32px !important;
+        font-size: 1.1rem !important;
+        border-radius: 50px !important;
+        background: linear-gradient(45deg, #FFD700, #FFA500) !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .play-button:active {
+        transform: translateY(2px) !important;
+        box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3) !important;
+    }
+}
+
+/* ================================================
+   PURCHASE SECTION - PERFECT FORMS
+   ================================================ */
+@media screen and (max-width: 768px) {
+    #purchase {
+        padding: 48px 16px !important;
+        background: #000 !important;
+    }
+    
+    .purchase-form {
+        background: rgba(255, 215, 0, 0.03) !important;
+        border: 1px solid rgba(255, 215, 0, 0.2) !important;
+        border-radius: 16px !important;
+        padding: 24px 16px !important;
+        margin: 0 !important;
+    }
+    
+    .form-group {
+        margin: 0 0 20px 0 !important;
+    }
+    
+    .form-group label {
+        display: block !important;
+        font-size: 0.9rem !important;
+        color: #FFD700 !important;
+        font-weight: 600 !important;
+        margin: 0 0 8px 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .form-input,
+    input[type="text"],
+    input[type="email"],
+    select {
+        width: 100% !important;
+        height: 48px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 215, 0, 0.2) !important;
+        border-radius: 8px !important;
+        padding: 0 16px !important;
+        color: #FFF !important;
+        font-size: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .form-input:focus,
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+        outline: none !important;
+        border-color: #FFD700 !important;
+        background: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1) !important;
+    }
+    
+    /* Batch selector - perfect alignment */
+    .batch-selector {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 16px !important;
+        margin: 0 !important;
+    }
+    
+    .batch-btn {
+        width: 48px !important;
+        height: 48px !important;
+        background: rgba(255, 215, 0, 0.1) !important;
+        border: 1px solid rgba(255, 215, 0, 0.3) !important;
+        border-radius: 8px !important;
+        color: #FFD700 !important;
+        font-size: 1.4rem !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .batch-btn:active {
+        transform: scale(0.9) !important;
+        background: rgba(255, 215, 0, 0.2) !important;
+    }
+    
+    .batch-count {
+        font-size: 1.8rem !important;
+        font-weight: 700 !important;
+        color: #FFD700 !important;
+        min-width: 60px !important;
+        text-align: center !important;
+    }
+    
+    /* Submit button - perfect sizing */
+    .btn,
+    button[type="submit"] {
+        width: 100% !important;
+        height: 52px !important;
+        background: linear-gradient(45deg, #FFD700, #FFA500) !important;
+        color: #000 !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        border: none !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        margin: 0 !important;
+    }
+    
+    .btn:active,
+    button[type="submit"]:active {
+        transform: translateY(2px) !important;
+        box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3) !important;
+    }
+}
+
+/* ================================================
+   FOOTER - PERFECT ALIGNMENT
+   ================================================ */
+@media screen and (max-width: 768px) {
+    footer {
+        background: #000 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 24px 16px !important;
+        text-align: center !important;
+        margin: 0 !important;
+    }
+    
+    footer p {
+        font-size: 0.85rem !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        margin: 0 !important;
+        line-height: 1.4 !important;
+    }
+    
+    footer a {
+        color: #FFD700 !important;
+        text-decoration: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    footer a:active {
+        opacity: 0.7 !important;
+    }
+}
+
+/* ================================================
+   RESPONSIVE BREAKPOINTS - PERFECT SCALING
+   ================================================ */
+
+/* Small phones (320px - 374px) */
+@media screen and (max-width: 374px) {
+    .site-title {
+        font-size: 1.4rem !important;
+    }
+    
+    .section-title,
+    #stats h2 {
+        font-size: 1.4rem !important;
+    }
+    
+    .hero h1 {
+        font-size: 1.9rem !important;
+    }
+    
+    .stat-value {
+        font-size: 1.6rem !important;
+    }
+    
+    .container {
+        padding: 0 12px !important;
+    }
+}
+
+/* Standard phones (375px - 413px) */
+@media screen and (min-width: 375px) and (max-width: 413px) {
+    .site-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .section-title,
+    #stats h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    .hero h1 {
+        font-size: 2rem !important;
+    }
+}
+
+/* Large phones (414px - 767px) */
+@media screen and (min-width: 414px) and (max-width: 767px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .tier-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* ================================================
+   ANIMATIONS - OPTIMIZED FOR MOBILE
+   ================================================ */
+@media screen and (max-width: 768px) {
+    @keyframes lightning-strike {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+    }
+    
+    /* Disable heavy animations on mobile */
+    * {
+        animation-duration: 0.3s !important;
+        transition-duration: 0.3s !important;
+    }
+    
+    /* Keep only essential animations */
+    .tagline {
+        animation-duration: 4s !important;
+    }
+}
+
+/* ================================================
+   UTILITIES - PERFECT MOBILE HELPERS
+   ================================================ */
+@media screen and (max-width: 768px) {
+    /* Prevent text selection on buttons */
+    button, .btn, .batch-btn {
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+    
+    /* Ensure proper touch targets */
+    a, button, input, select, textarea {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+    
+    /* Fix iOS input zoom */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+    
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Hide scrollbars but keep functionality */
+    ::-webkit-scrollbar {
+        display: none !important;
+    }
+    
+    * {
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+    }
+}
+
+/* ================================================
+   MODAL & OVERLAY - PERFECT MOBILE MODALS
+   ================================================ */
+@media screen and (max-width: 768px) {
+    .modal {
+        padding: 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .modal-content {
+        width: 100% !important;
+        max-width: calc(100% - 32px) !important;
+        max-height: calc(100vh - 32px) !important;
+        margin: 0 !important;
+        border-radius: 16px !important;
+        padding: 24px 16px !important;
+        overflow-y: auto !important;
+    }
+    
+    .modal-close {
+        position: absolute !important;
+        top: 12px !important;
+        right: 12px !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 1.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-radius: 50% !important;
+    }
+}
+
+/* ================================================
+   FINAL PERFECTION OVERRIDES
+   ================================================ */
+@media screen and (max-width: 768px) {
+    /* Ensure no horizontal overflow anywhere */
+    * {
+        max-width: 100% !important;
+    }
+    
+    /* Perfect image scaling */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* No orphaned text */
+    p, h1, h2, h3, h4, h5, h6 {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+    
+    /* Perfect touch feedback */
+    *:active {
+        -webkit-tap-highlight-color: rgba(255, 215, 0, 0.1) !important;
+    }
+}

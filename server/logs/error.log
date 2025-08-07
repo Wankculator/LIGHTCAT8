@@ -1,0 +1,33 @@
+[2025-07-28T04:02:27.030Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:28.035Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:30.042Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:30.042Z] [ERROR] Failed to create RGB transfer: 
+[2025-07-28T04:02:30.043Z] [ERROR] Failed to generate consignment: 
+[2025-07-28T04:02:30.048Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:31.052Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:33.056Z] [ERROR] RGB API request failed: {
+  endpoint: '/transfers/create',
+  method: 'POST',
+  error: 'fetch failed'
+}
+[2025-07-28T04:02:33.057Z] [ERROR] Failed to create RGB transfer: 

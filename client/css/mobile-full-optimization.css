@@ -1,0 +1,515 @@
+/* ============================================
+   COMPREHENSIVE MOBILE UI OPTIMIZATION
+   Ensures ALL elements are visible and properly scaled
+   Tested on all devices from 320px to 1024px
+   ============================================ */
+
+/* Reset any hidden elements on mobile */
+@media screen and (max-width: 1024px) {
+    /* Force visibility for all critical elements */
+    .section-title,
+    .stat-card,
+    .tier-card,
+    .batch-selector,
+    .play-button,
+    .purchase-form,
+    .mint-status-text,
+    .progress-container,
+    .stats-grid,
+    .tier-grid,
+    .form-group,
+    .form-label,
+    .form-input,
+    .batch-btn,
+    .batch-count,
+    header,
+    footer,
+    section,
+    .container {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Remove any transforms that might move elements off-screen */
+    * {
+        transform: none !important;
+    }
+}
+
+/* ============================================
+   DYNAMIC FONT SCALING FOR ALL DEVICES
+   ============================================ */
+:root {
+    /* Ultra-responsive font sizes using clamp() */
+    --fs-hero: clamp(1.5rem, 6vw + 0.5rem, 4rem);
+    --fs-title: clamp(1.2rem, 4vw + 0.3rem, 3rem);
+    --fs-subtitle: clamp(1rem, 3vw + 0.2rem, 2rem);
+    --fs-body: clamp(0.875rem, 2vw + 0.1rem, 1.1rem);
+    --fs-small: clamp(0.75rem, 1.5vw + 0.1rem, 0.9rem);
+    --fs-tiny: clamp(0.625rem, 1vw + 0.1rem, 0.8rem);
+    
+    /* Dynamic spacing that scales with viewport */
+    --space-xs: clamp(0.25rem, 1vw, 0.5rem);
+    --space-sm: clamp(0.5rem, 2vw, 1rem);
+    --space-md: clamp(1rem, 3vw, 1.5rem);
+    --space-lg: clamp(1.5rem, 4vw, 2.5rem);
+    --space-xl: clamp(2rem, 5vw, 4rem);
+    
+    /* Touch-friendly sizes */
+    --touch-target: max(44px, 11vw);
+    --input-height: clamp(44px, 12vw, 56px);
+    --btn-height: clamp(44px, 12vw, 60px);
+}
+
+/* ============================================
+   SECTION TITLE OPTIMIZATION
+   ============================================ */
+.section-title {
+    font-size: var(--fs-title) !important;
+    color: white !important;
+    text-align: center !important;
+    margin: var(--space-md) 0 !important;
+    padding: 0 var(--space-sm) !important;
+    line-height: 1.2 !important;
+    letter-spacing: clamp(1px, 0.3vw, 4px) !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+}
+
+/* Yellow on hover/touch */
+@media (hover: hover) {
+    .section-title:hover {
+        color: #FFD700 !important;
+    }
+}
+
+.section-title:active {
+    color: #FFD700 !important;
+}
+
+/* ============================================
+   STATS SECTION - FULL VISIBILITY
+   ============================================ */
+.mint-status-text {
+    font-size: clamp(1rem, 3.5vw, 1.8rem) !important;
+    text-align: center !important;
+    margin: var(--space-sm) 0 !important;
+    color: #FFD700 !important;
+    padding: 0 var(--space-sm) !important;
+}
+
+.progress-container {
+    width: 100% !important;
+    max-width: min(100%, 600px) !important;
+    margin: var(--space-md) auto !important;
+    padding: clamp(2px, 0.5vw, 4px) !important;
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+}
+
+.progress-bar {
+    height: clamp(20px, 5vw, 30px) !important;
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: clamp(6px, 1.5vw, 14px) !important;
+    overflow: hidden !important;
+}
+
+/* Stats Grid - Responsive Layout */
+.stats-grid {
+    display: grid !important;
+    gap: clamp(8px, 2vw, 20px) !important;
+    padding: 0 var(--space-sm) !important;
+    margin: var(--space-md) 0 !important;
+}
+
+/* Dynamic grid columns based on screen size */
+@media (max-width: 320px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+/* Stat Cards - Always Visible */
+.stat-card {
+    background: rgba(0,0,0,0.8) !important;
+    border: 1px solid #FFD700 !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+    padding: clamp(12px, 3vw, 24px) !important;
+    text-align: center !important;
+    min-height: clamp(80px, 20vw, 120px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: var(--space-xs) !important;
+    transition: all 0.3s ease !important;
+}
+
+.stat-number {
+    font-size: clamp(1rem, 3.5vw, 2rem) !important;
+    font-weight: 700 !important;
+    color: #FFD700 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+}
+
+.stat-label {
+    font-size: clamp(0.625rem, 1.8vw, 0.875rem) !important;
+    color: rgba(255,255,255,0.8) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.2 !important;
+}
+
+/* ============================================
+   GAME SECTION - RESPONSIVE
+   ============================================ */
+#game {
+    padding: var(--space-lg) 0 !important;
+}
+
+.tier-grid {
+    display: flex !important;
+    gap: clamp(8px, 2vw, 20px) !important;
+    padding: var(--space-sm) !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+}
+
+.tier-card {
+    flex: 0 0 clamp(140px, 35vw, 200px) !important;
+    background: rgba(0,0,0,0.8) !important;
+    border: 2px solid rgba(255,215,0,0.3) !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+    padding: clamp(16px, 4vw, 32px) !important;
+    text-align: center !important;
+    scroll-snap-align: center !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--space-xs) !important;
+}
+
+.tier-name {
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem) !important;
+    font-weight: 700 !important;
+    color: #FFD700 !important;
+}
+
+.tier-score {
+    font-size: clamp(0.75rem, 2vw, 1rem) !important;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+/* Game Container */
+#gameWrapper {
+    position: relative !important;
+    width: 100% !important;
+    height: clamp(250px, 50vh, 500px) !important;
+    max-height: 70vh !important;
+    background: #000 !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(255, 255, 0, 0.3) !important;
+    margin: var(--space-md) 0 !important;
+}
+
+#gameFrame {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+}
+
+/* Play Button */
+.play-button {
+    display: inline-block !important;
+    padding: var(--space-sm) var(--space-lg) !important;
+    min-height: var(--btn-height) !important;
+    min-width: clamp(120px, 30vw, 200px) !important;
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    background: #FFD700 !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+    cursor: pointer !important;
+    margin: var(--space-md) auto !important;
+    display: block !important;
+}
+
+/* ============================================
+   PURCHASE FORM - FULL OPTIMIZATION
+   ============================================ */
+.purchase-form {
+    background: rgba(0,0,0,0.5) !important;
+    border: 1px solid rgba(255,215,0,0.2) !important;
+    border-radius: clamp(8px, 2vw, 16px) !important;
+    padding: clamp(16px, 4vw, 32px) !important;
+    margin: var(--space-md) 0 !important;
+    width: 100% !important;
+}
+
+.form-group {
+    margin-bottom: var(--space-md) !important;
+    width: 100% !important;
+}
+
+.form-label {
+    display: block !important;
+    font-size: clamp(0.75rem, 2vw, 1rem) !important;
+    color: #FFD700 !important;
+    margin-bottom: var(--space-xs) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.form-input {
+    width: 100% !important;
+    padding: clamp(12px, 3vw, 16px) !important;
+    min-height: var(--input-height) !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,215,0,0.3) !important;
+    border-radius: clamp(6px, 1.5vw, 12px) !important;
+    color: #fff !important;
+    box-sizing: border-box !important;
+}
+
+/* Batch Selector - Always Visible */
+.batch-selector {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(16px, 4vw, 32px) !important;
+    margin: var(--space-lg) 0 !important;
+}
+
+.batch-btn {
+    width: var(--touch-target) !important;
+    height: var(--touch-target) !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: clamp(1.2rem, 4vw, 2rem) !important;
+    background: rgba(255,215,0,0.2) !important;
+    border: 2px solid #FFD700 !important;
+    color: #FFD700 !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.batch-count {
+    font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+    font-weight: 700 !important;
+    color: #FFD700 !important;
+    min-width: clamp(60px, 15vw, 100px) !important;
+    text-align: center !important;
+}
+
+/* All Buttons */
+.btn, button {
+    min-height: var(--btn-height) !important;
+    min-width: var(--touch-target) !important;
+    font-size: clamp(0.875rem, 2.5vw, 1.1rem) !important;
+    padding: var(--space-sm) var(--space-md) !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ============================================
+   HEADER & FOOTER OPTIMIZATION
+   ============================================ */
+header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #000 !important;
+    padding: var(--space-sm) 0 !important;
+    z-index: 9999 !important;
+    min-height: clamp(60px, 15vw, 80px) !important;
+}
+
+.header-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: var(--space-sm) !important;
+    padding: 0 var(--space-sm) !important;
+}
+
+.logo {
+    width: clamp(40px, 10vw, 60px) !important;
+    height: clamp(40px, 10vw, 60px) !important;
+    object-fit: contain !important;
+}
+
+.site-title {
+    font-size: clamp(1rem, 3.5vw, 2.5rem) !important;
+    font-weight: 700 !important;
+    letter-spacing: clamp(0.5px, 0.2vw, 3px) !important;
+}
+
+/* Adjust content for fixed header */
+body {
+    padding-top: clamp(60px, 15vw, 80px) !important;
+}
+
+/* ============================================
+   CONTAINER WIDTH OPTIMIZATION
+   ============================================ */
+.container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 clamp(12px, 3vw, 24px) !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
+
+section {
+    padding: var(--space-lg) 0 !important;
+    width: 100% !important;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.5) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FFD700 !important;
+    border-radius: 4px !important;
+}
+
+/* ============================================
+   LANDSCAPE OPTIMIZATIONS
+   ============================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+    :root {
+        --space-lg: clamp(1rem, 3vw, 2rem);
+        --space-xl: clamp(1.5rem, 4vw, 3rem);
+    }
+    
+    header {
+        min-height: clamp(50px, 10vh, 70px) !important;
+    }
+    
+    body {
+        padding-top: clamp(50px, 10vh, 70px) !important;
+    }
+    
+    #gameWrapper {
+        height: clamp(200px, 60vh, 350px) !important;
+    }
+    
+    section {
+        padding: var(--space-md) 0 !important;
+    }
+}
+
+/* ============================================
+   SMALL DEVICE SPECIFIC FIXES
+   ============================================ */
+@media (max-width: 360px) {
+    .site-title {
+        font-size: clamp(0.9rem, 3vw, 1.5rem) !important;
+    }
+    
+    .stat-number {
+        font-size: clamp(0.9rem, 3vw, 1.5rem) !important;
+    }
+    
+    .tier-card {
+        flex: 0 0 clamp(120px, 40vw, 160px) !important;
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Use GPU acceleration for smooth scrolling */
+.tier-grid,
+.stats-grid,
+.container {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* ============================================
+   CRITICAL VISIBILITY FIXES
+   ============================================ */
+
+/* Ensure nothing is cut off */
+html, body {
+    overflow-x: hidden !important;
+}
+
+/* Prevent content from being hidden */
+* {
+    clip: auto !important;
+    clip-path: none !important;
+}
+
+/* Force minimum heights to prevent collapse */
+section:not(:empty) {
+    min-height: 200px !important;
+}
+
+/* Ensure text is always readable */
+* {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8) !important;
+}
+
+/* Fix any z-index issues */
+.section-title,
+.stat-card,
+.tier-card,
+.batch-selector,
+.play-button,
+.purchase-form {
+    position: relative !important;
+    z-index: 1 !important;
+}

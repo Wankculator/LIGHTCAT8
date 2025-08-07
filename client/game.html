@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Light Cat - Collect Lightning</title>
+    
+    <!-- Security and Memory Management - MUST LOAD FIRST -->
+    <script src="js/secure-random-fixed.js"></script>
+    <script src="js/memory-leak-fix.js"></script>
+    <script src="js/game-loading-fix.js"></script>
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- Mobile CSS loaded conditionally via JavaScript -->
+    <style>
+        /* CRITICAL: Prevent yellow flash */
+        html, body { background: #000000 !important; }
+        * { background-color: transparent !important; }
+        #game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        #game-ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            #game-ui {
+                padding: 10px;
+                gap: 10px;
+            }
+        }
+
+        .game-stats {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-sm) var(--spacing-md);
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+            box-shadow: var(--glow-yellow);
+            transition: all var(--transition-fast);
+        }
+        
+        @media (max-width: 768px) {
+            .game-stats {
+                padding: 6px 10px;
+                transform: none;
+                border-width: 1.5px;
+                min-width: auto;
+                backdrop-filter: none;
+                box-shadow: none;
+            }
+            
+            .game-stats h3 {
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+        }
+
+        .game-stats h3 {
+            margin: 0 0 8px 0;
+            color: var(--primary-yellow);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            font-weight: var(--font-weight-bold);
+            letter-spacing: 0.05em;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: var(--font-weight-black);
+            color: var(--pure-white);
+            font-family: var(--font-family);
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+            line-height: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .timer {
+                font-size: 1.25rem;
+                text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            }
+        }
+
+        .score {
+            font-size: 1.5rem;
+            color: var(--primary-yellow);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-weight: var(--font-weight-bold);
+            line-height: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .score {
+                font-size: 1.1rem;
+                gap: 5px;
+            }
+        }
+
+        .lightning-icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .lightning-icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+        
+        .tier-notification {
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            padding: 0.4rem 1.2rem;
+            color: var(--primary-yellow);
+            font-weight: var(--font-weight-semibold);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+            z-index: 150;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tier-notification.show {
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .tier-notification {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+                top: 100px;
+                letter-spacing: 0.03em;
+                border-radius: 10px;
+                max-width: 250px;
+            }
+        }
+
+        #game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000000;
+            display: none;
+            z-index: 300;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        /* Full Page Gallery Styles */
+        .game-over-gallery {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        .gallery-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background: #000000;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .gallery-page {
+            display: none;
+        }
+        
+        .gallery-page.active {
+            display: block;
+        }
+        
+        .go-title {
+            color: var(--primary-yellow);
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+        
+        .score-section {
+            margin: 10px 0;
+        }
+        
+        .go-score {
+            font-size: clamp(2rem, 8vw, 3rem);
+            color: var(--primary-yellow);
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+            margin: 5px 0;
+            line-height: 1;
+        }
+        
+        .go-tier {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 255, 0, 0.1);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        
+        .twitter-block {
+            margin: 15px 0;
+            width: 100%;
+        }
+        
+        .twitter-block h3 {
+            color: var(--primary-yellow);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .twitter-block h3 {
+            color: var(--primary-yellow);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .go-btn {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 3px 0;
+            background: transparent;
+            border: 1.5px solid var(--primary-yellow);
+            color: var(--primary-yellow);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .go-btn.large {
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .go-btn:hover {
+            background: rgba(255, 255, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 0, 0.3);
+        }
+        
+        .go-btn.primary {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+        
+        .go-btn.twitter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .success-msg {
+            color: #4CAF50;
+            font-size: 0.75rem;
+            margin-top: 8px;
+            font-weight: 600;
+            padding: 8px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .action-group {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .benefits-box {
+            display: none;
+            margin-top: 5px;
+            padding: 8px;
+            background: rgba(255, 255, 0, 0.05);
+            border: 1px solid rgba(255, 255, 0, 0.3);
+            border-radius: 8px;
+            font-size: 0.7rem;
+            line-height: 1.2;
+        }
+        
+        .try-again-content {
+            text-align: left;
+        }
+        
+        .try-again-header {
+            color: var(--primary-yellow);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .score-requirements {
+            margin: 5px 0;
+        }
+        
+        .score-requirements p {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3px 0;
+            font-size: 0.65rem;
+        }
+        
+        .tier-label {
+            font-weight: 600;
+        }
+        
+        .tier-label.bronze { color: #CD7F32; }
+        .tier-label.silver { color: #C0C0C0; }
+        .tier-label.gold { color: #FFD700; }
+        
+        .game-tips {
+            margin-top: 5px;
+        }
+        
+        .game-tips h4 {
+            color: var(--primary-yellow);
+            font-size: 0.7rem;
+            margin-bottom: 3px;
+        }
+        
+        .game-tips ul {
+            margin: 0;
+            padding-left: 15px;
+            font-size: 0.6rem;
+            line-height: 1.2;
+        }
+        
+        .game-tips li {
+            margin: 1px 0;
+        }
+        
+        
+        @media (max-width: 768px) {
+            .gallery-wrapper {
+                padding: 5px;
+                max-width: 100%;
+                height: 100%;
+            }
+            
+            .go-title {
+                font-size: 1rem;
+                margin-bottom: 5px;
+            }
+            
+            .go-score {
+                font-size: 2rem;
+                margin: 3px 0;
+            }
+            
+            .go-tier {
+                font-size: 0.75rem;
+                padding: 5px 12px;
+                margin: 5px 0;
+            }
+            
+            .action-group {
+                flex-direction: column;
+                gap: 5px;
+                margin-top: 10px;
+            }
+            
+            .go-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+                min-height: 44px;
+            }
+            
+            .twitter-block {
+                margin: 10px 0;
+            }
+            
+            .twitter-block h3 {
+                font-size: 0.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .score-section {
+                margin: 5px 0;
+            }
+            
+            .benefits-box {
+                font-size: 0.6rem;
+                padding: 5px;
+            }
+            
+            .try-again-header {
+                font-size: 0.85rem;
+            }
+            
+            .score-requirements p {
+                font-size: 0.65rem;
+            }
+            
+            .game-tips h4 {
+                font-size: 0.7rem;
+            }
+            
+            .game-tips ul {
+                font-size: 0.6rem;
+                padding-left: 15px;
+            }
+            
+            /* Hide all scrollbars on mobile */
+            * {
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            *::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        
+        /* Old styles hidden */
+        .game-over-content {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            #game-over {
+                padding: 0;
+            }
+            
+            .game-over-content {
+                padding: 10px;
+                max-width: 280px;
+                max-height: auto;
+                overflow: hidden;
+                font-size: 0.9em;
+            }
+            
+            .game-over-content h2 {
+                font-size: 1.1rem !important;
+                margin-bottom: 3px !important;
+                letter-spacing: 0.5px !important;
+            }
+            
+            .game-over-content .final-score {
+                font-size: 1rem !important;
+                margin-bottom: 5px !important;
+            }
+            
+            .game-over-content .final-score img {
+                width: 16px !important;
+                height: 16px !important;
+            }
+            
+            .tier-unlocked {
+                font-size: 0.9rem !important;
+                margin-bottom: 8px !important;
+            }
+            
+            #twitter-verify {
+                padding: 8px !important;
+                margin-bottom: 8px !important;
+            }
+            
+            #twitter-verify p {
+                font-size: 0.65rem !important;
+                margin-bottom: 4px !important;
+            }
+            
+            .twitter-button {
+                padding: 5px 12px !important;
+                font-size: 0.7rem !important;
+                margin-bottom: 4px !important;
+            }
+            
+            .twitter-button svg {
+                width: 12px !important;
+                height: 12px !important;
+            }
+            
+            #verify-success {
+                padding: 5px !important;
+                margin-top: 5px !important;
+            }
+            
+            #verify-success p {
+                font-size: 0.65rem !important;
+            }
+            
+            #allocation-message {
+                font-size: 0.65rem !important;
+                padding: 5px !important;
+                margin-top: 5px !important;
+                line-height: 1.2 !important;
+            }
+            
+            button.btn {
+                padding: 6px 16px !important;
+                font-size: 0.75rem !important;
+            }
+            
+            /* Reduce gaps in button container */
+            .game-over-content > div:last-child {
+                gap: 5px !important;
+                margin-top: 8px !important;
+            }
+        }
+
+        #game-over h2 {
+            color: var(--primary-yellow);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--font-weight-bold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        @media (max-width: 768px) {
+            #game-over h2 {
+                font-size: 1.25rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .final-score {
+            font-size: 1.5rem;
+            color: var(--primary-yellow);
+            margin: var(--spacing-sm) 0;
+            font-weight: var(--font-weight-bold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-xs);
+        }
+        
+        @media (max-width: 768px) {
+            .final-score {
+                font-size: 1.25rem;
+            }
+        }
+
+        .tier-unlocked {
+            color: var(--primary-yellow);
+            font-size: 1rem;
+            font-weight: var(--font-weight-bold);
+            margin: var(--spacing-sm) 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        @media (max-width: 768px) {
+            .tier-unlocked {
+                font-size: 0.85rem;
+                margin: 10px 0;
+            }
+        }
+
+        .game-controls {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            border: 2px solid var(--primary-yellow);
+            z-index: 100;
+            box-shadow: var(--shadow-medium);
+            display: none; /* Hide on mobile */
+        }
+        
+        @media (min-width: 768px) {
+            .game-controls {
+                display: block;
+            }
+        }
+
+        .control-hint {
+            color: #ccc;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .control-key {
+            color: var(--primary-yellow);
+            font-weight: var(--font-weight-bold);
+            background: rgba(255, 255, 0, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 0 5px;
+            border: 1px solid var(--primary-yellow);
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+        }
+
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            padding: var(--spacing-md);
+        }
+
+        .start-content {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .start-content h1 {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-yellow), var(--electric-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: var(--font-weight-black);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        @media (max-width: 768px) {
+            .start-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        .game-instructions {
+            background: rgba(255, 255, 0, 0.05);
+            border: 2px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            box-shadow: var(--shadow-small);
+        }
+        
+        @media (max-width: 768px) {
+            .game-instructions {
+                padding: var(--spacing-md);
+                margin: var(--spacing-md) 0;
+            }
+        }
+
+        .tier-requirements {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-sm);
+            margin: var(--spacing-md) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .tier-requirements {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xs);
+            }
+        }
+
+        .tier-requirement {
+            background: rgba(255, 255, 0, 0.05);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border: 2px solid rgba(255, 255, 0, 0.2);
+            transition: all var(--transition-fast);
+        }
+        
+        .tier-requirement:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-small);
+            border-color: var(--primary-yellow);
+        }
+        
+        .tier-requirement h4 {
+            font-weight: var(--font-weight-bold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .tier-requirement p {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .tier-requirement small {
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .tier-requirement {
+                padding: var(--spacing-xs);
+            }
+            .tier-requirement p {
+                font-size: 1rem;
+            }
+        }
+
+        .tier-requirement.bronze { border-color: #CD7F32; }
+        .tier-requirement.silver { border-color: #C0C0C0; }
+        .tier-requirement.gold { border-color: #FFD700; }
+        .tier-requirement.platinum { border-color: #E5E4E2; }
+
+        #loading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000 !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        #loading-progress h2 {
+            color: var(--primary-yellow);
+            font-size: 2rem;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 1px solid rgba(255, 255, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-yellow);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        #twitter-verify {
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 0, 0.05);
+            border: 1px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        #twitter-verify p {
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-xs);
+            color: #ccc;
+        }
+
+        .twitter-button {
+            background: transparent;
+            color: var(--primary-yellow);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            display: inline-block;
+            margin: var(--spacing-xs) 0;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .twitter-button:hover {
+            background: var(--primary-yellow);
+            color: var(--primary-black);
+        }
+        
+        #play-again {
+            background: #fff600 !important;
+            color: #000000 !important;
+            border-color: #fff600 !important;
+        }
+        
+        #play-again:hover {
+            background: #e6dd00 !important;
+            color: #000000 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 246, 0, 0.4);
+        }
+        
+        /* Mobile Controls */
+        .mobile-controls {
+            position: fixed;
+            bottom: 120px; /* CRITICAL: Must be 120px per CLAUDE.md */
+            left: 0;
+            right: 0;
+            display: none;
+            z-index: 1000;
+            padding: var(--spacing-sm);
+            pointer-events: none;
+        }
+        
+        /* Show ONLY on mobile devices, not desktop */
+        @media (max-width: 768px) and (pointer: coarse) {
+            .mobile-controls {
+                display: block !important;
+            }
+        }
+        
+        .mobile-joystick {
+            position: absolute;
+            left: 20px;
+            bottom: 20px; /* Adjusted since container is now at 120px */
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 246, 0, 0.3);
+            border: 3px solid var(--primary-yellow);
+            border-radius: 50%;
+            pointer-events: auto;
+            touch-action: none;
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 246, 0, 0.5),
+                        inset 0 0 20px rgba(255, 246, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .mobile-joystick:active {
+            background: rgba(255, 246, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 246, 0, 0.7),
+                        inset 0 0 25px rgba(255, 246, 0, 0.3);
+        }
+        
+        .joystick-handle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-yellow);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(255, 246, 0, 0.8),
+                        0 0 30px rgba(255, 246, 0, 0.4);
+            border: 2px solid #fff;
+            z-index: 1;
+        }
+        
+        .mobile-jump {
+            position: absolute;
+            right: 20px;
+            bottom: 60px;
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 246, 0, 0.4);
+            border: 3px solid var(--primary-yellow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: var(--font-weight-bold);
+            color: #000;
+            background-image: radial-gradient(circle, rgba(255, 246, 0, 0.6) 0%, rgba(255, 246, 0, 0.3) 100%);
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.95;
+            box-shadow: 0 0 25px rgba(255, 246, 0, 0.6),
+                        inset 0 0 15px rgba(255, 246, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 246, 0, 0.8);
+            transition: all 0.1s ease;
+        }
+        
+        .mobile-jump:active {
+            background: rgba(255, 246, 0, 0.7);
+            transform: scale(0.92);
+            box-shadow: 0 0 35px rgba(255, 246, 0, 0.8),
+                        inset 0 0 20px rgba(255, 246, 0, 0.5);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            #game-ui {
+                padding: var(--spacing-xs);
+            }
+            
+            .control-hint {
+                display: none;
+            }
+            
+            .start-content {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .text-gray-300 {
+                color: #d1d5db;
+            }
+            
+            .mb-4 {
+                margin-bottom: var(--spacing-md);
+            }
+            
+            .mb-3 {
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+    </style>
+    
+    <!-- Mobile-specific CSS files -->
+    <!-- Mobile CSS loaded conditionally via JavaScript -->
+    <link rel="stylesheet" href="css/mobile-animation-fix.css">
+    <link rel="stylesheet" href="css/touch-target-validation.css">
+    <link rel="stylesheet" href="css/game-ui-layout-fix.css">
+    <link rel="stylesheet" href="css/game-no-tier-ui.css">
+    <link rel="stylesheet" href="css/game-tier-unlocked-ui.css">
+    <link rel="stylesheet" href="css/game-over-display-fix.css">
+    <link rel="stylesheet" href="css/game-over-mobile-fix.css">
+    <link rel="stylesheet" href="css/claim-button-fix.css?v=1754422354">
+    <!-- <link rel="stylesheet" href="css/game-over-comprehensive-fix.css"> -->
+    
+    <!-- Mobile Audio Fix - Load early for audio interception -->
+    <!-- Game Force Loading - MUST BE ABSOLUTELY FIRST -->
+    <script src="js/game-force-loading.js"></script>
+    
+    <!-- Game No Flash - DISABLED (replaced by force loading) -->
+    
+    <!-- Emergency Memory Safe Events Fix - MUST LOAD FIRST -->
+    <script src="js/memory-safe-events-fix.js"></script>
+    
+    <!-- Game Critical Fix - MUST LOAD EARLY -->
+    <script src="js/game-critical-fix.js"></script>
+    
+    <!-- Master Fix - Load First -->
+    <script src="js/master-fix.js"></script>
+    
+    <!-- Memory Safe Events (Required by other scripts) -->
+    <script src="js/memory-safe-events.js"></script>
+    
+    <script src="js/mobile-audio-fix.js"></script>
+    
+    <!-- Emergency Yellow Screen Fix - DISABLED (causes yellow flash) -->
+    
+    <!-- iOS Game Freeze Fix -->
+    <script src="js/ios-game-freeze-fix.js"></script>
+    
+    <!-- Game Restart and Joystick Fix -->
+    <script src="js/game-restart-fix.js"></script>
+    
+    <!-- Tier Display and Restart Fix -->
+    <script src="js/tier-display-restart-fix.js"></script>
+    
+    <!-- Game Loader Fix - DISABLED (replaced by clean load) -->
+    
+    <!-- Game Final Fix - REPLACED BY CLEAN LOAD -->
+    
+    <!-- Game Smooth Load - REPLACED BY CLEAN LOAD -->
+    
+    <!-- Game Clean Load - Eliminates ALL loading glitches -->
+    <script src="js/game-clean-load.js"></script>
+    
+    <!-- Game Claim Fix - DISABLED (conflicts with comprehensive fix) -->
+    
+    <!-- Game UI Complete Fix - DISABLED (conflicts with comprehensive fix) -->
+</head>
+<body>
+    <div id="game-container">
+        <!-- Back button positioned independently with frame structure -->
+        <a href="index.html" id="backButton">
+            <span style="font-size: 0.75rem; color: rgba(255, 215, 0, 0.8); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Menu</span>
+            <span style="font-size: 1.2rem;">←</span>
+        </a>
+        
+        <!-- Loading Screen -->
+        <div id="loading-progress" style="display: flex; background: #000000;">
+            <img src="images/RGB_LITE_CAT_LOGO.jpg" alt="Light Cat" style="width: 100px; height: 100px; margin-bottom: 20px;">
+            <h2 style="color: #666;">LIGHT CAT</h2>
+            <p style="color: #666; margin: 10px 0;">Loading, please wait...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <p id="loading-text" style="font-size: 0.9rem; color: #666;">Initializing game engine...</p>
+        </div>
+
+        <!-- Start Screen - Hidden as game starts automatically -->
+        <div id="start-screen" style="display: none;"></div>
+
+        <!-- Game UI Overlay -->
+        <div id="game-ui" style="display: none;">
+            <div class="game-stats">
+                <h3>Time</h3>
+                <div class="timer" id="timer">30</div>
+            </div>
+            
+            <div class="game-stats">
+                <h3>Lightning Collected</h3>
+                <div class="score">
+                    <img src="images/RGB_LITE_CAT_LOGO.jpg" alt="" class="lightning-icon">
+                    <span id="score">0</span>
+                </div>
+            </div>
+            
+            <!-- Tier notification area -->
+            <div id="tier-notification" class="tier-notification" style="display: none;">
+                <span id="tier-notification-text"></span>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over">
+            <div class="game-over-gallery">
+                <div class="gallery-wrapper">
+                    <!-- Compact Content -->
+                    <div class="content-wrapper">
+                        <h1 class="go-title">THANK YOU FOR PLAYING!</h1>
+                        
+                        <div class="score-section">
+                            <div class="go-score" id="final-score">0</div>
+                            <div class="go-tier" id="tier-unlocked">NO TIER</div>
+                        </div>
+                        
+                        <div id="twitter-verify" class="twitter-block" style="display: none;">
+                            <h3>UNLOCK YOUR REWARDS</h3>
+                            <div id="twitter-actions">
+                                <a href="https://x.com/intent/follow?screen_name=RGBLightCat" 
+                                   class="go-btn twitter" 
+                                   id="twitter-follow" 
+                                   target="_blank">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 5px;">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    </svg>
+                                    Follow @RGBLightCat
+                                </a>
+                                <button class="go-btn verify" id="verify-follow">Verify Follow</button>
+                            </div>
+                            <div id="verify-success" class="success-msg" style="display: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="#4CAF50">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                                <span>Verified! Ready to claim.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-group">
+                            <button class="go-btn large" id="play-again">PLAY AGAIN</button>
+                            <button class="go-btn large primary" id="unlock-tier" style="display: none;">CLAIM</button>
+                            <button class="go-btn large" onclick="window.location.href = '/'">EXIT GAME</button>
+                        </div>
+                        
+                        <div id="allocation-message" class="benefits-box">
+                            <!-- Dynamic message -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="game-over-content" style="display: none;">
+                <!-- Single line header -->
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin-bottom: 8px; padding: 5px; background: rgba(255,255,0,0.1); border-radius: 4px;">
+                    <span style="font-size: 0.7rem; color: var(--primary-yellow); font-weight: 600;">Score:</span>
+                    <span id="final-score" style="font-size: 1.2rem; color: var(--primary-yellow); font-weight: bold;">0</span>
+                    <span id="tier-unlocked" style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--primary-yellow);">No Tier</span>
+                </div>
+                
+                <!-- Twitter verification section -->
+                <div id="twitter-verify" style="margin-bottom: 5px; padding: 4px;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                    
+                    <a href="https://x.com/intent/follow?screen_name=RGBLightCat" 
+                       class="twitter-button" 
+                       id="twitter-follow" 
+                       target="_blank"
+                       style="padding: 3px 8px; font-size: 0.6rem; border-radius: 3px; flex: 1;">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 3px;">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        Follow
+                    </a>
+                    
+                    <span style="color: #666; font-size: 0.5rem;">→</span>
+                    
+                    <button class="twitter-button" id="verify-follow" style="background: transparent; cursor: pointer; padding: 3px 8px; font-size: 0.6rem; border-radius: 3px; flex: 1;">
+                        Verify
+                    </button>
+                    </div>
+                    
+                    <!-- Success message (hidden by default) -->
+                    <div id="verify-success" style="display: none; margin-top: 3px; padding: 3px; background: rgba(76,175,80,0.1); border: 1px solid #4CAF50; border-radius: 3px;">
+                        <span style="color: #4CAF50; font-size: 0.55rem;">
+                            ✓ Verified!
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Action buttons in row -->
+                <div style="display: flex; gap: 4px; margin-top: 5px; width: 100%;">
+                    <button class="btn btn-primary" id="play-again" style="padding: 4px 10px; font-size: 0.6rem; background: #fff600; border: 1px solid #fff600; color: #000000; transition: all 0.3s; border-radius: 3px; font-weight: 600; flex: 1;">
+                        Play Again
+                    </button>
+                    
+                    <button class="btn btn-secondary" id="unlock-tier" style="display: none; padding: 4px 10px; font-size: 0.6rem; background: var(--primary-yellow); color: var(--primary-black); border: 1px solid var(--primary-yellow); border-radius: 3px; font-weight: 700; text-transform: uppercase; flex: 1;">
+                        Claim
+                    </button>
+                </div>
+                    
+                    
+                <!-- Benefits message (hidden by default) -->
+                <div id="allocation-message" style="display: none; font-size: 0.55rem; color: #ccc; margin-top: 5px; padding: 4px; background: rgba(255,255,0,0.05); border-radius: 3px; border: 1px solid rgba(255,255,0,0.2); line-height: 1.2; text-align: center;">
+                    <!-- Dynamic message will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Three.js Canvas -->
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- Mobile Controls -->
+        <div class="mobile-controls">
+            <div class="mobile-joystick" id="mobile-joystick">
+                <div class="joystick-handle" id="joystick-handle"></div>
+            </div>
+            <div class="mobile-jump" id="mobile-jump">
+                JUMP
+            </div>
+        </div>
+        
+        <!-- Controls Toggle Button -->
+        <button id="controls-toggle" style="
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1001;
+            background: rgba(255, 246, 0, 0.9);
+            border: 2px solid #000;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            display: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        ">Controls</button>
+    </div>
+
+    
+    <!-- Console Suppressor (load first for mobile) -->
+    <script src="js/console-suppressor.js"></script>
+    
+    <!-- Emergency Game Loader -->
+    <!-- Game Emergency Loader - DISABLED (conflicts with smooth load) -->
+    
+    <!-- ES Module Shims for Mobile Compatibility -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    
+    <!-- Game Scripts -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script src="js/mobile-debug.js"></script>
+    <script type="module" src="js/game/main.js"></script>
+    <script src="js/game-controls-manager.js"></script>
+    <script>
+        // Check if tier was just unlocked
+        (function() {
+            const tierJustUnlocked = localStorage.getItem('tierJustUnlocked');
+            const unlockedTier = localStorage.getItem('unlockedTier');
+            
+            if (tierJustUnlocked === 'true' && unlockedTier) {
+                // Clear the flag
+                localStorage.removeItem('tierJustUnlocked');
+                
+                // Show message on start screen
+                setTimeout(function() {
+                    const startScreen = document.getElementById('start-screen');
+                    if (startScreen) {
+                        // Create tier unlock message
+                        const messageDiv = document.createElement('div');
+                        messageDiv.style.cssText = `
+                            position: absolute;
+                            top: 20px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            background: rgba(255, 255, 0, 0.9);
+                            color: #000;
+                            padding: 15px 30px;
+                            border-radius: 10px;
+                            font-weight: bold;
+                            font-size: 18px;
+                            z-index: 1000;
+                            text-align: center;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                        `;
+                        messageDiv.innerHTML = `
+                            ${unlockedTier.toUpperCase()} TIER UNLOCKED<br>
+                            <span style="font-size: 14px;">Exit the game to claim your tokens</span>
+                        `;
+                        startScreen.appendChild(messageDiv);
+                        
+                        // Remove message after 5 seconds
+                        setTimeout(function() {
+                            messageDiv.remove();
+                        }, 5000);
+                    }
+                }, 500);
+            }
+        })();
+        
+        // Mobile loading fix
+        (function() {
+            'use strict';
+            
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                console.log('[Mobile] Applying mobile-specific fixes');
+                
+                // Force hide loading screen if stuck after 5 seconds
+                setTimeout(function() {
+                    const loadingProgress = document.getElementById('loading-progress');
+                    if (loadingProgress && loadingProgress.style.display !== 'none') {
+                        console.log('[Mobile] Force hiding loading screen');
+                        loadingProgress.style.display = 'none';
+                        
+                        // Ensure game UI is visible
+                        const gameUI = document.getElementById('game-ui');
+                        if (gameUI) {
+                            gameUI.style.display = 'flex';
+                        }
+                    }
+                }, 5000);
+                
+                // Monitor for import errors
+                window.addEventListener('error', function(e) {
+                    if (e.message && e.message.includes('import')) {
+                        // Don't show error on production mobile
+                        const isProduction = window.location.hostname.includes('rgblightcat.com');
+                        if (!isProduction) {
+                            console.error('[Mobile] Module import error:', e.message);
+                            const loadingText = document.getElementById('loading-text');
+                            if (loadingText) {
+                                loadingText.textContent = 'Loading error - Please refresh';
+                                loadingText.style.color = '#ff5252';
+                            }
+                        }
+                    }
+                });
+            }
+        })();
+    </script>
+    <script>
+        // Show back button on mobile
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            document.getElementById('backButton').style.display = 'block';
+        }
+        
+        // Gallery functionality
+        (function() {
+            let currentPage = 0;
+            const wrapper = document.querySelector('.gallery-wrapper');
+            const dots = document.querySelectorAll('.dot');
+            const gallery = document.querySelector('.game-over-gallery');
+            
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            function switchPage(page) {
+                currentPage = page;
+                wrapper.style.transform = `translateX(-${page * 50}%)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === page);
+                });
+            }
+            
+            // Touch events
+            gallery.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            gallery.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50 && currentPage < 1) {
+                    switchPage(1);
+                }
+                if (touchEndX > touchStartX + 50 && currentPage > 0) {
+                    switchPage(0);
+                }
+            }
+            
+            // Mouse swipe
+            let mouseDown = false;
+            let startX = 0;
+            
+            gallery.addEventListener('mousedown', (e) => {
+                mouseDown = true;
+                startX = e.pageX;
+            });
+            
+            gallery.addEventListener('mouseup', (e) => {
+                if (!mouseDown) return;
+                mouseDown = false;
+                
+                const endX = e.pageX;
+                if (endX < startX - 50 && currentPage < 1) {
+                    switchPage(1);
+                }
+                if (endX > startX + 50 && currentPage > 0) {
+                    switchPage(0);
+                }
+            });
+            
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => switchPage(index));
+            });
+            
+            // Arrow keys
+            document.addEventListener('keydown', (e) => {
+                if (gallery.parentElement.style.display !== 'none') {
+                    if (e.key === 'ArrowRight' && currentPage < 1) switchPage(1);
+                    if (e.key === 'ArrowLeft' && currentPage > 0) switchPage(0);
+                }
+            });
+            
+            // Reset to first page when game over shows
+            window.resetGameOverGallery = function() {
+                switchPage(0);
+            };
+        })();
+        
+        // Handle verify success state
+        document.addEventListener('DOMContentLoaded', function() {
+            const verifyBtn = document.getElementById('verify-follow');
+            const twitterActions = document.getElementById('twitter-actions');
+            const verifySuccess = document.getElementById('verify-success');
+            const unlockTierBtn = document.getElementById('unlock-tier');
+            
+            if (verifyBtn) {
+                verifyBtn.addEventListener('click', function() {
+                    // Simulate verification (in real app, this would check Twitter)
+                    setTimeout(() => {
+                        // Hide twitter actions
+                        if (twitterActions) {
+                            twitterActions.style.display = 'none';
+                        }
+                        
+                        // Show success message
+                        if (verifySuccess) {
+                            verifySuccess.style.display = 'flex';
+                        }
+                        
+                        // Show claim button
+                        if (unlockTierBtn) {
+                            unlockTierBtn.style.display = 'block';
+                        }
+                        
+                        // Store verification state
+                        localStorage.setItem('twitterVerified', 'true');
+                    }, 1000);
+                });
+            }
+            
+            // Handle claim button click - DISABLED (handled by comprehensive fix)
+            /*
+            const claimBtn = document.getElementById('unlock-tier');
+            if (claimBtn) {
+                claimBtn.addEventListener('click', function() {
+                    // Check if Twitter is verified first
+                    const isVerified = localStorage.getItem('twitterVerified') === 'true';
+                    const verifyBtn = document.getElementById('verify-follow');
+                    
+                    if (!isVerified || (verifyBtn && verifyBtn.textContent !== '✓ Verified')) {
+                        alert('Please complete Twitter verification first!');
+                        return;
+                    }
+                    
+                    // Get the tier from the game
+                    const tierElement = document.getElementById('tier-unlocked');
+                    const tierText = tierElement ? tierElement.textContent : '';
+                    
+                    // Determine which tier was unlocked
+                    let tier = null;
+                    if (tierText.includes('GOLD')) tier = 'gold';
+                    else if (tierText.includes('SILVER')) tier = 'silver';
+                    else if (tierText.includes('BRONZE')) tier = 'bronze';
+                    
+                    if (!tier) {
+                        // No tier unlocked
+                        alert('Try again! Score 11+ points to unlock rewards.');
+                        return;
+                    }
+                    
+                    // Check if we're on desktop (wider than 768px)
+                    const isDesktop = window.innerWidth >= 769;
+                    
+                    // Store the tier information for after redirect
+                    localStorage.setItem('unlockedTier', tier);
+                    localStorage.setItem('tierJustUnlocked', 'true');
+                    
+                    if (isDesktop) {
+                        // Desktop: Show success message and reload to main screen
+                        alert('Congratulations! You unlocked ' + tier.toUpperCase() + ' TIER!\n\nClick OK to return to the main screen.');
+                        // Reload the page to go back to start screen
+                        location.reload();
+                    } else {
+                        // Mobile: Direct redirect
+                        window.location.href = '/#purchase?tier=' + tier;
+                    }
+                });
+            }
+            */
+        });
+    </script>
+    
+    <!-- Game Results Screen Optimization -->
+    <script src="js/game-results-optimization.js"></script>
+    
+    <!-- Game Over Mobile Button Fix - DISABLED (conflicts with comprehensive fix) -->
+    
+    <!-- Force Fix for stubborn mobile buttons - DISABLED (conflicts with comprehensive fix) -->
+    
+    <!-- Comprehensive Game Over Fix - Fixes ALL issues -->
+    
+    <!-- Targeted Background Fix - Prevents game bleed-through -->
+    
+    <!-- All heavy fixes disabled to prevent crashes -->
+    
+    <!-- Minimal Stable Fix -->
+    <script src="js/game-over-stable-fix.js"></script>
+    
+    <!-- Mobile-specific JavaScript files (already included above) -->
+</body>
+</html>

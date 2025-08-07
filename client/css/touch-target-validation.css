@@ -1,0 +1,152 @@
+/* LIGHTCAT Touch Target Validation - Ensures 44px minimum for all interactive elements */
+
+@media screen and (max-width: 768px) {
+    /* Global rule for ALL interactive elements */
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    [role="button"],
+    [onclick],
+    .btn,
+    .button,
+    .clickable,
+    .touchable {
+        min-width: 44px !important;
+        min-height: 44px !important;
+        position: relative !important;
+    }
+    
+    /* Specific game controls validation */
+    .mobile-jump {
+        min-width: 65px !important;
+        min-height: 65px !important;
+    }
+    
+    .mobile-joystick {
+        min-width: 85px !important;
+        min-height: 85px !important;
+    }
+    
+    /* Game UI buttons */
+    #play-again,
+    #unlock-tier,
+    #verify-follow,
+    #twitter-follow {
+        min-height: 44px !important;
+        padding: 12px 20px !important;
+    }
+    
+    /* Back button */
+    #backButton {
+        min-height: 44px !important;
+        padding: 12px 20px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+    
+    /* Form inputs */
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="password"],
+    input[type="search"],
+    input[type="url"],
+    textarea,
+    select {
+        min-height: 44px !important;
+        padding: 12px !important;
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+    
+    /* Close buttons */
+    .modal-close,
+    .close-btn,
+    [aria-label="Close"] {
+        min-width: 44px !important;
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Social media buttons */
+    .twitter-button,
+    .social-btn {
+        min-height: 44px !important;
+        padding: 12px 20px !important;
+    }
+    
+    /* Gallery navigation dots */
+    .dot {
+        min-width: 44px !important;
+        min-height: 44px !important;
+        margin: 0 5px !important;
+    }
+    
+    /* Ensure clickable areas have proper spacing */
+    .mobile-controls button,
+    .mobile-controls a {
+        margin: 5px !important;
+    }
+    
+    /* Links in text - add padding for better touch targets */
+    p a,
+    li a,
+    span a {
+        display: inline-block !important;
+        padding: 8px 4px !important;
+        margin: -8px -4px !important;
+    }
+    
+    /* Navigation menu items */
+    .mobile-nav-links a {
+        min-height: 44px !important;
+        padding: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    /* Quick select buttons */
+    .quick-select-btn {
+        min-height: 44px !important;
+        padding: 12px !important;
+    }
+}
+
+/* Visual debugging mode - uncomment to see all touch targets */
+/*
+@media screen and (max-width: 768px) {
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    [role="button"],
+    [onclick],
+    .btn,
+    .button,
+    .clickable,
+    .touchable {
+        outline: 2px dashed red !important;
+        outline-offset: 2px !important;
+    }
+    
+    button::after,
+    a::after,
+    .btn::after {
+        content: attr(class) " " attr(id);
+        position: absolute;
+        top: -20px;
+        left: 0;
+        font-size: 10px;
+        background: yellow;
+        color: black;
+        padding: 2px 4px;
+        z-index: 9999;
+        pointer-events: none;
+    }
+}
+*/

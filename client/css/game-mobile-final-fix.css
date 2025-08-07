@@ -1,0 +1,390 @@
+/* LIGHTCAT GAME - FINAL MOBILE FIX
+   Resolves all UI overlapping and mobile-specific issues
+   ============================================= */
+
+/* Global mobile reset for game */
+@media screen and (max-width: 768px) {
+    #game-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    /* Fix overlapping game UI - use flexbox for proper spacing */
+    #game-ui {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 8px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
+        z-index: 100;
+        pointer-events: none;
+        gap: 8px; /* Ensure spacing between elements */
+    }
+    
+    /* Compact game stats to prevent overlap */
+    .game-stats {
+        background: rgba(0, 0, 0, 0.95) !important;
+        border: 1.5px solid var(--primary-yellow) !important;
+        border-radius: 10px !important;
+        padding: 6px 10px !important;
+        backdrop-filter: none !important;
+        pointer-events: auto !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+        min-width: auto !important;
+        max-width: 45%; /* Prevent stats from overlapping */
+        flex: 0 1 auto;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.65rem !important;
+        margin: 0 0 3px 0 !important;
+        color: var(--primary-yellow) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        line-height: 1 !important;
+    }
+    
+    /* Smaller timer and score for mobile */
+    .timer {
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: var(--pure-white) !important;
+        text-shadow: 0 0 5px rgba(255, 255, 0, 0.5) !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+    }
+    
+    .score {
+        font-size: 0.95rem !important;
+        color: var(--primary-yellow) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        font-weight: 600 !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+    }
+    
+    .lightning-icon {
+        width: 14px !important;
+        height: 14px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Mobile controls - ensure proper positioning */
+    .mobile-controls {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        display: block !important;
+        z-index: 100 !important;
+        padding: 0 !important;
+        pointer-events: none !important; /* Container doesn't capture events */
+        height: 120px !important; /* Fixed height to prevent overlap */
+    }
+    
+    .mobile-joystick {
+        position: absolute !important;
+        left: 12px !important;
+        bottom: 12px !important;
+        width: 85px !important;
+        height: 85px !important;
+        background: rgba(255, 255, 0, 0.08) !important;
+        border: 2px solid rgba(255, 215, 0, 0.6) !important;
+        border-radius: 50% !important;
+        pointer-events: auto !important;
+        touch-action: none !important;
+        opacity: 0.9 !important;
+    }
+    
+    .joystick-handle {
+        position: absolute !important;
+        width: 35px !important;
+        height: 35px !important;
+        background: rgba(255, 215, 0, 0.8) !important;
+        border-radius: 50% !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
+        pointer-events: none !important;
+    }
+    
+    /* Jump button - REMOVE EMOJI, USE TEXT */
+    .mobile-jump {
+        position: absolute !important;
+        right: 12px !important;
+        bottom: 12px !important;
+        width: 65px !important;
+        height: 65px !important;
+        background: rgba(255, 255, 0, 0.15) !important;
+        border: 2px solid rgba(255, 215, 0, 0.8) !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        color: var(--primary-yellow) !important;
+        pointer-events: auto !important;
+        touch-action: none !important;
+        user-select: none !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        opacity: 0.9 !important;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.5) !important;
+    }
+    
+    .mobile-jump:active {
+        background: rgba(255, 255, 0, 0.3) !important;
+        transform: scale(0.95) !important;
+        border-color: var(--primary-yellow) !important;
+    }
+    
+    /* Tier notification - better positioning */
+    .tier-notification {
+        position: absolute !important;
+        top: 60px !important; /* Below the UI stats */
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        border: 1.5px solid var(--primary-yellow) !important;
+        border-radius: 20px !important;
+        padding: 6px 16px !important;
+        color: var(--primary-yellow) !important;
+        font-weight: 600 !important;
+        font-size: 0.7rem !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease-out !important;
+        pointer-events: none !important;
+        z-index: 150 !important;
+        max-width: 200px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    .tier-notification.show {
+        opacity: 1 !important;
+    }
+    
+    /* Game canvas should not interfere with UI */
+    #game-canvas {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        z-index: 1 !important; /* Below UI elements */
+    }
+    
+    /* Back button positioning */
+    #backButton {
+        position: fixed !important;
+        top: 10px !important;
+        right: 10px !important;
+        z-index: 200 !important;
+        padding: 6px 14px !important;
+        background: rgba(0,0,0,0.95) !important;
+        border: 1.5px solid var(--primary-yellow) !important;
+        border-radius: 20px !important;
+        color: var(--primary-yellow) !important;
+        text-decoration: none !important;
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+    }
+}
+
+/* Extra small devices (iPhone SE, etc) */
+@media screen and (max-width: 375px) {
+    #game-ui {
+        padding: 6px !important;
+        gap: 6px !important;
+    }
+    
+    .game-stats {
+        padding: 5px 8px !important;
+        max-width: 47% !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.6rem !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .timer {
+        font-size: 1rem !important;
+    }
+    
+    .score {
+        font-size: 0.85rem !important;
+    }
+    
+    .lightning-icon {
+        width: 12px !important;
+        height: 12px !important;
+    }
+    
+    .mobile-joystick {
+        width: 75px !important;
+        height: 75px !important;
+        left: 10px !important;
+        bottom: 10px !important;
+    }
+    
+    .joystick-handle {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    
+    .mobile-jump {
+        width: 60px !important;
+        height: 60px !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        font-size: 0.7rem !important;
+    }
+    
+    .tier-notification {
+        top: 55px !important;
+        font-size: 0.65rem !important;
+        padding: 5px 12px !important;
+        max-width: 180px !important;
+    }
+}
+
+/* Very small devices */
+@media screen and (max-width: 320px) {
+    #game-ui {
+        padding: 5px !important;
+        gap: 5px !important;
+    }
+    
+    .game-stats {
+        padding: 4px 6px !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.55rem !important;
+    }
+    
+    .timer {
+        font-size: 0.9rem !important;
+    }
+    
+    .score {
+        font-size: 0.8rem !important;
+    }
+    
+    .mobile-joystick {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    
+    .mobile-jump {
+        width: 55px !important;
+        height: 55px !important;
+        font-size: 0.65rem !important;
+    }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-width: 812px) and (orientation: landscape) {
+    #game-ui {
+        padding: 5px !important;
+    }
+    
+    .game-stats {
+        padding: 4px 8px !important;
+    }
+    
+    .game-stats h3 {
+        font-size: 0.6rem !important;
+        margin-bottom: 1px !important;
+    }
+    
+    .timer {
+        font-size: 0.9rem !important;
+    }
+    
+    .score {
+        font-size: 0.8rem !important;
+    }
+    
+    .mobile-controls {
+        height: 100px !important;
+    }
+    
+    .mobile-joystick {
+        width: 70px !important;
+        height: 70px !important;
+        bottom: 8px !important;
+    }
+    
+    .mobile-jump {
+        width: 55px !important;
+        height: 55px !important;
+        bottom: 8px !important;
+        font-size: 0.65rem !important;
+    }
+    
+    .tier-notification {
+        top: 45px !important;
+    }
+}
+
+/* Ensure no overflow */
+@media screen and (max-width: 768px) {
+    body, html {
+        overflow: hidden !important;
+        position: fixed !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    #game-container {
+        overflow: hidden !important;
+    }
+    
+    /* Prevent any element from causing horizontal scroll */
+    * {
+        max-width: 100vw !important;
+    }
+}
+
+/* High contrast mode support */
+@media screen and (max-width: 768px) and (prefers-contrast: high) {
+    .game-stats {
+        border-width: 2px !important;
+        background: #000 !important;
+    }
+    
+    .mobile-joystick,
+    .mobile-jump {
+        border-width: 3px !important;
+    }
+}
+
+/* Reduced motion support */
+@media screen and (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .mobile-jump:active {
+        transform: none !important;
+    }
+}

@@ -1,0 +1,333 @@
+/**
+ * Game Over Minimal UI
+ * Clean black and yellow theme
+ * Perfect fit for mobile and desktop
+ */
+
+/* Base game-over styles */
+#game-over {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #000000 !important;
+    z-index: 10000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Main container */
+.game-over-gallery {
+    background: #000000 !important;
+    border: 2px solid #fff600 !important;
+    padding: 30px !important;
+    max-width: 450px !important;
+    width: 90% !important;
+    text-align: center !important;
+}
+
+/* Title */
+.game-over-gallery h2,
+#game-over h2 {
+    color: #fff600 !important;
+    font-size: 28px !important;
+    margin: 0 0 20px 0 !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+}
+
+/* Score */
+#final-score {
+    display: block !important;
+    font-size: 48px !important;
+    color: #fff600 !important;
+    font-weight: bold !important;
+    margin: 15px 0 !important;
+}
+
+/* Tier badge */
+#tier-unlocked {
+    display: inline-block !important;
+    background: #fff600 !important;
+    color: #000000 !important;
+    padding: 8px 20px !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    margin: 15px 0 !important;
+}
+
+/* Twitter section */
+#twitter-verify {
+    border: 1px solid #fff600 !important;
+    padding: 15px !important;
+    margin: 20px 0 !important;
+    background: transparent !important;
+}
+
+#twitter-verify h3 {
+    color: #fff600 !important;
+    font-size: 14px !important;
+    margin: 0 0 10px 0 !important;
+    text-transform: uppercase !important;
+}
+
+/* Twitter buttons container */
+#twitter-actions {
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: center !important;
+}
+
+/* All buttons - minimal style */
+#game-over button,
+#game-over a.go-btn,
+#game-over .btn {
+    background: #fff600 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    text-transform: uppercase !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    transition: all 0.2s !important;
+    min-height: 44px !important;
+    line-height: 24px !important;
+    box-sizing: border-box !important;
+}
+
+#game-over button:hover,
+#game-over a.go-btn:hover {
+    opacity: 0.8 !important;
+}
+
+/* Twitter buttons - special styling */
+#twitter-follow {
+    background: #fff600 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+}
+
+#twitter-follow:hover {
+    background: #000000 !important;
+    color: #fff600 !important;
+    border-color: #fff600 !important;
+}
+
+#verify-follow {
+    background: transparent !important;
+    color: #fff600 !important;
+    border: 2px solid #fff600 !important;
+}
+
+#verify-follow:hover {
+    background: #fff600 !important;
+    color: #000000 !important;
+}
+
+/* Success message */
+#verify-success {
+    color: #fff600 !important;
+    font-size: 14px !important;
+    margin-top: 10px !important;
+    padding: 8px !important;
+}
+
+/* Action buttons group */
+.action-group {
+    display: flex !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    margin-top: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+/* Specific button styles */
+#play-again {
+    background: #fff600 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+}
+
+#unlock-tier {
+    background: #000000 !important;
+    color: #fff600 !important;
+    border: 3px solid #fff600 !important;
+    font-weight: 900 !important;
+    padding: 12px 30px !important;
+    font-size: 18px !important;
+    min-height: 50px !important;
+}
+
+#unlock-tier:hover {
+    background: #fff600 !important;
+    color: #000000 !important;
+}
+
+/* Exit button */
+button[onclick*="location.href"],
+.exit-button {
+    background: transparent !important;
+    color: #fff600 !important;
+    border: 2px solid #fff600 !important;
+}
+
+button[onclick*="location.href"]:hover,
+.exit-button:hover {
+    background: #fff600 !important;
+    color: #000000 !important;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+    .game-over-gallery {
+        padding: 20px 15px !important;
+        max-width: 100% !important;
+        width: 90% !important;
+        margin: 20px auto !important;
+    }
+    
+    .game-over-gallery h2 {
+        font-size: 24px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    #final-score {
+        font-size: 40px !important;
+        margin: 10px 0 !important;
+    }
+    
+    #tier-unlocked {
+        font-size: 16px !important;
+        padding: 8px 20px !important;
+        margin: 10px 0 !important;
+    }
+    
+    /* Twitter section compact */
+    #twitter-verify {
+        padding: 12px !important;
+        margin: 15px 0 !important;
+    }
+    
+    #twitter-verify h3 {
+        font-size: 12px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* Stack buttons on mobile */
+    #twitter-actions {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+    }
+    
+    .action-group {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+        margin-top: 15px !important;
+    }
+    
+    /* Full width buttons on mobile */
+    #game-over button,
+    #game-over a.go-btn {
+        width: 100% !important;
+        min-height: 48px !important;
+        padding: 12px 20px !important;
+        font-size: 16px !important;
+    }
+    
+    /* Claim button prominent */
+    #unlock-tier {
+        min-height: 54px !important;
+        font-size: 20px !important;
+        margin: 5px 0 !important;
+    }
+}
+
+/* Desktop specific - fits in game terminal */
+@media (min-width: 769px) {
+    .game-over-gallery {
+        max-width: 450px !important;
+        padding: 30px !important;
+    }
+    
+    /* Horizontal button layout on desktop */
+    #twitter-actions {
+        justify-content: center !important;
+        gap: 15px !important;
+    }
+    
+    .action-group {
+        justify-content: center !important;
+        gap: 12px !important;
+    }
+    
+    #game-over button,
+    #game-over a.go-btn {
+        min-width: 130px !important;
+        padding: 12px 24px !important;
+    }
+    
+    /* Claim button larger on desktop */
+    #unlock-tier {
+        min-width: 160px !important;
+        padding: 14px 35px !important;
+    }
+}
+
+/* Remove any animations for cleaner look */
+#unlock-tier {
+    animation: none !important;
+}
+
+/* Clean up any overflow */
+.game-over-gallery * {
+    overflow: visible !important;
+}
+
+/* Hide unnecessary elements */
+.dots,
+.gallery-navigation {
+    display: none !important;
+}
+
+/* Ensure clean typography */
+#game-over * {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif !important;
+}
+
+/* Prevent button text wrapping */
+#game-over button,
+#game-over a.go-btn {
+    white-space: nowrap !important;
+}
+
+/* Active states */
+#game-over button:active,
+#game-over a.go-btn:active {
+    transform: scale(0.98) !important;
+}
+
+/* Ensure game doesn't bleed through */
+#game-over {
+    background-color: #000000 !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Success message styling */
+#verify-success {
+    background: #fff600 !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+    padding: 10px 20px !important;
+    font-weight: bold !important;
+    border-radius: 0 !important;
+}
