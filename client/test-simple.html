@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test</title>
+</head>
+<body>
+    <h1>Simple Test - Direct</h1>
+    <p>Max: <span id="maxBatches">0</span></p>
+    <p>Current: <span id="batchCount">1</span></p>
+    <button id="decreaseBatch">-</button>
+    <button id="increaseBatch">+</button>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Starting test');
+        
+        // Get tier from URL
+        const params = new URLSearchParams(window.location.search);
+        const tier = params.get('tier');
+        console.log('Tier:', tier);
+        
+        // Elements
+        const maxBatchesEl = document.getElementById('maxBatches');
+        const batchCountEl = document.getElementById('batchCount');
+        const decreaseBtn = document.getElementById('decreaseBatch');
+        const increaseBtn = document.getElementById('increaseBatch');
+        
+        // Variables
+        let currentBatches = 1;
+        let maxBatches = 0;
+        
+        // Process tier
+        if (tier) {
+            switch(tier.toLowerCase()) {
+                case 'bronze': maxBatches = 10; break;
+                case 'silver': maxBatches = 20; break;
+                case 'gold': maxBatches = 30; break;
+            }
+        }
+        
+        // Update display function
+        function updateDisplay() {
+            if (maxBatchesEl) maxBatchesEl.textContent = maxBatches;
+            if (batchCountEl) batchCountEl.textContent = currentBatches;
+            if (decreaseBtn) decreaseBtn.disabled = currentBatches <= 1;
+            if (increaseBtn) increaseBtn.disabled = currentBatches >= maxBatches;
+        }
+        
+        // Button handlers
+        if (decreaseBtn) {
+            decreaseBtn.addEventListener('click', () => {
+                if (currentBatches > 1) {
+                    currentBatches--;
+                    updateDisplay();
+                }
+            });
+        }
+        
+        if (increaseBtn) {
+            increaseBtn.addEventListener('click', () => {
+                if (currentBatches < maxBatches) {
+                    currentBatches++;
+                    updateDisplay();
+                }
+            });
+        }
+        
+        // Initial update
+        updateDisplay();
+        console.log('Setup complete. Max:', maxBatches, 'Current:', currentBatches);
+    });
+    </script>
+</body>
+</html>

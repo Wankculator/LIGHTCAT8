@@ -1,0 +1,366 @@
+const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
+require('dotenv').config();
+
+const config = require('../config');
+const { errorHandler, notFound } = require('./middleware/errorMiddleware');
+const logger = require('./utils/logger');
+const { injectDatabaseService } = require('./middleware/databaseMiddleware');
+const { applyRateLimiting } = require('./middleware/comprehensiveRateLimiter');
+const { 
+  staticAssetsCaching, 
+  compressionSettings, 
+  performanceHeaders, 
+  serviceWorkerCache 
+} = require('./middleware/cacheHeaders');
+
+// Import routes
+const paymentRoutes = require('./routes/payments');
+const gameRoutes = require('./routes/game');
+const adminRoutes = require('./routes/admin');
+const webhookRoutes = require('./routes/webhooks');
+const healthRoutes = require('./routes/health');
+const rgbRoutes = require('./routes/rgbRoutes');
+const lightningRoutes = require('./routes/lightningRoutes');
+
+// Initialize Express app
+const app = express();
+
+// Security middleware
+const helmetConfig = {
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:", "https://cdn.litecat.xyz"],
+      scriptSrc: ["'self'", process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : ""],
+      connectSrc: ["'self'", config.database.url, "wss:", "https://api.coinpayments.net"],
+      frameAncestors: ["'none'"],
+      formAction: ["'self'"],
+      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+    },
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+};
+
+// Remove null values for production
+if (process.env.NODE_ENV === 'production') {
+  Object.keys(helmetConfig.contentSecurityPolicy.directives).forEach(key => {
+    helmetConfig.contentSecurityPolicy.directives[key] = 
+      helmetConfig.contentSecurityPolicy.directives[key].filter(v => v !== "" && v !== null);
+  });
+}
+
+app.use(helmet(helmetConfig));
+
+// CORS configuration
+app.use(cors({
+  origin: config.security.allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
+// Comprehensive rate limiting
+app.use(applyRateLimiting);
+
+// Body parsing middleware
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Rate limiter specifically for no-compression requests
+const noCompressionLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 no-compression requests per windowMs
+  message: {
+    error: 'Too many no-compression requests',
+    retryAfter: 900 // 15 minutes in seconds
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => {
+    // Include User-Agent in rate limiting key to prevent header spoofing
+    return `${req.ip}_${req.get('User-Agent') || 'unknown'}`;
+  }
+});
+
+// Compression middleware with enhanced security
+app.use(compression({
+  filter: (req, res) => {
+    // Check for no-compression header
+    const noCompressionHeader = req.headers['x-no-compression'];
+    
+    if (noCompressionHeader) {
+      // Validate the header value and context
+      const isValidNoCompressionRequest = validateNoCompressionRequest(req);
+      
+      if (!isValidNoCompressionRequest) {
+        logger.warn(`Suspicious no-compression request from ${req.ip}: ${req.url}`, {
+          userAgent: req.get('User-Agent'),
+          referer: req.get('Referer'),
+          headerValue: noCompressionHeader
+        });
+        
+        // Force compression for suspicious requests
+        return compression.filter(req, res);
+      }
+      
+      // Apply rate limiting for legitimate no-compression requests
+      return new Promise((resolve) => {
+        noCompressionLimiter(req, res, (err) => {
+          if (err) {
+            // Rate limit exceeded, force compression
+            logger.warn(`Rate limit exceeded for no-compression request from ${req.ip}`);
+            resolve(compression.filter(req, res));
+          } else {
+            // Rate limit passed, allow no compression
+            logger.info(`No-compression request allowed for ${req.ip}: ${req.url}`);
+            resolve(false);
+          }
+        });
+      });
+    }
+    
+    // Default compression behavior
+    return compression.filter(req, res);
+  }
+}));
+
+/**
+ * Validates if a no-compression request is legitimate
+ * @param {Object} req - Express request object
+ * @returns {boolean} - True if request appears legitimate
+ */
+function validateNoCompressionRequest(req) {
+  const headerValue = req.headers['x-no-compression'];
+  const userAgent = req.get('User-Agent') || '';
+  const contentType = req.get('Content-Type') || '';
+  
+  // Check for valid header values (should be simple boolean-like values)
+  const validHeaderValues = ['1', 'true', 'yes', 'disable'];
+  if (!validHeaderValues.includes(headerValue.toLowerCase())) {
+    return false;
+  }
+  
+  // Check for legitimate use cases
+  const legitimateScenarios = [
+    // Development/debugging tools
+    userAgent.includes('curl') || userAgent.includes('wget') || userAgent.includes('Postman'),
+    
+    // Already compressed content (images, videos, archives)
+    req.url.match(/\.(jpg|jpeg|png|gif|webp|mp4|mp3|zip|gz|br)$/i),
+    
+    // API endpoints that might handle pre-compressed data
+    req.url.startsWith('/api/') && (
+      contentType.includes('application/octet-stream') ||
+      contentType.includes('multipart/form-data') ||
+      req.url.includes('/upload')
+    ),
+    
+    // WebSocket upgrade requests
+    req.headers.upgrade === 'websocket',
+    
+    // Admin endpoints for debugging
+    req.url.startsWith('/api/admin/') && req.method === 'GET'
+  ];
+  
+  // Allow if any legitimate scenario matches
+  if (legitimateScenarios.some(scenario => scenario)) {
+    return true;
+  }
+  
+  // Additional validation: check request patterns
+  const suspiciousPatterns = [
+    // Bulk requests pattern
+    req.headers['x-bulk-request'],
+    
+    // Missing common browser headers
+    !req.get('Accept') && !userAgent.includes('curl'),
+    
+    // Suspicious user agents
+    userAgent.length < 10 && !userAgent.includes('curl'),
+    
+    // Too frequent requests (this would be caught by rate limiting anyway)
+    req.headers['x-automated'] || req.headers['x-bot']
+  ];
+  
+  if (suspiciousPatterns.some(pattern => pattern)) {
+    return false;
+  }
+  
+  // Default to allowing legitimate-looking requests
+  return true;
+}
+
+// Performance optimization headers
+app.use(performanceHeaders);
+
+// Logging middleware
+if (config.server.env !== 'test') {
+  app.use(morgan('combined', { 
+    stream: { write: message => logger.info(message.trim()) }
+  }));
+}
+
+// Cache headers for static assets
+app.use(staticAssetsCaching);
+app.use(serviceWorkerCache);
+
+// Serve static files with proper caching
+app.use(express.static(path.join(__dirname, '../client'), {
+  maxAge: '1d',
+  etag: true,
+  lastModified: true,
+  setHeaders: (res, filePath, stat) => {
+    const ext = path.extname(filePath).toLowerCase();
+    const fileName = path.basename(filePath).toLowerCase();
+    
+    // HTML files - no caching for dynamic content
+    if (ext === '.html' || ext === '.htm') {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      return;
+    }
+    
+    // JavaScript files - moderate caching with validation
+    if (ext === '.js' || ext === '.mjs') {
+      res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate'); // 1 day
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      return;
+    }
+    
+    // CSS files - moderate caching with validation
+    if (ext === '.css') {
+      res.setHeader('Cache-Control', 'public, max-age=86400, must-revalidate'); // 1 day
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      return;
+    }
+    
+    // Images - long caching
+    if (['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico'].includes(ext)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, immutable'); // 30 days
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      return;
+    }
+    
+    // Fonts - long caching
+    if (['.woff', '.woff2', '.ttf', '.eot', '.otf'].includes(ext)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year
+      res.setHeader('Access-Control-Allow-Origin', '*'); // Fonts may be used cross-origin
+      return;
+    }
+    
+    // Media files - long caching
+    if (['.mp4', '.mp3', '.wav', '.ogg', '.webm'].includes(ext)) {
+      res.setHeader('Cache-Control', 'public, max-age=2592000, immutable'); // 30 days
+      res.setHeader('Accept-Ranges', 'bytes'); // Enable range requests for media
+      return;
+    }
+    
+    // Archives and documents - moderate caching
+    if (['.zip', '.pdf', '.doc', '.docx', '.xls', '.xlsx'].includes(ext)) {
+      res.setHeader('Cache-Control', 'public, max-age=604800'); // 1 week
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+      return;
+    }
+    
+    // Service workers and manifest files - no caching for updates
+    if (fileName === 'sw.js' || fileName === 'service-worker.js' || 
+        fileName === 'manifest.json' || fileName === 'manifest.webmanifest') {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      return;
+    }
+    
+    // Configuration files - no caching
+    if (['.json', '.xml', '.txt'].includes(ext) && 
+        (fileName.includes('config') || fileName.includes('settings') || 
+         fileName === 'robots.txt' || fileName === 'sitemap.xml')) {
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+      return;
+    }
+    
+    // JSON files (API-like) - short caching
+    if (ext === '.json') {
+      res.setHeader('Cache-Control', 'public, max-age=3600'); // 1 hour
+      res.setHeader('Content-Type', 'application/json');
+      return;
+    }
+    
+    // Security headers for all files
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    
+    // Default caching for other static assets
+    res.setHeader('Cache-Control', 'public, max-age=86400'); // 1 day default
+  }
+}));
+
+// Health check endpoint
+app.use('/health', healthRoutes);
+
+// Database middleware - inject database service into all requests
+app.use(injectDatabaseService);
+
+// API routes
+app.use('/api/payments', paymentRoutes);
+app.use('/api/game', gameRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/webhooks', webhookRoutes); // CoinPayments IPN webhooks
+
+app.use('/api/rgb', rgbRoutes);
+app.use('/api/lightning', lightningRoutes);
+
+// Serve client application
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+
+// Error handling middleware
+app.use(notFound);
+app.use(errorHandler);
+
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received. Shutting down gracefully...');
+  process.exit(0);
+});
+
+process.on('SIGINT', () => {
+  logger.info('SIGINT received. Shutting down gracefully...');
+  process.exit(0);
+});
+
+const PORT = config.server.port;
+
+// Create HTTP server
+const http = require('http');
+const server = http.createServer(app);
+
+// Initialize WebSocket server
+const WebSocketServer = require('./websocket');
+const wsServer = new WebSocketServer(server);
+
+// Export WebSocket server for use in other modules
+app.wsServer = wsServer;
+
+// Start server
+server.listen(PORT, () => {
+  logger.info(`🐱⚡ Litecat server running on port ${PORT} in ${config.server.env} mode`);
+  logger.info(`🚀 Visit: http://localhost:${PORT}`);
+  logger.info(`🔌 WebSocket server ready at ws://localhost:${PORT}/ws`);
+});
+
+module.exports = { app, wsServer };

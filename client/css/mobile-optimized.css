@@ -1,0 +1,904 @@
+/* LIGHTCAT Mobile Optimized - Single Source of Truth */
+
+/* Override inline styles for mobile */
+@media screen and (max-width: 768px) {
+    /* CRITICAL: Force override inline header styles */
+    header[style] {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}
+
+/* ===== MOBILE BREAKPOINT: 768px ===== */
+@media screen and (max-width: 768px) {
+    
+    /* Reset and Base */
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Skip link visible on focus */
+    .skip-to-content:focus {
+        top: 0;
+    }
+    
+    html {
+        font-size: 16px;
+        overflow-x: hidden;
+    }
+    
+    body {
+        padding-top: 90px; /* Optimized header height */
+        scroll-padding-top: 90px; /* For smooth scroll with fixed header */
+        overflow-x: hidden;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    /* Hide desktop elements */
+    #three-canvas,
+    .lightning-rain {
+        display: none;
+    }
+    
+    /* Override any transparent backgrounds on header */
+    header,
+    header *,
+    .header-content,
+    .logo-section {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        opacity: 1 !important;
+    }
+    
+    /* ===== HEADER ===== */
+    header {
+        height: auto !important;
+        min-height: 90px !important; /* Optimized for better content visibility */
+        width: 100% !important;
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        background: #000000 !important;
+        background-color: #000000 !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: fixed !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+        /* Force solid black - override desktop transparency */
+        background: rgba(0, 0, 0, 1) !important;
+        /* Ensure content is visible */
+        overflow: visible !important;
+    }
+    
+    /* Full width header container - override desktop styles */
+    header .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #000000 !important;
+    }
+    
+    /* Remove pseudo elements - we'll use a different approach */
+    
+    /* Override all header states to solid black */
+    header,
+    header.scrolled,
+    header:not(.scrolled) {
+        padding: 10px 0 !important;
+        height: auto !important;
+        min-height: 80px !important;
+        background: #000000 !important;
+        background: rgba(0, 0, 0, 1) !important;
+        background-color: #000000 !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Force black background on header content too */
+    .header-content {
+        background: #000000 !important;
+        background-color: #000000 !important;
+        height: auto !important;
+        min-height: 60px !important;
+        padding: 10px 15px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+    
+    /* Force full viewport width for header - use box-shadow to extend black */
+    header {
+        transform: translateX(0) !important;
+        box-shadow: -100vw 0 0 100vw #000000, 100vw 0 0 100vw #000000 !important;
+    }
+    
+    .logo-section {
+        gap: 10px;
+        display: flex !important;
+        align-items: center !important;
+    }
+    
+    .logo-section > div {
+        display: block !important;
+        visibility: visible !important;
+        flex: 1;
+    }
+    
+    .logo-section h1 {
+        margin: 0;
+        line-height: 1;
+    }
+    
+    .logo-section p {
+        margin: 0;
+        line-height: 1.2;
+    }
+    
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .site-title {
+        font-size: clamp(1.8rem, 5vw, 2.2rem);
+        letter-spacing: 1px;
+    }
+    
+    .tagline {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 0.7rem;
+        margin-top: 5px;
+        margin-bottom: 0;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        overflow: visible !important;
+        position: relative;
+        z-index: 10;
+        color: #FFD700; /* Fallback color */
+        /* Same animation as desktop */
+        background: linear-gradient(90deg, 
+            #2a2a2a 0%,
+            #2a2a2a 40%,
+            #666666 48%,
+            #FFFF00 50%,
+            #FFFF00 52%,
+            #666666 54%,
+            #2a2a2a 62%,
+            #2a2a2a 100%
+        );
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: lightning-strike 4s ease-in-out infinite;
+        text-align: left; /* Align with logo */
+    }
+    
+    /* Animation for tagline */
+    @keyframes lightning-strike {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+    }
+    
+    /* Desktop nav hidden */
+    nav {
+        display: none;
+    }
+    
+    /* Mobile menu button */
+    .mobile-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3px;
+        padding: 8px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1001;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .mobile-menu-toggle span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--yellow);
+        transition: 0.3s;
+    }
+    
+    /* ===== SECTIONS ===== */
+    section {
+        padding: 40px 0;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem; /* Slightly smaller to prevent cutoff */
+        margin-bottom: 30px;
+        letter-spacing: 1px; /* Reduced letter spacing */
+        color: #FFFFFF !important; /* Make all section titles white */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        line-height: 1.2;
+    }
+    
+    /* Specific style for LIVE MINT STATUS */
+    #stats .section-title {
+        color: #FFFFFF !important;
+    }
+    
+    .section-title::after {
+        width: 60px;
+        bottom: -8px;
+    }
+    
+    /* ===== STATS SECTION ===== */
+    .stats-section {
+        padding-top: 20px; /* Reduced since body already has padding */
+        padding-bottom: 40px;
+    }
+    
+    .mint-status-text {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .progress-container {
+        margin: 0 0 30px 0;
+        padding: 15px;
+    }
+    
+    .progress-bar {
+        height: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 0 -5px; /* Negative margin to maximize width */
+    }
+    
+    .stat-card {
+        padding: 20px 10px;
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 215, 0, 0.02) 100%);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 12px;
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0 5px;
+        overflow: hidden;
+    }
+    
+    .stat-number {
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #FFFF00;  /* Same yellow as 7% SOLD */
+        line-height: 1.1;
+        width: 100%;
+        display: block;
+        white-space: nowrap;
+        font-feature-settings: "tnum";
+        /* Ensure abbreviated numbers fit nicely */
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* Formatted number specific styles */
+    .formatted-number {
+        cursor: help; /* Show tooltip is available */
+        position: relative;
+    }
+    
+    /* Ensure abbreviated format is readable */
+    .formatted-number[data-full-number] {
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.95); /* Improved contrast */
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+    
+    /* ===== GAME SECTION ===== */
+    .game-section {
+        padding: 40px 0;
+    }
+    
+    .game-frame {
+        height: 400px;
+    }
+    
+    /* ===== PURCHASE SECTION ===== */
+    .purchase-section {
+        padding: 40px 0;
+    }
+    
+    /* Tier layout on mobile - fits all 3 tiers */
+    .tier-grid {
+        display: flex;
+        gap: 10px;
+        padding: 10px 0;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+    
+    .tier-card {
+        flex: 1;
+        max-width: 110px;
+        padding: 15px 10px;
+        text-align: center;
+    }
+    
+    .tier-number {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+    
+    .tier-name {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+    }
+    
+    .tier-requirement,
+    .tier-reward {
+        font-size: 0.75rem;
+        line-height: 1.3;
+        margin: 3px 0;
+    }
+    
+    .tier-icon {
+        display: none; /* Hide if exists */
+    }
+    
+    .purchase-form {
+        padding: 25px 20px;
+        margin-top: 30px;
+    }
+    
+    .batch-selector {
+        gap: 10px;
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    .batch-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+        text-align: center !important;
+    }
+    
+    /* Fix for batch count display */
+    .batch-count {
+        min-width: 60px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--yellow);
+        text-align: center;
+        padding: 0 10px;
+    }
+    
+    /* MAX button - just the text, no padding or fixed size */
+    .batch-btn.max-btn {
+        width: auto !important;         /* only as wide as the text */
+        height: auto !important;        /* only as tall as the text */
+        min-width: unset !important;    /* remove minimum width */
+        min-height: unset !important;   /* remove minimum height */
+        border-radius: 0 !important;    /* no border radius needed */
+        padding: 0 !important;          /* no padding at all */
+        font-size: 0.65rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        text-align: center !important;
+        border: none !important;        /* remove the frame/border */
+        background: transparent !important; /* make background transparent */
+    }
+    
+    #batchAmount {
+        font-size: 1.8rem;
+        padding: 10px;
+        margin: 0 10px;
+        width: 80px;
+    }
+    
+    .form-control {
+        padding: 12px 15px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .btn-purchase {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+    
+    /* ===== FOOTER ===== */
+    footer {
+        padding: 40px 0;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}
+
+/* ===== MOBILE NAVIGATION DRAWER - MOBILE ONLY ===== */
+@media screen and (max-width: 768px) {
+    .mobile-nav {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        background: #000;
+        border-left: 2px solid var(--yellow);
+        transition: right 0.3s ease;
+        z-index: 10000;
+        overflow-y: auto;
+    }
+
+    .mobile-nav.open {
+        right: 0;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-nav-header {
+        padding: 20px;
+        border-bottom: 1px solid rgba(255, 255, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mobile-nav-logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .mobile-nav-close {
+        background: none;
+        border: none;
+        color: var(--yellow);
+        font-size: 2rem;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .mobile-nav-links {
+        padding: 20px;
+    }
+
+    .mobile-nav-links a {
+        display: block;
+        padding: 15px;
+        color: var(--white);
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-bottom: 1px solid rgba(255, 255, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a:active {
+        background: rgba(255, 255, 0, 0.1);
+        color: var(--yellow);
+    }
+
+    /* Quick Select in Mobile Menu */
+    .mobile-quick-select {
+        padding: 20px;
+        border-top: 1px solid rgba(255, 255, 0, 0.2);
+        background: rgba(255, 255, 0, 0.02);
+    }
+
+    .mobile-quick-select h3 {
+        color: var(--yellow);
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .quick-select-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .quick-select-btn {
+        background: rgba(255, 255, 0, 0.1);
+        border: 1px solid var(--yellow);
+        color: var(--yellow);
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .quick-select-btn:hover,
+    .quick-select-btn:active {
+        background: var(--yellow);
+        color: var(--black);
+    }
+
+    .mobile-nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+
+    .mobile-nav-overlay.show {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+/* Hide mobile elements on desktop */
+@media screen and (min-width: 769px) {
+    .mobile-nav,
+    .mobile-nav-overlay,
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+}
+
+/* ===== SMALL DEVICES: 480px ===== */
+@media screen and (max-width: 480px) {
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .game-frame {
+        height: 350px;
+    }
+    
+    .stat-number {
+        font-size: 1.3rem;
+    }
+    
+    .mint-status-text {
+        font-size: 1.3rem;
+    }
+    
+    /* MAX button for 480px screens */
+    .batch-btn.max-btn {
+        font-size: 0.6rem !important;
+    }
+    
+    .batch-selector {
+        gap: 8px;
+    }
+}
+
+/* ===== EXTRA SMALL DEVICES: 375px ===== */
+@media screen and (max-width: 375px) {
+    body {
+        padding-top: 120px; /* Adjust for smaller screens with tagline */
+    }
+    
+    .tagline {
+        font-size: 0.65rem !important;
+    }
+    
+    .site-title {
+        font-size: 1.1rem;
+    }
+    
+    .tagline {
+        font-size: 0.65rem !important; /* Smaller on small screens */
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+    
+    /* Ensure LIVE MINT STATUS fits */
+    #stats .section-title {
+        font-size: 1.4rem !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .stats-grid {
+        gap: 8px;
+    }
+    
+    .stat-card {
+        padding: 15px 8px;
+        min-height: 90px;
+    }
+    
+    .stat-number {
+        font-size: 1rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+        letter-spacing: 0;
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+}
+
+/* ===== TINY DEVICES: 320px ===== */
+@media screen and (max-width: 320px) {
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .site-title {
+        font-size: 1rem;
+    }
+    
+    .tagline {
+        font-size: 0.6rem !important;
+        letter-spacing: 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr; /* Keep 2 columns even on tiny screens */
+        gap: 6px;
+        margin: 0 -3px;
+    }
+    
+    .stat-card {
+        padding: 15px 5px;
+        min-height: 80px;
+        margin: 0 3px;
+    }
+    
+    .stat-number {
+        font-size: 0.9rem;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem;
+    }
+    
+    .batch-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #batchAmount {
+        width: 70px;
+        font-size: 1.5rem;
+    }
+}
+
+/* ===== LANDSCAPE MODE ===== */
+@media screen and (max-width: 812px) and (orientation: landscape) {
+    .stats-section {
+        padding-top: 70px;
+    }
+    
+    .game-frame {
+        height: 280px;
+    }
+    
+    section {
+        padding: 30px 0;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== IPHONE NOTCH SUPPORT ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+    @media screen and (max-width: 768px) {
+        header {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        body {
+            padding-top: calc(60px + env(safe-area-inset-top));
+        }
+        
+        .mobile-nav {
+            padding-top: env(safe-area-inset-top);
+        }
+    }
+}
+
+/* ===== EMERGENCY MOBILE FIXES ===== */
+@media (max-width: 768px) {
+    /* Fix 1: LIVE MINT STATUS Color Issue */
+    #stats .section-title {
+        color: #FFFFFF !important;
+    }
+    
+    #stats .section-title:hover,
+    #stats .section-title:active {
+        color: #FFD700 !important;
+    }
+    
+    /* Fix 2: Stat Cards Spacing Problem */
+    .stat-card {
+        padding: 8px !important;
+        min-height: unset !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+    }
+    
+    .stat-number {
+        margin: 0 !important;
+        line-height: 1.2 !important;
+    }
+    
+    .stat-label {
+        margin: 4px 0 0 0 !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Fix 3: Layout on 320px screens */
+    .stats-grid {
+        gap: 10px !important;
+    }
+    
+    /* Fix 4: Touch Target Size */
+    button, .button, .test-button, .mint-button, input[type="submit"] {
+        height: 44px !important;
+        padding: 0 15px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Scan QR Button - Mobile Optimized */
+    #scanQRBtn {
+        width: 100% !important;
+        padding: 14px 20px !important;
+        font-size: 1rem !important;
+        border-radius: 10px !important;
+        box-shadow: 0 3px 10px rgba(255, 215, 0, 0.4) !important;
+        margin-bottom: 8px !important;
+        -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
+        height: auto !important;
+        min-height: 48px !important;
+    }
+    
+    /* Scan button container - Mobile spacing */
+    #scanQRBtn.parentElement {
+        margin-top: 25px !important;
+        margin-bottom: 30px !important;
+        padding: 15px 0 !important;
+    }
+    
+    #scanQRBtn:active {
+        transform: scale(0.98) !important;
+        box-shadow: 0 1px 5px rgba(255, 215, 0, 0.3) !important;
+    }
+    
+    #scanQRBtn svg {
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 8px !important;
+    }
+    
+    /* Helper text below scan button */
+    #scanQRBtn + p {
+        font-size: 0.75rem !important;
+        margin-bottom: 20px !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .stat-number {
+        font-size: 1.3rem !important;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem !important;
+    }
+    
+    .stats-grid {
+        gap: 8px !important;
+    }
+    
+    .stat-card:nth-child(3) .stat-number {
+        font-size: 1.1rem !important;
+    }
+    
+    /* MAX button for 375px screens */
+    .batch-btn.max-btn {
+        font-size: 0.55rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .stat-number {
+        font-size: 1.1rem !important;
+        word-break: break-word;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem !important;
+    }
+    
+    .stats-grid {
+        gap: 6px !important;
+    }
+    
+    /* MAX button for 320px screens - maintain 44px for accessibility */
+    .batch-btn.max-btn {
+        font-size: 0.5rem !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+}

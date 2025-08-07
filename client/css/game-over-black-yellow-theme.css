@@ -1,0 +1,266 @@
+/**
+ * Game Over Black & Yellow Theme
+ * Matches LIGHTCAT brand identity
+ */
+
+/* Desktop-specific game over styles */
+@media (min-width: 769px) {
+    #game-over {
+        background: #000000 !important;
+    }
+    
+    .game-over-gallery {
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        background: #000000 !important;
+        border: 3px solid #fff600 !important;
+        border-radius: 0 !important; /* Sharp edges for bold look */
+        padding: 40px !important;
+        box-shadow: 0 0 30px rgba(255, 246, 0, 0.5) !important;
+    }
+    
+    /* CONGRATULATIONS title */
+    .game-over-gallery h2 {
+        font-size: 42px !important;
+        color: #fff600 !important;
+        text-align: center !important;
+        margin-bottom: 30px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 4px !important;
+        font-weight: 900 !important;
+        text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    }
+    
+    /* Score display */
+    #final-score {
+        font-size: 80px !important;
+        color: #fff600 !important;
+        text-align: center !important;
+        display: block !important;
+        margin: 20px 0 !important;
+        font-weight: 900 !important;
+        text-shadow: 3px 3px 0 rgba(255, 246, 0, 0.3);
+    }
+    
+    /* Tier badge */
+    #tier-unlocked {
+        display: inline-block !important;
+        padding: 15px 50px !important;
+        font-size: 28px !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        margin: 20px auto !important;
+        text-align: center !important;
+        letter-spacing: 3px !important;
+        background: #fff600 !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        position: relative !important;
+    }
+    
+    #tier-unlocked::before,
+    #tier-unlocked::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 5px;
+        left: 5px;
+        background: #fff600;
+        border: 3px solid #000;
+        z-index: -1;
+    }
+    
+    /* Twitter section */
+    #twitter-verify {
+        background: #000000 !important;
+        border: 2px solid #fff600 !important;
+        padding: 25px !important;
+        margin: 30px 0 !important;
+    }
+    
+    #twitter-verify h3 {
+        font-size: 18px !important;
+        color: #fff600 !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        font-weight: 700 !important;
+    }
+    
+    #twitter-actions {
+        display: flex !important;
+        gap: 20px !important;
+        justify-content: center !important;
+    }
+    
+    #twitter-follow {
+        background: #000000 !important;
+        color: #fff600 !important;
+        border: 3px solid #fff600 !important;
+        padding: 12px 30px !important;
+        text-decoration: none !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    #twitter-follow:hover {
+        background: #fff600 !important;
+        color: #000000 !important;
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 4px 4px 0 #fff600 !important;
+    }
+    
+    #twitter-follow svg {
+        fill: currentColor !important;
+    }
+    
+    #verify-follow {
+        background: #fff600 !important;
+        color: #000000 !important;
+        border: 3px solid #000000 !important;
+        padding: 12px 30px !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    #verify-follow:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 4px 4px 0 #000000 !important;
+    }
+    
+    /* Action buttons */
+    .action-group {
+        display: flex !important;
+        gap: 20px !important;
+        justify-content: center !important;
+        margin-top: 40px !important;
+    }
+    
+    .go-btn.large {
+        padding: 20px 40px !important;
+        font-size: 18px !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        border: 3px solid #000000 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        letter-spacing: 2px !important;
+        min-width: 160px !important;
+        position: relative !important;
+    }
+    
+    /* Play Again button */
+    #play-again {
+        background: #000000 !important;
+        color: #fff600 !important;
+        border: 3px solid #fff600 !important;
+    }
+    
+    #play-again:hover {
+        transform: translate(-3px, -3px) !important;
+        box-shadow: 5px 5px 0 #fff600 !important;
+    }
+    
+    /* CLAIM button - THE MAIN ATTRACTION */
+    #unlock-tier {
+        background: #fff600 !important;
+        color: #000000 !important;
+        font-size: 24px !important;
+        padding: 25px 60px !important;
+        border: 4px solid #000000 !important;
+        position: relative !important;
+        overflow: visible !important;
+        z-index: 10 !important;
+    }
+    
+    #unlock-tier::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 5px;
+        left: 5px;
+        background: #fff600;
+        border: 4px solid #000;
+        z-index: -1;
+    }
+    
+    #unlock-tier:hover {
+        transform: translate(-5px, -5px) !important;
+    }
+    
+    #unlock-tier:hover::before {
+        top: 8px;
+        left: 8px;
+    }
+    
+    /* Pulsing outline for CLAIM */
+    @keyframes pulse-outline {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 246, 0, 0.8);
+        }
+        70% {
+            box-shadow: 0 0 0 15px rgba(255, 246, 0, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 246, 0, 0);
+        }
+    }
+    
+    #unlock-tier {
+        animation: pulse-outline 2s infinite;
+    }
+    
+    /* Exit button */
+    .go-btn.large[onclick*="location.href"] {
+        background: #000000 !important;
+        color: #fff600 !important;
+        border: 3px solid #fff600 !important;
+    }
+    
+    .go-btn.large[onclick*="location.href"]:hover {
+        transform: translate(-3px, -3px) !important;
+        box-shadow: 5px 5px 0 #fff600 !important;
+    }
+    
+    /* Success message */
+    #verify-success {
+        background: #fff600 !important;
+        color: #000000 !important;
+        padding: 15px 30px !important;
+        text-align: center !important;
+        font-weight: 900 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        margin-top: 20px !important;
+        border: 3px solid #000000 !important;
+    }
+    
+    /* Remove all gradients and soft shadows */
+    .game-over-gallery * {
+        text-shadow: none !important;
+    }
+    
+    /* Bold geometric style */
+    .game-over-gallery::after {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border: 2px solid #fff600;
+        z-index: -1;
+        opacity: 0.5;
+    }
+}

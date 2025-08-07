@@ -1,0 +1,170 @@
+/* ============================================
+   COMPLETE RESPONSIVE BREAKPOINTS
+   All required breakpoints for perfect responsive design
+   ============================================ */
+
+/* 320px - Small phones (iPhone SE, older devices) */
+@media screen and (max-width: 320px) {
+    :root {
+        --fs-hero: 1.75rem;
+        --fs-title: 1.25rem;
+        --fs-body: 0.875rem;
+        --space-md: 12px;
+        --space-lg: 20px;
+    }
+    
+    .container {
+        padding: 0 12px;
+    }
+    
+    .stat-card {
+        min-height: 70px;
+        padding: 10px;
+    }
+    
+    .stat-number {
+        font-size: 1rem;
+    }
+    
+    .tier-card {
+        flex: 0 0 100px;
+    }
+}
+
+/* 375px - Standard phones (iPhone 6/7/8) */
+@media screen and (max-width: 375px) {
+    :root {
+        --fs-hero: 2rem;
+        --fs-title: 1.4rem;
+        --fs-body: 0.9rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #gameWrapper {
+        height: 300px;
+    }
+}
+
+/* 414px - Large phones (iPhone 6+/7+/8+) */
+@media screen and (max-width: 414px) {
+    :root {
+        --fs-hero: 2.25rem;
+        --fs-title: 1.5rem;
+        --fs-body: 0.95rem;
+        --space-lg: 28px;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    .stat-card {
+        min-height: 85px;
+    }
+    
+    .batch-selector {
+        gap: 20px;
+    }
+    
+    .tier-grid {
+        gap: 12px;
+    }
+    
+    #gameWrapper {
+        height: 350px;
+    }
+}
+
+/* 768px - Tablets */
+@media screen and (max-width: 768px) {
+    :root {
+        --fs-hero: 3rem;
+        --fs-title: 2rem;
+        --fs-body: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    #gameWrapper {
+        height: 400px;
+    }
+    
+    .tier-grid {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+}
+
+/* 1024px - Small laptops and landscape tablets */
+@media screen and (max-width: 1024px) {
+    :root {
+        --fs-hero: 3.5rem;
+        --fs-title: 2.5rem;
+        --fs-body: 1.1rem;
+    }
+    
+    .container {
+        max-width: 960px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    #gameWrapper {
+        height: 500px;
+    }
+}
+
+/* Landscape optimizations for all breakpoints */
+@media screen and (max-width: 414px) and (orientation: landscape) {
+    :root {
+        --space-xl: 20px;
+        --space-xxl: 30px;
+    }
+    
+    header {
+        min-height: 50px;
+    }
+    
+    section {
+        padding: var(--space-lg) 0;
+    }
+    
+    #gameWrapper {
+        height: 250px;
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    #gameWrapper {
+        height: 320px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* High DPI screens */
+@media screen and (max-width: 414px) and (-webkit-min-device-pixel-ratio: 3) {
+    /* Optimize for retina displays */
+    .stat-card,
+    .tier-card {
+        border-width: 1px;
+    }
+}
+
+/* Progressive enhancement for newer devices */
+@supports (padding: clamp(1rem, 2vw, 2rem)) {
+    @media screen and (max-width: 414px) {
+        .container {
+            padding: 0 clamp(12px, 3vw, 20px);
+        }
+    }
+}

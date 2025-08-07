@@ -1,0 +1,287 @@
+/**
+ * Game Over Desktop Redesign
+ * Professional, modern design for desktop screens
+ */
+
+/* Desktop-specific game over styles */
+@media (min-width: 769px) {
+    #game-over {
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%) !important;
+        backdrop-filter: blur(10px);
+    }
+    
+    .game-over-gallery {
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        background: rgba(0, 0, 0, 0.95) !important;
+        border: 2px solid #fff600 !important;
+        border-radius: 20px !important;
+        padding: 40px !important;
+        box-shadow: 0 0 50px rgba(255, 246, 0, 0.3) !important;
+    }
+    
+    /* Main title styling */
+    .game-over-gallery h2 {
+        font-size: 48px !important;
+        background: linear-gradient(45deg, #fff600, #ffd700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 30px !important;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #fff600, 0 0 20px #fff600; }
+        to { text-shadow: 0 0 20px #fff600, 0 0 30px #fff600; }
+    }
+    
+    /* Score display redesign */
+    #final-score {
+        font-size: 72px !important;
+        color: #fff !important;
+        text-align: center;
+        display: block !important;
+        margin: 20px 0 !important;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Tier badge redesign */
+    #tier-unlocked {
+        display: inline-block !important;
+        padding: 15px 40px !important;
+        font-size: 24px !important;
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        border-radius: 50px !important;
+        margin: 20px auto !important;
+        text-align: center !important;
+        letter-spacing: 2px !important;
+    }
+    
+    #tier-unlocked:contains("GOLD") {
+        background: linear-gradient(45deg, #ffd700, #ffed4e) !important;
+        color: #000 !important;
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5) !important;
+    }
+    
+    #tier-unlocked:contains("SILVER") {
+        background: linear-gradient(45deg, #c0c0c0, #e8e8e8) !important;
+        color: #000 !important;
+        box-shadow: 0 4px 20px rgba(192, 192, 192, 0.5) !important;
+    }
+    
+    #tier-unlocked:contains("BRONZE") {
+        background: linear-gradient(45deg, #cd7f32, #e6a55e) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 20px rgba(205, 127, 50, 0.5) !important;
+    }
+    
+    /* Twitter section redesign */
+    #twitter-verify {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 246, 0, 0.3) !important;
+        border-radius: 15px !important;
+        padding: 25px !important;
+        margin: 30px 0 !important;
+    }
+    
+    #twitter-verify h3 {
+        font-size: 20px !important;
+        color: #fff600 !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
+    }
+    
+    #twitter-actions {
+        display: flex !important;
+        gap: 15px !important;
+        justify-content: center !important;
+    }
+    
+    #twitter-follow {
+        background: #1DA1F2 !important;
+        color: #fff !important;
+        padding: 12px 25px !important;
+        border-radius: 25px !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    #twitter-follow:hover {
+        background: #1a8cd8 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(29, 161, 242, 0.4) !important;
+    }
+    
+    #verify-follow {
+        background: transparent !important;
+        color: #fff600 !important;
+        border: 2px solid #fff600 !important;
+        padding: 12px 25px !important;
+        border-radius: 25px !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    #verify-follow:hover {
+        background: #fff600 !important;
+        color: #000 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(255, 246, 0, 0.4) !important;
+    }
+    
+    /* Action buttons redesign */
+    .action-group {
+        display: flex !important;
+        gap: 20px !important;
+        justify-content: center !important;
+        margin-top: 40px !important;
+    }
+    
+    .go-btn.large {
+        padding: 18px 40px !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        text-transform: uppercase !important;
+        border-radius: 10px !important;
+        border: none !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        letter-spacing: 1px !important;
+        min-width: 150px !important;
+    }
+    
+    /* Play Again button */
+    #play-again {
+        background: #333 !important;
+        color: #fff !important;
+        border: 2px solid #555 !important;
+    }
+    
+    #play-again:hover {
+        background: #444 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    /* Claim button - make it stand out */
+    #unlock-tier {
+        background: linear-gradient(45deg, #fff600, #ffd700) !important;
+        color: #000 !important;
+        font-size: 20px !important;
+        padding: 20px 50px !important;
+        position: relative !important;
+        overflow: hidden !important;
+        animation: pulse 2s infinite !important;
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 246, 0, 0.7); }
+        70% { box-shadow: 0 0 0 20px rgba(255, 246, 0, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 246, 0, 0); }
+    }
+    
+    #unlock-tier:hover {
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 10px 30px rgba(255, 246, 0, 0.5) !important;
+    }
+    
+    #unlock-tier::before {
+        content: '⚡';
+        position: absolute;
+        left: 20px;
+        font-size: 24px;
+        animation: flash 1s infinite;
+    }
+    
+    #unlock-tier::after {
+        content: '⚡';
+        position: absolute;
+        right: 20px;
+        font-size: 24px;
+        animation: flash 1s infinite;
+    }
+    
+    @keyframes flash {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+    
+    /* Exit button */
+    .go-btn.large[onclick*="location.href"] {
+        background: #dc3545 !important;
+        color: #fff !important;
+        border: 2px solid #dc3545 !important;
+    }
+    
+    .go-btn.large[onclick*="location.href"]:hover {
+        background: #c82333 !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3) !important;
+    }
+    
+    /* Success message styling */
+    #verify-success {
+        background: linear-gradient(45deg, #28a745, #34ce57) !important;
+        color: #fff !important;
+        padding: 15px 30px !important;
+        border-radius: 10px !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        margin-top: 20px !important;
+        animation: slideIn 0.5s ease-out !important;
+    }
+    
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Allocation message */
+    #allocation-message {
+        background: rgba(255, 246, 0, 0.1) !important;
+        border: 2px solid rgba(255, 246, 0, 0.3) !important;
+        border-radius: 10px !important;
+        padding: 20px !important;
+        margin-top: 30px !important;
+        color: #fff !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        line-height: 1.6 !important;
+    }
+    
+    /* Add particle effect container */
+    .game-over-gallery::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #fff600, #ffd700, #fff600);
+        border-radius: 20px;
+        z-index: -1;
+        opacity: 0.5;
+        animation: borderGlow 3s linear infinite;
+    }
+    
+    @keyframes borderGlow {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+}

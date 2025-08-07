@@ -1,0 +1,426 @@
+/* Perfect 10/10 UI/UX Improvements for LIGHTCAT */
+
+/* ===== CSS CUSTOM PROPERTIES FOR DESIGN TOKENS ===== */
+:root {
+    /* Colors with improved contrast */
+    --black: #000000;
+    --yellow: #FFFF00;
+    --yellow-hover: #FFD700;
+    --dark-gray: #0a0a0a;
+    --medium-gray: #1a1a1a;
+    --light-gray: #2a2a2a;
+    --white: #FFFFFF;
+    --white-high-contrast: rgba(255, 255, 255, 0.95); /* Improved from 0.8 */
+    
+    /* Spacing System */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 40px;
+    --spacing-3xl: 60px;
+    
+    /* Typography Scale */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --font-size-3xl: 3rem;
+    
+    /* Border Radius System */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 300ms ease-in-out;
+    --transition-slow: 500ms ease-in-out;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(255, 255, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(255, 255, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(255, 255, 0, 0.2);
+    --shadow-xl: 0 16px 32px rgba(255, 255, 0, 0.25);
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+
+/* Focus indicators for all interactive elements */
+*:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* Skip to content link for screen readers - HIDDEN until focused */
+.skip-to-content {
+    position: absolute;
+    top: -100px; /* Further off screen */
+    left: -100px; /* Also off to the left */
+    background: var(--yellow);
+    color: var(--black);
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10000;
+    border-radius: 0 0 var(--radius-md) 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .tagline {
+        background: var(--yellow) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --white-high-contrast: #FFFFFF;
+    }
+    
+    .stat-label,
+    .tier-requirement,
+    .tier-reward {
+        color: var(--white) !important;
+    }
+}
+
+/* ===== VISUAL HIERARCHY IMPROVEMENTS ===== */
+
+/* Fluid typography for better scaling */
+.site-title {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+}
+
+.section-title {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+.stat-number {
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+}
+
+/* Improved header height for mobile */
+@media (max-width: 768px) {
+    header {
+        min-height: 90px !important; /* Reduced from 110px */
+        height: auto !important;
+    }
+    
+    body {
+        padding-top: 90px !important; /* Match header height */
+        scroll-padding-top: 90px; /* For smooth scroll */
+    }
+}
+
+/* ===== USABILITY ENHANCEMENTS ===== */
+
+/* Tier cards - no scroll indicators needed, they fit perfectly on mobile */
+
+/* Loading states for async operations */
+.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--yellow);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner 0.75s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Skeleton loading for content */
+.skeleton {
+    background: linear-gradient(90deg, 
+        var(--medium-gray) 25%, 
+        var(--light-gray) 50%, 
+        var(--medium-gray) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* GPU acceleration for animations */
+.animated {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Contain layout for better performance */
+.stat-card,
+.tier-card,
+.feature-box {
+    contain: layout style paint;
+}
+
+/* ===== CONSISTENCY IMPROVEMENTS ===== */
+
+/* Unified button styles */
+.btn,
+button,
+.test-button,
+.mint-button,
+input[type="submit"] {
+    min-height: 44px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    border: 2px solid var(--yellow);
+    background: transparent;
+    color: var(--yellow);
+}
+
+.btn:hover,
+button:hover {
+    background: var(--yellow);
+    color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn:active,
+button:active {
+    transform: translateY(0);
+}
+
+/* Unified card styles */
+.card {
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.05) 0%, 
+        rgba(255, 215, 0, 0.02) 100%
+    );
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    border-color: var(--yellow);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+/* ===== SECURITY TRUST SIGNALS ===== */
+
+.security-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(255, 255, 0, 0.1);
+    border: 1px solid rgba(255, 255, 0, 0.3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    color: var(--white-high-contrast);
+}
+
+.security-badge svg {
+    width: 16px;
+    height: 16px;
+    color: var(--yellow);
+}
+
+/* ===== MOBILE-SPECIFIC IMPROVEMENTS ===== */
+
+@media (max-width: 768px) {
+    /* Better touch targets */
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    .clickable {
+        min-height: 48px; /* Increased from 44px for better accessibility */
+    }
+    
+    /* Improved text contrast */
+    .stat-label,
+    .tier-requirement,
+    .tier-reward,
+    .feature-description {
+        color: var(--white-high-contrast);
+    }
+    
+    /* Visual feedback for touch */
+    .touchable {
+        -webkit-tap-highlight-color: rgba(255, 255, 0, 0.1);
+    }
+    
+    /* Better form inputs */
+    input,
+    select,
+    textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: var(--spacing-md);
+        background: var(--medium-gray);
+        border: 2px solid var(--light-gray);
+        color: var(--white);
+        border-radius: var(--radius-md);
+    }
+    
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--yellow);
+        background: var(--dark-gray);
+    }
+}
+
+/* ===== ICON SYSTEM ===== */
+
+.icon {
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+.icon-sm { font-size: 1rem; }
+.icon-md { font-size: 1.5rem; }
+.icon-lg { font-size: 2rem; }
+.icon-xl { font-size: 3rem; }
+
+/* ===== ERROR STATES ===== */
+
+.error {
+    border-color: #ff3333 !important;
+}
+
+.error-message {
+    color: #ff6666;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+}
+
+/* ===== SUCCESS STATES ===== */
+
+.success {
+    border-color: #33ff33 !important;
+}
+
+.success-message {
+    color: #66ff66;
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-xs);
+}
+
+/* ===== TOOLTIP SYSTEM ===== */
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: var(--black);
+    color: var(--yellow);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--yellow);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-fast);
+}
+
+[data-tooltip]:hover::after {
+    opacity: 1;
+}
+
+/* ===== RESPONSIVE GAME CONTAINER ===== */
+
+@media (max-width: 768px) {
+    .game-frame {
+        height: 60vh; /* Responsive to viewport */
+        min-height: 350px;
+        max-height: 500px;
+    }
+}
+
+/* Portrait mode optimization */
+@media (max-width: 768px) and (orientation: portrait) {
+    .game-frame {
+        height: 50vh;
+    }
+}
+
+/* Landscape mode optimization */
+@media (max-width: 812px) and (orientation: landscape) {
+    .game-frame {
+        height: 80vh;
+    }
+}

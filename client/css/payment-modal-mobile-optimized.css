@@ -1,0 +1,439 @@
+/* Mobile-Optimized Payment Modal - CLAUDE.md Compliant */
+
+/* Base Modal */
+.payment-modal-clean {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    display: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+}
+
+.payment-modal-clean.active {
+    display: block;
+}
+
+/* Modal Container */
+.payment-modal-box {
+    background: #fff;
+    max-width: 400px;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    min-height: auto;
+}
+
+/* Header - Fixed height for consistency */
+.payment-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+    height: 56px; /* Fixed height per CLAUDE.md */
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.payment-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    flex: 1;
+}
+
+.payment-close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 44px; /* CLAUDE.md minimum touch target */
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    transition: background 0.2s;
+}
+
+.payment-close:active {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Tabs - Proper touch targets */
+.payment-tabs {
+    display: flex;
+    background: #f8f8f8;
+}
+
+.payment-tab {
+    flex: 1;
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    height: 44px; /* CLAUDE.md minimum */
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-tab.active {
+    color: #000;
+    border-bottom-color: #000;
+    background: #fff;
+}
+
+/* Content - Proper spacing */
+.payment-content {
+    padding: 20px;
+    min-height: 400px; /* Prevent layout shift */
+}
+
+/* Amount Display */
+.payment-amount {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.amount-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.amount-tokens {
+    font-size: 14px;
+    color: #666;
+    font-weight: 400;
+}
+
+/* QR Code Container */
+.payment-qr {
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 240px;
+    position: relative;
+}
+
+#qrCanvas {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* Invoice Input Section */
+.payment-invoice {
+    margin: 20px 0;
+}
+
+.invoice-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+    font-size: 12px;
+    color: #333;
+    background: #f8f8f8;
+    box-sizing: border-box;
+    word-break: break-all;
+    min-height: 44px; /* CLAUDE.md minimum */
+}
+
+.copy-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    min-height: 44px; /* CLAUDE.md minimum */
+    transition: background 0.2s;
+}
+
+.copy-btn:active {
+    background: #333;
+}
+
+/* Status Section */
+.payment-status {
+    padding: 16px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 20px;
+}
+
+#statusText {
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+}
+
+.countdown {
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+    padding: 4px 8px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+/* Responsive Breakpoints per CLAUDE.md */
+
+/* Small phones (320px) */
+@media (max-width: 374px) {
+    .payment-modal-box {
+        width: calc(100% - 16px);
+        margin: 8px auto;
+        border-radius: 0;
+    }
+    
+    .payment-header {
+        padding: 12px 16px;
+    }
+    
+    .payment-title {
+        font-size: 16px;
+    }
+    
+    .payment-content {
+        padding: 16px;
+    }
+    
+    .amount-value {
+        font-size: 24px;
+    }
+    
+    #qrCanvas {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .payment-qr {
+        padding: 16px;
+    }
+}
+
+/* Standard phones (375px) */
+@media (min-width: 375px) and (max-width: 413px) {
+    .payment-modal-clean {
+        padding-top: env(safe-area-inset-top); /* iPhone notch support */
+    }
+    
+    .payment-modal-box {
+        margin-top: max(10px, env(safe-area-inset-top));
+    }
+}
+
+/* Large phones (414px+) */
+@media (min-width: 414px) and (max-width: 767px) {
+    .payment-modal-box {
+        max-width: 440px;
+        margin: 20px auto;
+    }
+    
+    .amount-value {
+        font-size: 32px;
+    }
+}
+
+/* Tablets (768px+) */
+@media (min-width: 768px) {
+    .payment-modal-clean {
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .payment-modal-clean.active {
+        display: flex;
+    }
+    
+    .payment-modal-box {
+        margin: 20px;
+        max-width: 480px;
+    }
+    
+    .payment-invoice {
+        display: flex;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .invoice-input {
+        flex: 1;
+    }
+    
+    .copy-btn {
+        width: auto;
+        margin-top: 0;
+        padding: 12px 24px;
+    }
+}
+
+/* Landscape Mode Adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .payment-modal-box {
+        margin: 5px auto;
+        max-height: calc(100vh - 10px);
+        overflow-y: auto;
+    }
+    
+    .payment-content {
+        min-height: auto;
+        padding: 12px;
+    }
+    
+    .payment-amount {
+        padding: 12px 0;
+    }
+    
+    #qrCanvas {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .payment-modal-box {
+        background: #1a1a1a;
+        color: #fff;
+    }
+    
+    .payment-header {
+        border-bottom-color: #333;
+    }
+    
+    .payment-title {
+        color: #fff;
+    }
+    
+    .payment-close {
+        color: #ccc;
+    }
+    
+    .payment-tabs {
+        background: #222;
+    }
+    
+    .payment-tab {
+        color: #999;
+    }
+    
+    .payment-tab.active {
+        color: #fff;
+        background: #1a1a1a;
+        border-bottom-color: #fff;
+    }
+    
+    .amount-value {
+        color: #fff;
+    }
+    
+    .amount-tokens {
+        color: #999;
+    }
+    
+    .payment-qr {
+        background: #222;
+    }
+    
+    .invoice-input {
+        background: #222;
+        border-color: #444;
+        color: #fff;
+    }
+    
+    .payment-status {
+        background: #222;
+    }
+    
+    #statusText {
+        color: #ccc;
+    }
+    
+    .countdown {
+        background: #333;
+        color: #fff;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .payment-modal-box {
+        border: 2px solid #000;
+    }
+    
+    .payment-tab.active {
+        border-bottom-width: 3px;
+    }
+    
+    .copy-btn {
+        border: 2px solid #000;
+    }
+}
+
+/* Print Mode - Hide modal */
+@media print {
+    .payment-modal-clean {
+        display: none !important;
+    }
+}
+
+/* Safe Area Support for Modern Devices */
+.payment-modal-box {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Ensure touch targets meet CLAUDE.md requirements */
+button, .payment-tab, input, select {
+    min-height: 44px;
+    min-width: 44px;
+}

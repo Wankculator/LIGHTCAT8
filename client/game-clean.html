@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Light Cat - Collect Lightning</title>
+    
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* CRITICAL: Prevent yellow flash */
+        html, body { background: #000000 !important; }
+        * { background-color: transparent !important; }
+        #game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        #game-ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            #game-ui {
+                padding: 10px;
+                gap: 10px;
+            }
+        }
+
+        .game-stats {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-sm) var(--spacing-md);
+            backdrop-filter: blur(10px);
+            pointer-events: auto;
+            box-shadow: var(--glow-yellow);
+            transition: all var(--transition-fast);
+        }
+        
+        @media (max-width: 768px) {
+            .game-stats {
+                padding: 6px 10px;
+                transform: none;
+                border-width: 1.5px;
+                min-width: auto;
+                backdrop-filter: none;
+                box-shadow: none;
+            }
+            
+            .game-stats h3 {
+                font-size: 0.7rem;
+                margin-bottom: 2px;
+            }
+        }
+
+        .game-stats h3 {
+            margin: 0 0 8px 0;
+            color: var(--primary-yellow);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            font-weight: var(--font-weight-bold);
+            letter-spacing: 0.05em;
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: var(--font-weight-black);
+            color: var(--pure-white);
+            font-family: var(--font-family);
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+            line-height: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .timer {
+                font-size: 1.25rem;
+                text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            }
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: var(--font-weight-black);
+            color: var(--primary-yellow);
+            font-family: var(--font-family);
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+            line-height: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .score {
+                font-size: 1.25rem;
+                text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            }
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--primary-yellow);
+        }
+
+        .loading-title {
+            font-size: 2.5rem;
+            font-weight: var(--font-weight-black);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px auto;
+            border: 1px solid rgba(255, 255, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-yellow);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        /* Start Screen */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .start-content {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--primary-yellow);
+            border-radius: var(--border-radius);
+            max-width: 600px;
+        }
+
+        .start-title {
+            font-size: 3rem;
+            font-weight: var(--font-weight-black);
+            color: var(--primary-yellow);
+            margin-bottom: var(--spacing-md);
+            text-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .start-title {
+                font-size: 2rem;
+            }
+        }
+
+        .start-instructions {
+            color: var(--pure-white);
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        @media (max-width: 768px) {
+            .start-instructions {
+                font-size: 1rem;
+            }
+        }
+
+        #start-game {
+            background: var(--primary-yellow);
+            color: var(--primary-black);
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 15px rgba(255, 246, 0, 0.4);
+        }
+
+        #start-game:hover {
+            background: #e6dd00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 246, 0, 0.6);
+        }
+
+        /* Game Over Screen */
+        #game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+            z-index: 300;
+            overflow-y: auto;
+        }
+
+        /* Mobile Controls */
+        .mobile-controls {
+            position: fixed;
+            bottom: 120px;
+            left: 0;
+            right: 0;
+            display: none;
+            z-index: 1000;
+            padding: var(--spacing-sm);
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) and (pointer: coarse) {
+            .mobile-controls {
+                display: block !important;
+            }
+        }
+        
+        .mobile-joystick {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 246, 0, 0.2);
+            border: 3px solid #fff600;
+            border-radius: 50%;
+            pointer-events: auto;
+            touch-action: none;
+        }
+        
+        #joystick-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #fff600;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        
+        .mobile-jump-btn {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 246, 0, 0.8);
+            border: 3px solid #fff600;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 18px;
+            pointer-events: auto;
+            touch-action: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="game-ui" style="display: none;">
+            <div class="game-stats">
+                <h3>Score</h3>
+                <div class="score">0</div>
+            </div>
+            <div class="game-stats">
+                <h3>Time</h3>
+                <div class="timer">30</div>
+            </div>
+        </div>
+
+        <div id="loading-screen">
+            <div class="loading-content">
+                <h1 class="loading-title">LIGHTCAT</h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p id="loading-status">Loading game assets...</p>
+            </div>
+        </div>
+
+        <div id="start-screen" style="display: none;">
+            <div class="start-content">
+                <h1 class="start-title">LIGHTCAT</h1>
+                <p class="start-instructions">
+                    Collect lightning bolts to unlock purchasing tiers!<br><br>
+                    🎮 Controls:<br>
+                    Desktop: Arrow keys to move, Spacebar to jump<br>
+                    Mobile: Use on-screen controls<br><br>
+                    Reach 11+ points to unlock Bronze tier!
+                </p>
+                <button id="start-game" type="button">START GAME</button>
+            </div>
+        </div>
+
+        <div id="game-over"></div>
+
+        <div class="mobile-controls">
+            <div id="mobile-joystick" class="mobile-joystick">
+                <div id="joystick-handle"></div>
+            </div>
+            <button id="mobile-jump" class="mobile-jump-btn" type="button">JUMP</button>
+        </div>
+    </div>
+
+    <!-- ES Module Shims for Mobile Compatibility -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <!-- Main Game Module -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { ProGame } from './js/game/ProGame.js';
+        import { GameUI } from './js/game/GameUI.js';
+        import { SoundManager } from './js/game/SoundManager.js';
+
+        class LightcatGame {
+            constructor() {
+                this.proGame = null;
+                this.ui = null;
+                this.sound = null;
+                
+                this.gameState = 'loading';
+                this.score = 0;
+                this.timeRemaining = 30;
+                
+                this.init();
+            }
+            
+            cleanup() {
+                if (this.ui) this.ui.cleanup();
+                if (this.proGame) this.proGame.cleanup();
+                if (this.sound) this.sound.cleanup();
+            }
+
+            async init() {
+                try {
+                    this.updateProgress(10, 'Checking device compatibility...');
+                    
+                    const canvas = document.getElementById('game-canvas');
+                    if (!canvas) {
+                        throw new Error('Game canvas not found');
+                    }
+                    
+                    this.updateProgress(20, 'Creating game world...');
+                    
+                    // Initialize game without SafeEvents dependency
+                    this.proGame = new ProGame(canvas);
+                    
+                    this.updateProgress(50, 'Loading sounds...');
+                    
+                    this.sound = new SoundManager();
+                    await this.sound.loadSounds();
+                    
+                    this.updateProgress(70, 'Setting up UI...');
+                    
+                    this.ui = new GameUI();
+                    
+                    this.updateProgress(90, 'Finalizing...');
+                    
+                    this.setupCallbacks();
+                    
+                    this.updateProgress(100, 'Ready!');
+                    setTimeout(() => {
+                        document.getElementById('loading-screen').style.display = 'none';
+                        document.getElementById('start-screen').style.display = 'flex';
+                        
+                        const startBtn = document.getElementById('start-game');
+                        if (startBtn) {
+                            startBtn.addEventListener('click', () => this.startGame());
+                        }
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('Game initialization failed:', error);
+                    this.showError('Failed to initialize game. Please refresh the page.');
+                }
+            }
+
+            updateProgress(percent, status) {
+                const progressFill = document.getElementById('progress-fill');
+                const loadingStatus = document.getElementById('loading-status');
+                
+                if (progressFill) {
+                    progressFill.style.width = percent + '%';
+                }
+                
+                if (loadingStatus) {
+                    loadingStatus.textContent = status;
+                }
+            }
+
+            showError(message) {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.innerHTML = `
+                        <div class="loading-content">
+                            <h1 class="loading-title">Error</h1>
+                            <p style="color: #ff6666;">${message}</p>
+                            <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: #fff600; color: #000; border: none; border-radius: 5px; cursor: pointer;">
+                                Refresh Page
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            setupCallbacks() {
+                this.proGame.onScoreUpdate = (score) => {
+                    this.score = score;
+                    this.ui.updateScore(score);
+                };
+                
+                this.proGame.onTimeUpdate = (time) => {
+                    this.timeRemaining = time;
+                    this.ui.updateTimer(time);
+                };
+                
+                this.proGame.onGameOver = (score) => {
+                    this.endGame(score);
+                };
+            }
+
+            startGame() {
+                this.gameState = 'playing';
+                this.score = 0;
+                this.timeRemaining = 30;
+                
+                document.getElementById('start-screen').style.display = 'none';
+                document.getElementById('game-ui').style.display = 'flex';
+                
+                this.proGame.startGame();
+                
+                if (this.sound) {
+                    this.sound.playBackgroundMusic();
+                }
+            }
+
+            endGame(finalScore) {
+                this.gameState = 'gameover';
+                
+                this.proGame.stopGame();
+                
+                if (this.sound) {
+                    this.sound.stopBackgroundMusic();
+                }
+                
+                let tier = null;
+                if (finalScore >= 25) tier = 'gold';
+                else if (finalScore >= 15) tier = 'silver';
+                else if (finalScore >= 11) tier = 'bronze';
+                
+                this.showGameOver(finalScore, tier);
+            }
+
+            showGameOver(score, tier) {
+                const gameOver = document.getElementById('game-over');
+                if (!gameOver) return;
+                
+                gameOver.innerHTML = `
+                    <div style="padding: 40px; text-align: center; max-width: 600px; margin: 0 auto;">
+                        <h1 style="color: #fff600; font-size: 3rem; margin-bottom: 20px;">GAME OVER</h1>
+                        <p style="color: #fff; font-size: 2rem; margin-bottom: 30px;">Final Score: ${score}</p>
+                        
+                        ${tier ? `
+                            <div style="background: rgba(255, 246, 0, 0.1); border: 2px solid #fff600; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
+                                <h2 style="color: #fff600; font-size: 1.5rem; margin-bottom: 10px;">🎉 Tier Unlocked: ${tier.toUpperCase()}</h2>
+                                <p style="color: #fff;">You can now purchase up to ${tier === 'gold' ? '30' : tier === 'silver' ? '20' : '10'} batches!</p>
+                            </div>
+                        ` : `
+                            <p style="color: #ff6666; margin-bottom: 20px;">Score 11+ to unlock purchasing tiers!</p>
+                        `}
+                        
+                        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                            <button id="play-again" style="background: #fff600; color: #000; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1.2rem; font-weight: bold; cursor: pointer;">
+                                PLAY AGAIN
+                            </button>
+                            ${tier ? `
+                                <button id="unlock-tier" style="background: transparent; color: #fff600; padding: 15px 30px; border: 2px solid #fff600; border-radius: 5px; font-size: 1.2rem; font-weight: bold; cursor: pointer;">
+                                    CLAIM TIER
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                gameOver.style.display = 'block';
+                document.getElementById('game-ui').style.display = 'none';
+                
+                const playAgain = document.getElementById('play-again');
+                if (playAgain) {
+                    playAgain.addEventListener('click', () => {
+                        gameOver.style.display = 'none';
+                        this.startGame();
+                    });
+                }
+                
+                const unlockTier = document.getElementById('unlock-tier');
+                if (unlockTier && tier) {
+                    unlockTier.addEventListener('click', () => {
+                        localStorage.setItem('unlockedTier', tier);
+                        localStorage.setItem('tierJustUnlocked', 'true');
+                        
+                        try {
+                            if (window.top && window.top !== window) {
+                                window.top.location.href = '/#purchase?tier=' + tier;
+                            } else {
+                                window.location.href = '/#purchase?tier=' + tier;
+                            }
+                        } catch (e) {
+                            window.open('/#purchase?tier=' + tier, '_blank');
+                        }
+                    });
+                }
+            }
+        }
+
+        // Initialize game when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                window.gameInstance = new LightcatGame();
+            });
+        } else {
+            window.gameInstance = new LightcatGame();
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (window.gameInstance) {
+                window.gameInstance.cleanup();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Consolidated Fix</title>
+    <style>
+        body { background: #000; color: #fff; font-family: monospace; padding: 20px; }
+        button { padding: 10px 20px; margin: 5px; background: #ff6b00; color: #000; border: none; cursor: pointer; }
+        input { padding: 10px; margin: 5px; }
+        .info { background: #111; padding: 20px; margin: 20px 0; border: 1px solid #333; }
+    </style>
+</head>
+<body>
+    <h1>LIGHTCAT Test - Consolidated JavaScript</h1>
+    
+    <div class="info">
+        <p>Current Batches: <span id="batchCount">1</span></p>
+        <p>Maximum Allowed: <span id="maxBatches">0</span> batches</p>
+        <p>Total BTC: <span id="totalBTC">0.00002000 BTC</span></p>
+        <p>Total Sats: <span id="totalSats">2,000</span></p>
+        <p>Total Tokens: <span id="tokenAmount">700</span></p>
+    </div>
+    
+    <div>
+        <button id="decreaseBatch">-</button>
+        <button id="increaseBatch">+</button>
+        <button id="maxBatch">MAX</button>
+    </div>
+    
+    <form id="purchaseForm">
+        <div>
+            <input type="text" id="rgbInvoice" placeholder="Enter RGB Invoice" style="width: 400px;">
+        </div>
+        <button type="submit" id="submitRgbInvoice">CREATE LIGHTNING INVOICE</button>
+    </form>
+
+<script>
+// CONSOLIDATED JAVASCRIPT - ALL IN ONE SCOPE
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 LIGHTCAT: Initializing...');
+    
+    // ========== CONSTANTS ==========
+    const PRICE_PER_BATCH_BTC = 0.00002;
+    const TOKENS_PER_BATCH = 700;
+    const PRICE_PER_BATCH_SATS = 2000;
+    
+    // ========== STATE VARIABLES ==========
+    let currentBatches = 1;
+    let maxBatches = 0;
+    let mintLocked = true;
+    let unlockedTier = null;
+    
+    // ========== GET ALL ELEMENTS ==========
+    const elements = {
+        // Purchase form elements
+        purchaseForm: document.getElementById('purchaseForm'),
+        decreaseBtn: document.getElementById('decreaseBatch'),
+        increaseBtn: document.getElementById('increaseBatch'),
+        batchCountEl: document.getElementById('batchCount'),
+        maxBatchesEl: document.getElementById('maxBatches'),
+        totalBTCEl: document.getElementById('totalBTC'),
+        totalSatsEl: document.getElementById('totalSats'),
+        tokenAmountEl: document.getElementById('tokenAmount'),
+        
+        // Invoice elements
+        rgbInvoiceInput: document.getElementById('rgbInvoice'),
+        submitBtn: document.getElementById('submitRgbInvoice')
+    };
+    
+    console.log('Elements found:', Object.keys(elements).reduce((acc, key) => {
+        acc[key] = !!elements[key];
+        return acc;
+    }, {}));
+    
+    // ========== TIER DETECTION ==========
+    const urlParams = new URLSearchParams(window.location.search);
+    unlockedTier = urlParams.get('tier');
+    
+    // Check hash params if not in regular params
+    if (!unlockedTier && window.location.hash.includes('?')) {
+        const hashParams = new URLSearchParams(window.location.hash.split('?')[1]);
+        unlockedTier = hashParams.get('tier');
+    }
+    
+    // Check localStorage
+    if (!unlockedTier) {
+        unlockedTier = localStorage.getItem('unlockedTier');
+    }
+    
+    console.log('🎯 Tier detected:', unlockedTier || 'none');
+    
+    // ========== PROCESS TIER ==========
+    if (unlockedTier) {
+        mintLocked = false;
+        
+        switch(unlockedTier.toLowerCase()) {
+            case 'bronze':
+                maxBatches = 10;
+                break;
+            case 'silver':
+                maxBatches = 20;
+                break;
+            case 'gold':
+                maxBatches = 30;
+                break;
+            default:
+                maxBatches = 0;
+                mintLocked = true;
+        }
+        
+        console.log('✅ Tier unlocked! Max batches:', maxBatches);
+    } else {
+        // Demo mode - 1 batch allowed
+        maxBatches = 1;
+        console.log('📦 Demo mode: 1 batch allowed');
+    }
+    
+    // ========== UPDATE DISPLAY ==========
+    function updateBatchDisplay() {
+        if (elements.batchCountEl) {
+            elements.batchCountEl.textContent = currentBatches;
+        }
+        
+        if (elements.maxBatchesEl) {
+            elements.maxBatchesEl.textContent = maxBatches;
+        }
+        
+        const totalBTC = (currentBatches * PRICE_PER_BATCH_BTC).toFixed(8);
+        const totalSats = currentBatches * PRICE_PER_BATCH_SATS;
+        const totalTokens = currentBatches * TOKENS_PER_BATCH;
+        
+        if (elements.totalBTCEl) elements.totalBTCEl.textContent = totalBTC + ' BTC';
+        if (elements.totalSatsEl) elements.totalSatsEl.textContent = totalSats.toLocaleString();
+        if (elements.tokenAmountEl) elements.tokenAmountEl.textContent = totalTokens.toLocaleString();
+        
+        // Update button states
+        if (elements.decreaseBtn) {
+            elements.decreaseBtn.disabled = currentBatches <= 1;
+        }
+        if (elements.increaseBtn) {
+            elements.increaseBtn.disabled = currentBatches >= maxBatches;
+        }
+        
+        console.log('Display updated: batches=' + currentBatches + '/' + maxBatches);
+    }
+    
+    // ========== BUTTON EVENT HANDLERS ==========
+    if (elements.decreaseBtn) {
+        elements.decreaseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentBatches > 1) {
+                currentBatches--;
+                updateBatchDisplay();
+                console.log('Decreased to:', currentBatches);
+            }
+        });
+        console.log('✅ Decrease button handler attached');
+    }
+    
+    if (elements.increaseBtn) {
+        elements.increaseBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (currentBatches < maxBatches) {
+                currentBatches++;
+                updateBatchDisplay();
+                console.log('Increased to:', currentBatches);
+            }
+        });
+        console.log('✅ Increase button handler attached');
+    }
+    
+    // Max button
+    const maxBtn = document.getElementById('maxBatch');
+    if (maxBtn) {
+        maxBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            currentBatches = maxBatches;
+            updateBatchDisplay();
+            console.log('Set to max:', currentBatches);
+        });
+        console.log('✅ Max button handler attached');
+    }
+    
+    // ========== FORM SUBMISSION ==========
+    if (elements.purchaseForm) {
+        elements.purchaseForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
+            
+            if (mintLocked && !unlockedTier) {
+                alert('MINT IS LOCKED! You must play the game to unlock purchasing.');
+                return;
+            }
+            
+            const rgbInvoice = elements.rgbInvoiceInput ? elements.rgbInvoiceInput.value.trim() : '';
+            
+            if (!rgbInvoice) {
+                alert('Please enter your RGB invoice');
+                return;
+            }
+            
+            console.log('Creating Lightning invoice for', currentBatches, 'batches');
+            alert('Would create invoice for ' + currentBatches + ' batches\nRGB Invoice: ' + rgbInvoice.substring(0, 50) + '...');
+        });
+        console.log('✅ Form submission handler attached');
+    }
+    
+    // ========== INITIAL DISPLAY UPDATE ==========
+    updateBatchDisplay();
+    
+    console.log('🎉 LIGHTCAT initialization complete!');
+    console.log('Final state:', {
+        tier: unlockedTier,
+        maxBatches: maxBatches,
+        currentBatches: currentBatches,
+        mintLocked: mintLocked
+    });
+});
+</script>
+</body>
+</html>
