@@ -43,6 +43,13 @@
         init() {
             console.log('⚡ Creating lightning canvas...');
             
+            // Wait for body to exist
+            if (!document.body) {
+                console.log('⚡ Waiting for document.body...');
+                setTimeout(() => this.init(), 100);
+                return;
+            }
+            
             // Remove any existing lightning canvas
             const existing = document.getElementById('lightning-canvas');
             if (existing) existing.remove();
@@ -52,8 +59,12 @@
             this.canvas.id = 'lightning-canvas';
             this.canvas.style.cssText = 'position:fixed !important;top:0 !important;left:0 !important;width:100% !important;height:100% !important;pointer-events:none !important;z-index:0 !important;opacity:0.6 !important;mix-blend-mode:screen !important;';
             
-            // Insert at beginning of body
-            document.body.insertBefore(this.canvas, document.body.firstChild);
+            // Insert at beginning of body (safely)
+            if (document.body.firstChild) {
+                document.body.insertBefore(this.canvas, document.body.firstChild);
+            } else {
+                document.body.appendChild(this.canvas);
+            }
             
             this.ctx = this.canvas.getContext('2d');
             this.resize();
