@@ -1,0 +1,547 @@
+/* ============================================
+   ULTIMATE MOBILE RESPONSIVE CSS
+   Dynamic scaling for ALL screen sizes
+   ============================================ */
+
+/* CSS Custom Properties for dynamic scaling */
+:root {
+    /* Dynamic font sizes */
+    --fs-hero: clamp(2rem, 8vw, 4rem);
+    --fs-title: clamp(1.5rem, 5vw, 3rem);
+    --fs-subtitle: clamp(1.2rem, 4vw, 2rem);
+    --fs-body: clamp(0.9rem, 2.5vw, 1.1rem);
+    --fs-small: clamp(0.75rem, 2vw, 0.9rem);
+    --fs-tiny: clamp(0.65rem, 1.8vw, 0.8rem);
+    
+    /* Dynamic spacing */
+    --space-xs: clamp(4px, 1vw, 8px);
+    --space-sm: clamp(8px, 2vw, 16px);
+    --space-md: clamp(16px, 3vw, 24px);
+    --space-lg: clamp(24px, 4vw, 40px);
+    --space-xl: clamp(32px, 5vw, 60px);
+    --space-xxl: clamp(40px, 6vw, 80px);
+    
+    /* Dynamic sizes */
+    --btn-height: clamp(44px, 10vw, 60px);
+    --input-height: clamp(44px, 10vw, 56px);
+    --card-padding: clamp(12px, 3vw, 24px);
+    --border-radius: clamp(8px, 2vw, 16px);
+    
+    /* Container widths */
+    --container-max: min(100% - var(--space-md) * 2, 1200px);
+}
+
+/* ============================================
+   BASE RESPONSIVE STYLES
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; /* Base for rem calculations */
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   CONTAINER & LAYOUT
+   ============================================ */
+
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+section {
+    padding: var(--space-xl) 0;
+}
+
+/* ============================================
+   TYPOGRAPHY - FULLY RESPONSIVE
+   ============================================ */
+
+h1, .h1 {
+    font-size: var(--fs-hero);
+    line-height: 1.1;
+    margin: 0 0 var(--space-lg) 0;
+}
+
+h2, .h2, .section-title {
+    font-size: var(--fs-title);
+    line-height: 1.2;
+    margin: 0 0 var(--space-md) 0;
+    letter-spacing: clamp(1px, 0.5vw, 4px);
+}
+
+h3, .h3 {
+    font-size: var(--fs-subtitle);
+    line-height: 1.3;
+    margin: 0 0 var(--space-sm) 0;
+}
+
+p {
+    font-size: var(--fs-body);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+/* ============================================
+   HEADER - RESPONSIVE
+   ============================================ */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    padding: var(--space-sm) 0;
+    z-index: 9999;
+    min-height: clamp(60px, 15vw, 80px);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+}
+
+.logo {
+    width: clamp(40px, 10vw, 60px);
+    height: clamp(40px, 10vw, 60px);
+    object-fit: contain;
+}
+
+.site-title {
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: clamp(1px, 0.3vw, 3px);
+}
+
+.tagline {
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    opacity: 0.8;
+}
+
+/* ============================================
+   STATS SECTION - FULLY RESPONSIVE
+   ============================================ */
+
+.stats-section {
+    padding-top: calc(clamp(60px, 15vw, 80px) + var(--space-lg));
+}
+
+.mint-status-text {
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    text-align: center;
+    margin-bottom: var(--space-md);
+    color: #FFD700;
+}
+
+.progress-container {
+    margin: var(--space-md) auto;
+    max-width: min(100%, 600px);
+    padding: clamp(2px, 0.5vw, 4px);
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--border-radius);
+}
+
+.progress-bar {
+    height: clamp(20px, 5vw, 30px);
+    background: rgba(255,255,255,0.05);
+    border-radius: calc(var(--border-radius) - 2px);
+    overflow: hidden;
+}
+
+/* Dynamic Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(clamp(140px, 30vw, 200px), 1fr));
+    gap: clamp(8px, 2vw, 20px);
+    margin-top: var(--space-lg);
+}
+
+.stat-card {
+    background: rgba(0,0,0,0.8);
+    border: 1px solid #FFD700;
+    border-radius: var(--border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    min-height: clamp(80px, 20vw, 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: all 0.3s ease;
+}
+
+.stat-card:active {
+    transform: scale(0.98);
+    background: rgba(255,215,0,0.1);
+}
+
+.stat-number {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #FFD700;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: var(--fs-tiny);
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+/* ============================================
+   GAME SECTION - RESPONSIVE
+   ============================================ */
+
+#game {
+    padding: var(--space-xl) 0;
+}
+
+.tier-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.tier-card {
+    flex: 0 0 clamp(120px, 30vw, 180px);
+    background: rgba(0,0,0,0.8);
+    border: 2px solid rgba(255,215,0,0.3);
+    border-radius: var(--border-radius);
+    padding: var(--card-padding);
+    text-align: center;
+    scroll-snap-align: center;
+    transition: all 0.3s ease;
+}
+
+.tier-card:active {
+    transform: scale(0.95);
+    border-color: #FFD700;
+}
+
+.tier-name {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+}
+
+.tier-score {
+    font-size: var(--fs-small);
+    opacity: 0.8;
+}
+
+/* Game Container - Responsive Height */
+#gameWrapper {
+    position: relative;
+    width: 100%;
+    height: clamp(300px, 50vh, 500px);
+    max-height: 70vh;
+    background: #000;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 0, 0.3);
+    margin: var(--space-md) 0;
+}
+
+#gameFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Game Controls */
+.play-button, .btn {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-lg);
+    min-height: var(--btn-height);
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.play-button:active, .btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   PURCHASE SECTION - RESPONSIVE
+   ============================================ */
+
+.purchase-form {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    margin: var(--space-md) 0;
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.form-label {
+    display: block;
+    font-size: var(--fs-small);
+    color: #FFD700;
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-sm);
+    min-height: var(--input-height);
+    font-size: 16px; /* Prevents zoom on iOS */
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: var(--border-radius);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #FFD700;
+    background: rgba(255,255,255,0.08);
+}
+
+/* Batch Selector - Responsive */
+.batch-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+}
+
+.batch-btn {
+    width: clamp(44px, 12vw, 60px);
+    height: clamp(44px, 12vw, 60px);
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    background: rgba(255,215,0,0.2);
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.batch-btn:active {
+    transform: scale(0.9);
+    background: #FFD700;
+    color: #000;
+}
+
+.batch-count {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: #FFD700;
+    min-width: clamp(60px, 15vw, 80px);
+    text-align: center;
+}
+
+/* Total Display */
+#totalBTC {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #FFD700;
+}
+
+/* ============================================
+   MODALS - RESPONSIVE
+   ============================================ */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    z-index: 10000;
+}
+
+.modal-content {
+    background: #000;
+    border: 2px solid #FFD700;
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    width: 100%;
+    max-width: min(90vw, 500px);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: clamp(36px, 10vw, 44px);
+    height: clamp(36px, 10vw, 44px);
+    background: rgba(255,0,0,0.2);
+    border: 1px solid rgba(255,0,0,0.5);
+    border-radius: 50%;
+    color: #fff;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   FOOTER - RESPONSIVE
+   ============================================ */
+
+footer {
+    padding: var(--space-lg) 0;
+    text-align: center;
+    font-size: var(--fs-small);
+    opacity: 0.8;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.m-0 { margin: 0; }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+
+.p-0 { padding: 0; }
+.p-sm { padding: var(--space-sm); }
+.p-md { padding: var(--space-md); }
+.p-lg { padding: var(--space-lg); }
+
+/* ============================================
+   LANDSCAPE OPTIMIZATIONS
+   ============================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+    :root {
+        --space-xl: clamp(20px, 4vw, 40px);
+        --space-xxl: clamp(30px, 5vw, 60px);
+    }
+    
+    header {
+        min-height: clamp(50px, 10vh, 70px);
+    }
+    
+    #gameWrapper {
+        height: clamp(250px, 60vh, 400px);
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Disable expensive effects on mobile */
+@media (max-width: 768px) {
+    * {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    .glow-effect,
+    .particle-effect,
+    .backdrop-blur {
+        display: none !important;
+    }
+    
+    /* Use GPU acceleration */
+    .scroll-container {
+        -webkit-overflow-scrolling: touch;
+        transform: translateZ(0);
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus states */
+:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
+}
+
+/* Skip links */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #FFD700;
+    color: #000;
+    padding: var(--space-sm);
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast */
+@media (prefers-contrast: high) {
+    .stat-card,
+    .tier-card,
+    .form-input,
+    .btn {
+        border-width: 2px;
+    }
+}

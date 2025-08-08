@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGHTCAT Payment Receipt</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0a0a0a;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #1a1a1a; color: #ffffff;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 40px 20px; text-align: center;">
+            <h1 style="margin: 0; color: #000000; font-size: 32px;">🐱⚡ LIGHTCAT</h1>
+            <p style="margin: 10px 0 0 0; color: #000000; font-size: 14px;">RGB Protocol Token</p>
+        </div>
+
+        <!-- Thank You Section -->
+        <div style="padding: 40px 30px; text-align: center; border-bottom: 1px solid #333;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: rgba(255, 215, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 40px;">✓</span>
+            </div>
+            <h2 style="color: #FFD700; margin: 0 0 10px 0; font-size: 28px;">Payment Successful!</h2>
+            <p style="color: #999; margin: 0; font-size: 16px;">Thank you for your purchase</p>
+        </div>
+
+        <!-- Transaction Details -->
+        <div style="padding: 30px;">
+            <h3 style="color: #FFD700; margin: 0 0 20px 0; font-size: 18px; text-transform: uppercase; letter-spacing: 1px;">Transaction Details</h3>
+            
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #999;">Transaction ID:</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #fff; text-align: right; font-family: monospace;">{{transactionId}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #999;">Date & Time:</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #fff; text-align: right;">{{paymentDate}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #999;">Batches Purchased:</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #FFD700; text-align: right; font-weight: bold;">{{batchCount}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #999;">LIGHTCAT Tokens:</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #FFD700; text-align: right; font-weight: bold; font-size: 20px;">{{tokenAmount}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #999;">Amount Paid:</td>
+                    <td style="padding: 12px 0; border-bottom: 1px solid #333; color: #fff; text-align: right;">{{amountSats}} sats</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px 0; color: #999;">Payment Method:</td>
+                    <td style="padding: 12px 0; color: #fff; text-align: right;">Bitcoin Lightning Network</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- RGB Details -->
+        <div style="padding: 0 30px 30px;">
+            <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 8px; padding: 20px;">
+                <h3 style="color: #FFD700; margin: 0 0 15px 0; font-size: 16px;">RGB Invoice Address</h3>
+                <p style="color: #aaa; margin: 0; word-break: break-all; font-family: monospace; font-size: 12px; line-height: 1.5;">{{rgbInvoice}}</p>
+            </div>
+        </div>
+
+        <!-- Distribution Status -->
+        <div style="padding: 0 30px 30px;">
+            <div style="background: #0a0a0a; border-radius: 8px; padding: 20px; text-align: center;">
+                <h3 style="color: #FFD700; margin: 0 0 15px 0;">Token Distribution Status</h3>
+                <div style="display: inline-block; padding: 10px 20px; background: {{statusColor}}; color: #000; border-radius: 20px; font-weight: bold;">
+                    {{distributionStatus}}
+                </div>
+                {{#if consignmentReady}}
+                <p style="color: #4CAF50; margin: 15px 0 0 0;">
+                    ✓ Your RGB consignment file is ready for download
+                </p>
+                {{else}}
+                <p style="color: #999; margin: 15px 0 0 0;">
+                    Your tokens are being generated. This usually takes 30-60 seconds.
+                </p>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div style="padding: 0 30px 40px;">
+            <h3 style="color: #FFD700; margin: 0 0 20px 0; font-size: 18px;">Next Steps</h3>
+            <ol style="color: #aaa; line-height: 1.8; padding-left: 20px;">
+                <li>Visit your receipt page to download the RGB consignment file</li>
+                <li>Import the consignment into your RGB-compatible wallet (Iris, BitMask, etc.)</li>
+                <li>Your LIGHTCAT tokens will appear in your wallet</li>
+                <li>Keep the consignment file safe as a backup</li>
+            </ol>
+        </div>
+
+        <!-- Download Button -->
+        <div style="padding: 0 30px 40px; text-align: center;">
+            <a href="{{downloadUrl}}" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+                View Receipt & Download Tokens
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div style="background: #0a0a0a; padding: 30px; text-align: center; border-top: 1px solid #333;">
+            <p style="color: #666; margin: 0 0 10px 0; font-size: 12px;">
+                This is an automated receipt from LIGHTCAT RGB Token Platform
+            </p>
+            <p style="color: #666; margin: 0 0 10px 0; font-size: 12px;">
+                For support, please contact: support@lightcat.com
+            </p>
+            <p style="color: #444; margin: 0; font-size: 11px;">
+                Transaction secured by Bitcoin Lightning Network & RGB Protocol
+            </p>
+        </div>
+    </div>
+</body>
+</html>

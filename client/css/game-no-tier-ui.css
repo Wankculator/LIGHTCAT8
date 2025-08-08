@@ -1,0 +1,181 @@
+/* Professional No Tier UI Styling */
+
+/* Style the allocation message for no-tier scenario */
+#allocation-message {
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 2px solid rgba(255, 215, 0, 0.3) !important;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin: 20px auto !important;
+    max-width: 400px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* No tier specific styling */
+#game-over:has(#tier-unlocked:contains("NO TIER")) #allocation-message,
+.no-tier-message {
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(20, 20, 20, 0.95) 100%) !important;
+    border: 2px solid rgba(255, 215, 0, 0.5) !important;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8),
+                    0 0 20px rgba(255, 215, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8),
+                    0 0 30px rgba(255, 215, 0, 0.2);
+    }
+}
+
+/* Try Again heading */
+.try-again-header {
+    color: #FFD700 !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Score requirement info */
+.score-requirements {
+    background: rgba(255, 215, 0, 0.05) !important;
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    margin: 12px 0 !important;
+}
+
+.score-requirements p {
+    margin: 6px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-size: 0.85rem !important;
+}
+
+.tier-label {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+}
+
+.tier-label.bronze {
+    color: #CD7F32 !important;
+}
+
+.tier-label.silver {
+    color: #C0C0C0 !important;
+}
+
+.tier-label.gold {
+    color: #FFD700 !important;
+}
+
+/* Play Again button enhancement for no-tier */
+.no-tier-state #play-again {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3) !important;
+    animation: playAgainPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes playAgainPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(255, 215, 0, 0.4);
+    }
+}
+
+.no-tier-state #play-again:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5) !important;
+}
+
+/* Tips section */
+.game-tips {
+    background: rgba(255, 215, 0, 0.03) !important;
+    border-left: 3px solid rgba(255, 215, 0, 0.3) !important;
+    padding: 10px 15px !important;
+    margin-top: 15px !important;
+    border-radius: 0 8px 8px 0 !important;
+}
+
+.game-tips h4 {
+    color: #FFD700 !important;
+    font-size: 0.8rem !important;
+    margin: 0 0 8px 0 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.game-tips ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.game-tips li {
+    color: #AAA !important;
+    font-size: 0.75rem !important;
+    margin: 5px 0 !important;
+    padding-left: 15px !important;
+    position: relative !important;
+}
+
+.game-tips li:before {
+    content: "→" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: #FFD700 !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    #allocation-message {
+        padding: 15px !important;
+        margin: 15px 10px !important;
+    }
+    
+    .try-again-header {
+        font-size: 1rem !important;
+    }
+    
+    .score-requirements p {
+        font-size: 0.75rem !important;
+    }
+    
+    .no-tier-state #play-again {
+        font-size: 0.9rem !important;
+        padding: 10px 20px !important;
+    }
+    
+    .game-tips {
+        padding: 8px 12px !important;
+    }
+    
+    .game-tips li {
+        font-size: 0.7rem !important;
+    }
+}
+
+/* Ensure NO TIER text is visible but subtle */
+#tier-unlocked:contains("NO TIER") {
+    color: #666 !important;
+    font-size: 0.8rem !important;
+    font-weight: normal !important;
+}

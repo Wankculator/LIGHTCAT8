@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-08-07T05:25:09.994Z",
+  "modals": {
+    "paymentModalPro": false,
+    "oldPaymentModal": true,
+    "qrScannerModal": true
+  },
+  "assets": {
+    "paymentModalCSS": true,
+    "paymentModalJS": true,
+    "qrCodeLibrary": true
+  },
+  "elements": {
+    "purchaseSection": true,
+    "rgbInputs": 4,
+    "createButtons": 1
+  },
+  "mobile": {
+    "viewportMeta": true,
+    "mobileCSS": true
+  },
+  "security": {
+    "cspHeaders": false,
+    "secureRandom": true
+  }
+}

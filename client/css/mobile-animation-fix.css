@@ -1,0 +1,211 @@
+/* LIGHTCAT Mobile Animation Optimization
+   Fixes janky animations and improves performance
+   ============================================= */
+
+@media screen and (max-width: 768px) {
+    /* Use GPU acceleration for smooth animations */
+    * {
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+    }
+    
+    /* Reduce animation complexity on mobile */
+    *,
+    *::before,
+    *::after {
+        /* Shorter, simpler transitions */
+        transition-duration: 0.2s !important;
+        transition-timing-function: ease-out !important;
+    }
+    
+    /* Disable complex animations */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    @keyframes fadeInOut {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+    
+    /* Simplify glow effects */
+    .glow-effect {
+        animation: none !important;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5) !important;
+    }
+    
+    /* Optimize button interactions */
+    button:active,
+    .btn:active,
+    .mobile-jump:active {
+        transition: transform 0.1s ease-out !important;
+        transform: scale(0.95) !important;
+    }
+    
+    /* Remove hover effects on touch devices */
+    @media (hover: none) {
+        button:hover,
+        a:hover,
+        .btn:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    }
+    
+    /* Optimize tier notification animation */
+    .tier-notification {
+        transition: opacity 0.2s ease-out !important;
+    }
+    
+    .tier-notification.show {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    
+    /* Simplify score pulse animation */
+    #score {
+        transition: transform 0.15s ease-out !important;
+    }
+    
+    /* Optimize modal animations */
+    .modal {
+        transition: opacity 0.2s ease-out !important;
+    }
+    
+    .modal-content {
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    /* Disable parallax effects */
+    .parallax {
+        transform: none !important;
+        position: relative !important;
+    }
+    
+    /* Optimize loading spinner */
+    .spinner,
+    .loader {
+        animation: spin 1.5s linear infinite !important;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Fix for joystick handle movement */
+    .joystick-handle {
+        transition: none !important; /* No transition for immediate response */
+        will-change: transform;
+    }
+    
+    /* Reduce particle effects */
+    .particle {
+        animation-duration: 1s !important;
+        animation-iteration-count: 1 !important;
+    }
+    
+    /* Game over screen optimization */
+    #game-over {
+        transition: opacity 0.3s ease-out !important;
+    }
+    
+    .gallery-wrapper {
+        transition: transform 0.25s ease-out !important;
+    }
+    
+    /* Disable text animations */
+    .animated-text {
+        animation: none !important;
+    }
+    
+    /* Progress bar optimization */
+    #progressBar,
+    .progress-fill {
+        transition: width 0.3s ease-out !important;
+    }
+    
+    /* Lightning collection effect optimization */
+    .collection-effect {
+        animation: fadeOut 0.5s ease-out !important;
+    }
+    
+    @keyframes fadeOut {
+        0% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(1.2); }
+    }
+}
+
+/* Respect user preferences for reduced motion */
+@media screen and (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* Keep only essential feedback */
+    button:active,
+    .btn:active {
+        opacity: 0.8 !important;
+        transform: none !important;
+    }
+    
+    /* Static progress bars */
+    #progressBar,
+    .progress-fill {
+        transition: none !important;
+    }
+    
+    /* No score animations */
+    #score {
+        transform: none !important;
+    }
+}
+
+/* Hardware acceleration for critical elements */
+@media screen and (max-width: 768px) {
+    #game-canvas,
+    .mobile-controls,
+    #game-ui {
+        transform: translateZ(0);
+        will-change: transform;
+    }
+    
+    /* Optimize touch response */
+    .mobile-jump,
+    .mobile-joystick {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+    }
+}
+
+/* Performance mode for very low-end devices */
+@media screen and (max-width: 768px) and (max-device-memory: 2) {
+    /* Disable all non-essential animations */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* Reduce visual effects */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        filter: none !important;
+    }
+    
+    /* Basic borders instead of shadows */
+    .game-stats,
+    .modal-content,
+    button,
+    .btn {
+        border: 1px solid currentColor !important;
+    }
+}

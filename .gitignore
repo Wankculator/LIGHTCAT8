@@ -1,0 +1,78 @@
+# Cache and build directories
+.cache/
+.cargo/
+.archive-*/
+.config/
+.npm/
+.rustup/
+.puppeteer/
+.claude/
+.pm2/
+.local/
+.mozilla/
+
+# Large files that exceed GitHub limits
+backup-*.tar.gz
+*.rlib
+libLLVM.so.*
+browser_v8_context_snapshot.bin
+chrome
+chrome-headless-shell
+firefox/
+webkit-*/
+Cypress/
+
+# Environment and sensitive files
+.env
+.env.*
+.bash_history
+.ssh/
+*.key
+*.pem
+*.cert
+*.macaroon
+.lightcat-secure/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# Claude specific
+.claude.json*
+
+# Node modules (keep package.json and package-lock.json)
+node_modules/
+ms-playwright/
+minibrowser-*/
+
+# Playwright and testing tools
+playwright-*/
+chromium*/
+headless_shell
+libxul.so
+librustc_driver*.so
+libWPEWebKit*.so
+libwebkitgtk*.so
+
+# npm cache
+_cacache/
+content-v2/
+
+# FFmpeg and media tools
+ffmpeg
+ffprobe
+
+# Test artifacts
+test-results/
+playwright-report/
+coverage/
+
+# Temporary and backup files
+*.tmp
+*.bak
+*.swp
+*.swo
+temp/
+tmp/

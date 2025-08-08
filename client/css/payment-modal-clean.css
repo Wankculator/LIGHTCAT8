@@ -1,0 +1,217 @@
+/* Clean Payment Modal CSS - Minimal, Professional, No Decorations */
+
+.payment-modal-clean {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-modal-clean.active {
+    display: flex;
+}
+
+.payment-modal-box {
+    background: #fff;
+    max-width: 400px;
+    width: 90%;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.payment-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+}
+
+.payment-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+.payment-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.payment-close:hover {
+    color: #000;
+}
+
+/* Tabs */
+.payment-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.payment-tab {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.payment-tab:hover {
+    color: #333;
+}
+
+.payment-tab.active {
+    color: #000;
+    border-bottom-color: #000;
+    font-weight: 500;
+}
+
+/* Content */
+.payment-content {
+    padding: 20px;
+}
+
+.payment-amount {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.amount-value {
+    font-size: 24px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 5px;
+}
+
+.amount-tokens {
+    font-size: 14px;
+    color: #666;
+}
+
+/* QR Code */
+.payment-qr {
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+#qrCanvas {
+    max-width: 200px;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+/* Invoice Input */
+.payment-invoice {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.invoice-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #333;
+    background: #f8f8f8;
+}
+
+.copy-btn {
+    padding: 10px 20px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.copy-btn:hover {
+    background: #333;
+}
+
+/* Status */
+.payment-status {
+    text-align: center;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#statusText {
+    font-size: 14px;
+    color: #666;
+}
+
+.countdown {
+    font-family: monospace;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .payment-modal-box {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .payment-header {
+        padding: 12px 15px;
+    }
+    
+    .payment-title {
+        font-size: 16px;
+    }
+    
+    .payment-content {
+        padding: 15px;
+    }
+    
+    .amount-value {
+        font-size: 20px;
+    }
+    
+    .payment-invoice {
+        flex-direction: column;
+    }
+    
+    .copy-btn {
+        width: 100%;
+    }
+    
+    #qrCanvas {
+        max-width: 160px;
+    }
+}

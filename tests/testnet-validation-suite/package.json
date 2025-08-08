@@ -1,0 +1,75 @@
+{
+  "name": "lightcat-testnet-validation-suite",
+  "version": "1.0.0",
+  "description": "Comprehensive Bitcoin Lightning testnet validation suite for LIGHTCAT RGB token platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:full": "./scripts/run-full-validation.sh",
+    "test:payment-flow": "./scripts/run-full-validation.sh --suite payment-flow",
+    "test:business-logic": "./scripts/run-full-validation.sh --suite business-logic",
+    "test:load-testing": "./scripts/run-full-validation.sh --suite load-testing",
+    "test:edge-cases": "./scripts/run-full-validation.sh --suite edge-cases",
+    "test:monitoring": "./scripts/run-full-validation.sh --suite monitoring",
+    "test:quick": "jest --runInBand --testTimeout=30000 --bail",
+    "test:watch": "jest --watch --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "validate:production": "TEST_ENV=production ./scripts/run-full-validation.sh",
+    "validate:testnet": "TEST_ENV=testnet ./scripts/run-full-validation.sh",
+    "validate:staging": "TEST_ENV=staging ./scripts/run-full-validation.sh",
+    "report": "./scripts/run-full-validation.sh --report-only",
+    "setup:testnet": "node scripts/setup-testnet-environment.js",
+    "cleanup": "node scripts/cleanup-test-data.js",
+    "benchmark": "node scripts/performance-benchmark.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 300000,
+    "maxWorkers": 1,
+    "verbose": true,
+    "collectCoverageFrom": [
+      "utils/**/*.js",
+      "!utils/**/*.test.js"
+    ],
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setup/test-setup.js"
+    ],
+    "testSequencer": "<rootDir>/utils/TestSequencer.js"
+  },
+  "keywords": [
+    "bitcoin",
+    "lightning",
+    "rgb",
+    "testnet",
+    "validation",
+    "testing",
+    "cryptocurrency",
+    "token"
+  ],
+  "author": "LIGHTCAT Development Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "crypto": "^1.0.1",
+    "events": "^3.3.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "jest": "^29.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lightcat-team/rgb-token-platform"
+  },
+  "bugs": {
+    "url": "https://github.com/lightcat-team/rgb-token-platform/issues"
+  },
+  "homepage": "https://litecat.xyz"
+}
