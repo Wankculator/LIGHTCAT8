@@ -1,0 +1,119 @@
+{
+  "name": "rgb-light-cat",
+  "version": "2.0.0",
+  "description": "RGB Light Cat - Professional 3D Gaming Platform with Bitcoin Lightning Integration",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 4173",
+    "lint": "eslint src --ext .js,.ts --fix",
+    "lint:check": "eslint src --ext .js,.ts",
+    "format": "prettier --write \"src/**/*.{js,ts,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,ts,json,css,md}\"",
+    "test": "vitest",
+    "test:unit": "vitest run --coverage",
+    "test:integration": "vitest run tests/integration",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:performance": "lighthouse --output=json http://localhost:4173",
+    "test:security": "npm audit --audit-level=high",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
+    "analyze": "vite-bundle-analyzer",
+    "analyze:bundle": "npm run build && npx vite-bundle-analyzer dist/assets/*.js",
+    "security:scan": "npm audit && npm run lint:check",
+    "quality:check": "npm run lint:check && npm run typecheck && npm run test:coverage && npm run security:scan",
+    "start:server": "node server/app.js",
+    "start:dev": "concurrently \"npm run dev\" \"npm run start:server\"",
+    "deploy:staging": "vercel --target=staging",
+    "deploy:production": "npm run build && npm run deploy:vercel",
+    "deploy:vercel": "vercel --prod",
+    "health-check": "curl -f http://localhost:4173/health || exit 1",
+    "clean": "rimraf dist node_modules/.vite coverage test-results playwright-report",
+    "postinstall": "playwright install chromium"
+  },
+  "dependencies": {
+    "three": "^0.160.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^7.1.5",
+    "ws": "^8.14.2",
+    "winston": "^3.11.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "vite": "^5.0.10",
+    "vite-bundle-analyzer": "^0.7.0",
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0", 
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "prettier": "^3.1.1",
+    "vitest": "^1.2.0",
+    "@vitest/ui": "^1.2.0",
+    "@testing-library/jest-dom": "^6.2.0",
+    "jsdom": "^23.2.0",
+    "playwright": "^1.40.0",
+    "@playwright/test": "^1.40.0",
+    "lighthouse": "^11.4.0",
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "vercel": "^33.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test && npm run lint:check"
+    }
+  },
+  "keywords": [
+    "game",
+    "3d",
+    "threejs",
+    "bitcoin",
+    "lightning",
+    "rgb",
+    "web3",
+    "gaming",
+    "cryptocurrency"
+  ],
+  "author": "RGB Light Cat Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wankculator/RGB.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wankculator/RGB/issues"
+  },
+  "homepage": "https://rgblightcat.com"
+}
