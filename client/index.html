@@ -520,7 +520,7 @@
             top: 0;
             z-index: 1000;
             transition: var(--transition);
-            min-height: 80px;
+            min-height: 65px;
         }
 
         header.scrolled {
@@ -542,13 +542,18 @@
         }
 
         .logo {
-            width: 40px;
-            height: 40px;
+            width: 65px;
+            height: 65px;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
 
         .logo:hover {
+        .mobile-nav-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
             transform: scale(1.1) rotate(5deg);
         }
 
@@ -689,7 +694,7 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 3px;
             background: var(--yellow);
             transition: width 0.3s ease;
@@ -791,7 +796,7 @@
             
             .stat-card {
                 padding: 20px 10px;
-                min-height: 100px;
+                min-height: 80px;
             }
             
             .stat-number {
@@ -805,8 +810,8 @@
             
             /* Make header elements MUCH bigger on mobile */
             .logo {
-                width: 60px !important;
-                height: 60px !important;
+                width: 80px !important;
+                height: 80px !important;
                 margin-bottom: 10px !important;
             }
             
@@ -925,7 +930,7 @@
             .feature-box {
                 flex: 1 !important;
                 width: 100% !important;
-                min-height: 90px !important;
+                min-height: 70px !important;
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
@@ -1282,7 +1287,7 @@
 
         /* numeric value */
         #purchase .batch-selector .batch-count {
-            min-width: 60px;               /* keeps value column stable          */
+            min-width: 80px;               /* keeps value column stable          */
             text-align: center;
             font-variant-numeric: tabular-nums;
             font-size: 3rem;
@@ -1377,7 +1382,7 @@
         .batch-count {
             font-size: 3rem;
             font-weight: 700;
-            min-width: 100px;
+            min-width: 80px;
             text-align: center;
             color: var(--yellow);
             font-family: 'JetBrains Mono', monospace;
@@ -1572,8 +1577,8 @@
             }
             
             .logo {
-                width: 55px !important;
-                height: 55px !important;
+                width: 70px !important;
+                height: 70px !important;
             }
             
             .tagline {
@@ -1776,8 +1781,8 @@
             }
             
             #gameStartScreen img {
-                width: 60px !important;
-                height: 60px !important;
+                width: 80px !important;
+                height: 80px !important;
                 margin-bottom: 10px !important;
             }
             
@@ -2083,7 +2088,7 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo-section">
-                        <img src="logo.jpg" alt="RGBLightCat Logo" class="logo">
+                        <img src="images/rgblightcat-headlogo.png" alt="RGBLightCat Logo" class="logo">
                         <div>
                             <h1 class="site-title">LIGHTCAT</h1>
                             <p class="tagline">First Cat Meme Token on RGB Protocol</p>
@@ -2113,7 +2118,7 @@
         <!-- Mobile Navigation Drawer -->
         <nav class="mobile-nav" id="mobileNav">
             <div class="mobile-nav-header">
-                <img src="logo.jpg" alt="RGBLightCat" class="mobile-nav-logo">
+                <img src="images/rgblightcat-headlogo.png" alt="RGBLightCat" class="mobile-nav-logo">
                 <button class="mobile-nav-close" id="mobileNavClose">×</button>
             </div>
             <div class="mobile-nav-links">
@@ -2436,14 +2441,14 @@
     <!-- QR Scanner Modal -->
     <div class="modal" id="qrScannerModal" style="display: none;">
         <div class="modal-content" style="max-width: 500px; text-align: center; position: relative; padding-top: 60px;">
-            <button class="modal-close" id="closeQRScanner" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--yellow); font-size: 2rem; cursor: pointer; z-index: 10; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; opacity: 0.8;">&times;</button>
+            <button class="modal-close" id="closeQRScanner" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--yellow); font-size: 2rem; cursor: pointer; z-index: 10; width: 65px; height: 65px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; opacity: 0.8;">&times;</button>
             <h2 style="color: var(--yellow); margin-bottom: 30px; padding: 0 50px;">Scan RGB Invoice QR Code</h2>
             
             <!-- Scanner State Container -->
             <div id="scannerStateContainer" style="min-height: 300px;">
                 <!-- Initial state - asking for camera permission -->
                 <div id="cameraPermissionDiv" style="padding: 40px;">
-                    <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 65px; height: 65px; margin: 0 auto 20px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="#000">
                             <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                             <circle cx="12" cy="13" r="4"/>
@@ -2469,7 +2474,7 @@
                 
                 <!-- Success State (hidden initially) -->
                 <div id="scanSuccessDiv" style="display: none; padding: 40px;">
-                    <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <div style="width: 65px; height: 65px; margin: 0 auto 20px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="#fff">
                             <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                         </svg>
@@ -2522,7 +2527,7 @@
                     </div>
                     
                     <p style="margin-bottom: 10px; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; color: var(--yellow); font-weight: 600; font-size: 0.9rem;">Lightning Invoice:</p>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; word-break: break-all; margin: 10px 0; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--yellow); border-radius: 12px; cursor: pointer; transition: all 0.3s; line-height: 1.4; max-height: 100px; overflow-y: auto;" id="lightningInvoice" onclick="copyInvoice()">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; word-break: break-all; margin: 10px 0; padding: 12px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--yellow); border-radius: 12px; cursor: pointer; transition: all 0.3s; line-height: 1.4; max-height: 80px; overflow-y: auto;" id="lightningInvoice" onclick="copyInvoice()">
                         Loading...
                     </div>
                     
@@ -2993,8 +2998,8 @@
                         <div style="position: relative; z-index: 1; text-align: center;">
                             <!-- Logo placeholder -->
                             <div style="
-                                width: 100px;
-                                height: 100px;
+                                width: 80px;
+                                height: 80px;
                                 margin: 0 auto 20px;
                                 background: radial-gradient(circle, rgba(255, 246, 0, 0.2), transparent);
                                 border: 2px solid ${tierColor.glow};
