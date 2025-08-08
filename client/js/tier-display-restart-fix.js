@@ -130,28 +130,14 @@
         }
     }
     
-    // Update allocation message
+    // Update allocation message - REMOVED DUPLICATE MESSAGES
     function updateAllocationMessage() {
         const allocMsg = document.getElementById('allocation-message');
         if (!allocMsg) return;
         
-        let message = '';
-        switch(window.gameTier) {
-            case 'GOLD TIER':
-                message = '🥇 GOLD TIER - Maximum 10 batches unlocked!';
-                break;
-            case 'SILVER TIER':
-                message = '🥈 SILVER TIER - Maximum 8 batches unlocked!';
-                break;
-            case 'BRONZE TIER':
-                message = '🏆 BRONZE TIER - Maximum 5 batches unlocked!';
-                break;
-            default:
-                message = 'Score 11+ points to unlock purchase tiers!';
-        }
-        
-        allocMsg.textContent = message;
-        allocMsg.style.display = 'block';
+        // Remove the element entirely to avoid duplicate messages
+        allocMsg.style.display = 'none';
+        allocMsg.textContent = '';
     }
     
     // Fix 2: Controls Toggle Button

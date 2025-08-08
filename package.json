@@ -116,8 +116,5 @@
     "url": "https://github.com/Wankculator/RGB/issues"
   },
   "homepage": "https://rgblightcat.com",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  }
+  "type": "commonjs"
 }

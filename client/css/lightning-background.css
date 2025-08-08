@@ -1,0 +1,33 @@
+/* Lightning Background Styles */
+#lightning-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    opacity: 0.7 !important;
+    mix-blend-mode: screen !important;
+}
+
+/* Ensure canvas stays behind all content */
+body {
+    position: relative;
+    z-index: 1;
+}
+
+/* All main content should be above the lightning */
+.hero-section,
+.stats-section,
+.purchase-section,
+.how-to-purchase,
+.roadmap-section,
+.community-section,
+header,
+nav,
+main,
+footer {
+    position: relative;
+    z-index: 2;
+}

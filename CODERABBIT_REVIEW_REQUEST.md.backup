@@ -1,0 +1,25 @@
+# CodeRabbit Review Request
+
+This file was created to trigger a CodeRabbit review of the entire LIGHTCAT8 project.
+
+## Project Overview
+- **285 files changed**
+- **98,223 lines added**
+- **Complete RGB Lightning Platform**
+
+## Key Areas for Review
+1. **Client-side code** - Game engine, UI components, payment integration
+2. **Server-side code** - Payment controllers, RGB services, middleware
+3. **Security implementations** - Input validation, rate limiting, authentication
+4. **Mobile optimizations** - Responsive design, touch controls
+5. **Performance optimizations** - Memory management, lazy loading
+
+## Review Focus
+Please review for:
+- Code quality and best practices
+- Security vulnerabilities
+- Performance optimizations
+- Mobile compatibility
+- Error handling
+
+Created: August 7, 2025

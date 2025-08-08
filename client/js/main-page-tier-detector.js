@@ -112,39 +112,11 @@
         return badge;
     }
     
-    // Show notification when tier is unlocked
+    // Show notification when tier is unlocked - DISABLED TO PREVENT DUPLICATES
     function showTierUnlockedNotification(tier) {
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #fff600;
-            color: #000;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            z-index: 100000;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            border: 2px solid #000;
-            animation: slideIn 0.3s ease-out;
-        `;
-        
-        notification.innerHTML = `
-            🎉 ${tier.toUpperCase()} TIER UNLOCKED!<br>
-            <span style="font-size: 12px;">You can now purchase up to ${
-                tier === 'bronze' ? 5 : tier === 'silver' ? 8 : 10
-            } batches</span>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        // Remove after 5 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease-out';
-            setTimeout(() => notification.remove(), 300);
-        }, 5000);
+        // Notification disabled - tier is already shown in the game UI
+        console.log('[Tier Detector] Tier notification disabled to prevent duplicates:', tier);
+        return;
     }
     
     // Add animation styles
