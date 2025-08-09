@@ -6,11 +6,9 @@
     <meta name="description" content="RGBLightCat - The first cat meme token on RGB protocol">
     <meta name="theme-color" content="#FFFF00">
     <title>RGBLightCat - RGB Protocol Token</title>
-    <!-- Cache bust: 1754582561 -->
     
     <!-- UNIFIED MINT SYSTEM - Single source of truth for mint locking -->
-    <!-- DISABLED - Creating duplicate mint lock UI
-    <script src="js/mint-system-unified.js"></script> -->
+    <script src="js/mint-system-unified.js"></script>
     
     <!-- Secure Random - MUST LOAD FIRST for security -->
     <script src="js/secure-random-fixed.js"></script>
@@ -42,12 +40,7 @@
     <!-- Accessibility Improvements - WCAG 2.1 AA Compliance -->
     <script src="js/accessibility-improvements.js"></script>
     
-    <!-- Three.js - Only load on game page -->
-    <script>
-        if (window.location.pathname.includes('game')) {
-            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
-        }
-    </script>
+    <!-- Three.js removed - was only loading on game pages anyway -->
     
     <!-- GSAP for smooth animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -470,16 +463,7 @@
             position: relative;
         }
 
-        /* Three.js Background Canvas */
-        #three-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.3;
-        }
+        /* Three.js canvas styles removed - element was deleted */
 
         /* Smooth Scroll */
         html {
@@ -4430,6 +4414,26 @@
     <script src="js/double-submit-prevention.js"></script>
     <script src="js/qr-scanner-lazy-load.js"></script>
     <script src="js/threejs-console-fixes.js"></script>
+    
+    <!-- QR Scanner Professional - Enhanced scanner with better UI -->
+    <script src="js/qr-scanner.js?v=1.1.3"></script>
+    <script src="js/scanner-professional.js"></script>
+    <script src="js/qr-scanner-ux-fix.js"></script>
+    
+    <!-- GOD MODE FIX - THIS ONE ACTUALLY WORKED FOR BATCH BUTTONS -->
+    <script src="js/god-mode-fix.js"></script>
+    
+    <!-- SIMPLE FIX - Just make QR button open modal -->
+    <script src="js/simple-qr-button-fix.js"></script>
+    
+    <!-- FINAL OVERRIDE - RUNS LAST AND FORCES EVERYTHING TO WORK -->
+    <script src="js/final-override.js"></script>
+    
+    <!-- Ultra-minimal mint lock text fix - ONLY hides text, touches NOTHING else -->
+    <script src="js/hide-mint-lock-message-only.js"></script>
+    
+    <!-- Visual-only mint lock fix - Safe version that won't break site -->
+    <script src="js/mint-lock-visual-only-fix.js"></script>
     
 </body>
 </html>

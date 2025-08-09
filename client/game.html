@@ -1251,39 +1251,6 @@
                 // Clear the flag
                 localStorage.removeItem('tierJustUnlocked');
                 
-                // Show message on start screen
-                setTimeout(function() {
-                    const startScreen = document.getElementById('start-screen');
-                    if (startScreen) {
-                        // Create tier unlock message
-                        const messageDiv = document.createElement('div');
-                        messageDiv.style.cssText = `
-                            position: absolute;
-                            top: 20px;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            background: rgba(255, 255, 0, 0.9);
-                            color: #000;
-                            padding: 15px 30px;
-                            border-radius: 10px;
-                            font-weight: bold;
-                            font-size: 18px;
-                            z-index: 1000;
-                            text-align: center;
-                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-                        `;
-                        messageDiv.innerHTML = `
-                            ${unlockedTier.toUpperCase()} TIER UNLOCKED<br>
-                            <span style="font-size: 14px;">Exit the game to claim your tokens</span>
-                        `;
-                        startScreen.appendChild(messageDiv);
-                        
-                        // Remove message after 5 seconds
-                        setTimeout(function() {
-                            messageDiv.remove();
-                        }, 5000);
-                    }
-                }, 500);
             }
         })();
         
